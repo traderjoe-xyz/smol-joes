@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-/// @title Interface for NounsSeeder
+/// @title Interface for SmolJoeSeeder
 
 pragma solidity ^0.8.6;
 

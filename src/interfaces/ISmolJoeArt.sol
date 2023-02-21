@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
 /// @title Interface for SmolJoeArt
-/// Inspired by Nouns DAO's NounsArt contract
 
 pragma solidity ^0.8.6;
 

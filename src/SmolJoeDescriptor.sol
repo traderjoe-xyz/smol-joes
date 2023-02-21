@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0
 
-/// @title The Nouns NFT descriptor
+/// @title The Smol Joe NFT descriptor
+/// Inspired by Nouns DAO's NounsDescriptor contract
 
 pragma solidity ^0.8.6;
 
 import {Ownable} from "openzeppelin/access/Ownable.sol";
 import {Strings} from "openzeppelin/utils/Strings.sol";
-import {ISmolJoeDescriptorV2} from "./interfaces/ISmolJoeDescriptor.sol";
+import {ISmolJoeDescriptor} from "./interfaces/ISmolJoeDescriptor.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {NFTDescriptor} from "./libs/NFTDescriptor.sol";
 import {ISVGRenderer} from "./interfaces/ISVGRenderer.sol";
@@ -394,7 +395,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Given a token ID and seed, construct a token URI for an official Nouns DAO noun.
      * @dev The returned value may be a base64 encoded data URI or an API URL.
      */
-    function tokenURI(uint256 tokenId, ISmolJoesSeeder.Seed memory seed)
+    function tokenURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed)
         external
         view
         override
@@ -409,7 +410,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     /**
      * @notice Given a token ID and seed, construct a base64 encoded data URI for an official Nouns DAO noun.
      */
-    function dataURI(uint256 tokenId, ISmolJoesSeeder.Seed memory seed) public view override returns (string memory) {
+    function dataURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) public view override returns (string memory) {
         string memory nounId = tokenId.toString();
         string memory name = string(abi.encodePacked("Noun ", nounId));
         string memory description = string(abi.encodePacked("Noun ", nounId, " is a member of the Nouns DAO"));
@@ -420,34 +421,34 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     /**
      * @notice Given a name, description, and seed, construct a base64 encoded data URI.
      */
-    function genericDataURI(string memory name, string memory description, ISmolJoesSeeder.Seed memory seed)
+    function genericDataURI(string memory name, string memory description, ISmolJoeSeeder.Seed memory seed)
         public
         view
         override
         returns (string memory)
     {
-        NFTDescriptorV2.TokenURIParams memory params = NFTDescriptorV2.TokenURIParams({
+        NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
             name: name,
             description: description,
             parts: getPartsForSeed(seed),
             background: art.backgrounds(seed.background)
         });
-        return NFTDescriptorV2.constructTokenURI(renderer, params);
+        return NFTDescriptor.constructTokenURI(renderer, params);
     }
 
     /**
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
-    function generateSVGImage(ISmolJoesSeeder.Seed memory seed) external view override returns (string memory) {
+    function generateSVGImage(ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
         ISVGRenderer.SVGParams memory params =
             ISVGRenderer.SVGParams({parts: getPartsForSeed(seed), background: art.backgrounds(seed.background)});
-        return NFTDescriptorV2.generateSVGImage(renderer, params);
+        return NFTDescriptor.generateSVGImage(renderer, params);
     }
 
     /**
      * @notice Get all Noun parts for the passed `seed`.
      */
-    function getPartsForSeed(ISmolJoesSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
+    function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
         bytes memory body = art.bodies(seed.body);
         bytes memory accessory = art.accessories(seed.accessory);
         bytes memory head = art.heads(seed.head);

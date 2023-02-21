@@ -23,7 +23,7 @@ pragma solidity ^0.8.6;
 import {Base64} from "base64-sol/base64.sol";
 import {ISVGRenderer} from "../interfaces/ISVGRenderer.sol";
 
-library NFTDescriptorV2 {
+library NFTDescriptor {
     struct TokenURIParams {
         string name;
         string description;
