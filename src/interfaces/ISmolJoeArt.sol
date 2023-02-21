@@ -34,20 +34,16 @@ interface ISmolJoeArt {
 
     event BodiesAdded(uint16 count);
 
-    event AccessoriesAdded(uint16 count);
-
     event HeadsAdded(uint16 count);
 
-    event GlassesAdded(uint16 count);
-
-    struct NounArtStoragePage {
+    struct SmolJoeArtStoragePage {
         uint16 imageCount;
         uint80 decompressedLength;
         address pointer;
     }
 
     struct Trait {
-        NounArtStoragePage[] storagePages;
+        SmolJoeArtStoragePage[] storagePages;
         uint256 storedImagesCount;
     }
 
@@ -69,21 +65,13 @@ interface ISmolJoeArt {
 
     function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
-    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
     function addHeads(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addGlasses(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
     function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
-    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
     function addHeadsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addGlassesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 
     function backgroundsCount() external view returns (uint256);
 
@@ -93,15 +81,7 @@ interface ISmolJoeArt {
 
     function bodies(uint256 index) external view returns (bytes memory);
 
-    function accessories(uint256 index) external view returns (bytes memory);
-
-    function glasses(uint256 index) external view returns (bytes memory);
-
     function getBodiesTrait() external view returns (Trait memory);
 
-    function getAccessoriesTrait() external view returns (Trait memory);
-
     function getHeadsTrait() external view returns (Trait memory);
-
-    function getGlassesTrait() external view returns (Trait memory);
 }

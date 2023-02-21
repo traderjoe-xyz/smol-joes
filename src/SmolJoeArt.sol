@@ -9,30 +9,24 @@ import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {SSTORE2} from "solady/utils/SSTORE2.sol";
 import {IInflator} from "./interfaces/IInflator.sol";
 
-contract NounsArt is ISmolJoeArt {
-    /// @notice Current Nouns Descriptor address
+contract SmolJoeArt is ISmolJoeArt {
+    /// @notice Current Smol Joe Descriptor address
     address public override descriptor;
 
     /// @notice Current inflator address
     IInflator public override inflator;
 
-    /// @notice Noun Backgrounds (Hex Colors)
+    /// @notice Smol Joe Backgrounds (Hex Colors)
     string[] public override backgrounds;
 
-    /// @notice Noun Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
+    /// @notice Smol Joe Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
     mapping(uint8 => address) public palettesPointers;
 
-    /// @notice Noun Bodies Trait
+    /// @notice Smol Joe Bodies Trait
     Trait public bodiesTrait;
 
-    /// @notice Noun Accessories Trait
-    Trait public accessoriesTrait;
-
-    /// @notice Noun Heads Trait
+    /// @notice Smol Joe Heads Trait
     Trait public headsTrait;
-
-    /// @notice Noun Glasses Trait
-    Trait public glassesTrait;
 
     /**
      * @notice Require that the sender is the descriptor.
@@ -82,16 +76,6 @@ contract NounsArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Get the Trait struct for accessories.
-     * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
-     * https://github.com/ethereum/solidity/issues/11826
-     * @return Trait the struct, including a total image count, and an array of storage pages.
-     */
-    function getAccessoriesTrait() external view override returns (Trait memory) {
-        return accessoriesTrait;
-    }
-
-    /**
      * @notice Get the Trait struct for heads.
      * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
      * https://github.com/ethereum/solidity/issues/11826
@@ -102,17 +86,7 @@ contract NounsArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Get the Trait struct for glasses.
-     * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
-     * https://github.com/ethereum/solidity/issues/11826
-     * @return Trait the struct, including a total image count, and an array of storage pages.
-     */
-    function getGlassesTrait() external view override returns (Trait memory) {
-        return glassesTrait;
-    }
-
-    /**
-     * @notice Batch add Noun backgrounds.
+     * @notice Batch add Smol Joe backgrounds.
      * @dev This function can only be called by the descriptor.
      */
     function addManyBackgrounds(string[] calldata _backgrounds) external override onlyDescriptor {
@@ -124,7 +98,7 @@ contract NounsArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Add a Noun background.
+     * @notice Add a Smol Joe background.
      * @dev This function can only be called by the descriptor.
      */
     function addBackground(string calldata _background) external override onlyDescriptor {
@@ -171,24 +145,6 @@ contract NounsArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Add a batch of accessory images.
-     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
-     * and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(accessoriesTrait, encodedCompressed, decompressedLength, imageCount);
-
-        emit AccessoriesAdded(imageCount);
-    }
-
-    /**
      * @notice Add a batch of head images.
      * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
      * and finally compressing it using deflate.
@@ -204,24 +160,6 @@ contract NounsArt is ISmolJoeArt {
         addPage(headsTrait, encodedCompressed, decompressedLength, imageCount);
 
         emit HeadsAdded(imageCount);
-    }
-
-    /**
-     * @notice Add a batch of glasses images.
-     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
-     * and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addGlasses(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(glassesTrait, encodedCompressed, decompressedLength, imageCount);
-
-        emit GlassesAdded(imageCount);
     }
 
     /**
@@ -259,25 +197,6 @@ contract NounsArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Add a batch of accessory images from an existing storage contract.
-     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
-     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
-     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(accessoriesTrait, pointer, decompressedLength, imageCount);
-
-        emit AccessoriesAdded(imageCount);
-    }
-
-    /**
      * @notice Add a batch of head images from an existing storage contract.
      * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
      * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
@@ -297,26 +216,7 @@ contract NounsArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Add a batch of glasses images from an existing storage contract.
-     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
-     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
-     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addGlassesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(glassesTrait, pointer, decompressedLength, imageCount);
-
-        emit GlassesAdded(imageCount);
-    }
-
-    /**
-     * @notice Get the number of available Noun `backgrounds`.
+     * @notice Get the number of available Smol Joe `backgrounds`.
      */
     function backgroundsCount() public view override returns (uint256) {
         return backgrounds.length;
@@ -334,20 +234,6 @@ contract NounsArt is ISmolJoeArt {
      */
     function bodies(uint256 index) public view override returns (bytes memory) {
         return imageByIndex(bodiesTrait, index);
-    }
-
-    /**
-     * @notice Get a accessory image bytes (RLE-encoded).
-     */
-    function accessories(uint256 index) public view override returns (bytes memory) {
-        return imageByIndex(accessoriesTrait, index);
-    }
-
-    /**
-     * @notice Get a glasses image bytes (RLE-encoded).
-     */
-    function glasses(uint256 index) public view override returns (bytes memory) {
-        return imageByIndex(glassesTrait, index);
     }
 
     /**
@@ -386,13 +272,13 @@ contract NounsArt is ISmolJoeArt {
             revert BadImageCount();
         }
         trait.storagePages.push(
-            NounArtStoragePage({pointer: pointer, decompressedLength: decompressedLength, imageCount: imageCount})
+            SmolJoeArtStoragePage({pointer: pointer, decompressedLength: decompressedLength, imageCount: imageCount})
         );
         trait.storedImagesCount += imageCount;
     }
 
     function imageByIndex(ISmolJoeArt.Trait storage trait, uint256 index) internal view returns (bytes memory) {
-        (ISmolJoeArt.NounArtStoragePage storage page, uint256 indexInPage) = getPage(trait.storagePages, index);
+        (ISmolJoeArt.SmolJoeArtStoragePage storage page, uint256 indexInPage) = getPage(trait.storagePages, index);
         bytes[] memory decompressedImages = decompressAndDecode(page);
         return decompressedImages[indexInPage];
     }
@@ -402,18 +288,18 @@ contract NounsArt is ISmolJoeArt {
      * inside the page, so the image can be read from storage.
      * Example: if you have 2 pages with 100 images each, and you want to get image 150, this function would return
      * the 2nd page, and the 50th index.
-     * @return INounsArt.NounArtStoragePage the page containing the image at index
+     * @return ISmolJoeArt.SmolJoeArtStoragePage the page containing the image at index
      * @return uint256 the index of the image in the page
      */
-    function getPage(ISmolJoeArt.NounArtStoragePage[] storage pages, uint256 index)
+    function getPage(ISmolJoeArt.SmolJoeArtStoragePage[] storage pages, uint256 index)
         internal
         view
-        returns (ISmolJoeArt.NounArtStoragePage storage, uint256)
+        returns (ISmolJoeArt.SmolJoeArtStoragePage storage, uint256)
     {
         uint256 len = pages.length;
         uint256 pageFirstImageIndex = 0;
         for (uint256 i = 0; i < len; i++) {
-            ISmolJoeArt.NounArtStoragePage storage page = pages[i];
+            ISmolJoeArt.SmolJoeArtStoragePage storage page = pages[i];
 
             if (index < pageFirstImageIndex + page.imageCount) {
                 return (page, index - pageFirstImageIndex);
@@ -425,7 +311,11 @@ contract NounsArt is ISmolJoeArt {
         revert ImageNotFound();
     }
 
-    function decompressAndDecode(ISmolJoeArt.NounArtStoragePage storage page) internal view returns (bytes[] memory) {
+    function decompressAndDecode(ISmolJoeArt.SmolJoeArtStoragePage storage page)
+        internal
+        view
+        returns (bytes[] memory)
+    {
         bytes memory compressedData = SSTORE2.read(page.pointer);
         (, bytes memory decompressedData) = inflator.puff(compressedData, page.decompressedLength);
         return abi.decode(decompressedData, (bytes[]));

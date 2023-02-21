@@ -10,9 +10,7 @@ interface ISmolJoeSeeder {
     struct Seed {
         uint48 background;
         uint48 body;
-        uint48 accessory;
         uint48 head;
-        uint48 glasses;
     }
 
     function generateSeed(uint256 nounId, ISmolJoeDescriptorMinimal descriptor) external view returns (Seed memory);
