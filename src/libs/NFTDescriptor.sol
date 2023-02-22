@@ -42,7 +42,6 @@ library NFTDescriptor {
         string memory image =
             generateSVGImage(renderer, ISVGRenderer.SVGParams({parts: params.parts, background: params.background}));
 
-        // prettier-ignore
         return string(
             abi.encodePacked(
                 "data:application/json;base64,",

@@ -26,6 +26,7 @@ contract SmolJoeToken is ISmolJoeToken, Ownable, ERC721 {
     }
 
     function mint(uint256 tokenID) public {
+        seeds[tokenID] = seeder.generateSeed(tokenID, descriptor);
         _mint(msg.sender, tokenID);
     }
 

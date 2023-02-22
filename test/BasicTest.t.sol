@@ -19,7 +19,9 @@ contract BasicTest is Test {
     SVGRenderer renderer;
     Inflator inflator;
 
-    function setUp() public {
+    function setUp() public {}
+
+    function test() public {
         inflator = new Inflator();
         renderer = new SVGRenderer();
         seeder = new SmolJoeSeeder();
@@ -28,14 +30,15 @@ contract BasicTest is Test {
         art = new SmolJoeArt(address(descriptor), inflator);
         descriptor.setArt(art);
 
+        uint256 gasLeft = gasleft();
         _populateDescriptorV2();
+        console.log("Gas used: ", gasLeft - gasleft());
 
         token = new SmolJoeToken(descriptor, seeder);
-    }
 
-    function test() public {
-        token.mint(2);
+        uint256 tokenID = 2;
 
+        token.mint(tokenID);
         console.log(token.tokenURI(2));
     }
 

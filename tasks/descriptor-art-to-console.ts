@@ -65,17 +65,17 @@ task(
       )
     );
 
-    console.log("=== PALETTE ===\n");
-    console.log(`paletteValue: '${paletteValue}'\n`);
+    // console.log("=== PALETTE ===\n");
+    // console.log(`paletteValue: '${paletteValue}'\n`);
 
     console.log("=== BODIES ===\n");
-    console.log(`bodiesCompressed: '${bodiesPage.encodedCompressed}'\n`);
+    // console.log(`bodiesCompressed: '${bodiesPage.encodedCompressed}'\n`);
     console.log(`bodiesLength: ${bodiesPage.originalLength}\n`);
     console.log(`bodies count: ${bodiesPage.itemCount}`);
     saveToFileAbiEncoded(path.join(exportPath, "bodiesPage.abi"), bodiesPage);
 
     console.log("=== HEADS ===\n");
-    console.log(`headsCompressed: '${headsPage.encodedCompressed}'\n`);
+    // console.log(`headsCompressed: '${headsPage.encodedCompressed}'\n`);
     console.log(`headsLength: ${headsPage.originalLength}\n`);
     console.log(`heads count: ${headsPage.itemCount}`);
     saveToFileAbiEncoded(path.join(exportPath, "headsPage.abi"), headsPage);

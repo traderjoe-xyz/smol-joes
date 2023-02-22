@@ -26,9 +26,8 @@ contract SVGRenderer is ISVGRenderer {
     bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
     uint256 private constant _INDEX_TO_BYTES3_FACTOR = 3;
 
-    // prettier-ignore
     string private constant _SVG_START_TAG =
-        '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
+        '<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
     string private constant _SVG_END_TAG = "</svg>";
 
     struct ContentBounds {
@@ -88,45 +87,77 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Given RLE image parts and color palettes, generate SVG rects.
      */
-    // prettier-ignore
     function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
-        string[33] memory lookup = [
+        string[64] memory lookup = [
             "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
             "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
             "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
             "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
             "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
             "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
             "60",
-            "70",
-            "80",
-            "90",
-            "100",
-            "110",
-            "120",
-            "130",
-            "140",
-            "150",
-            "160",
-            "170",
-            "180",
-            "190",
-            "200",
-            "210",
-            "220",
-            "230",
-            "240",
-            "250",
-            "260",
-            "270",
-            "280",
-            "290",
-            "300",
-            "310",
-            "320"
+            "61",
+            "62",
+            "63"
         ];
+
         string memory rects;
         string[] memory cache;
+
         for (uint8 p = 0; p < params.parts.length; p++) {
             cache = new string[](256); // Initialize color cache
 
@@ -197,7 +228,7 @@ contract SVGRenderer is ISVGRenderer {
                     chunk,
                     '<rect width="',
                     buffer[i],
-                    '" height="10" x="',
+                    '" height="1" x="',
                     buffer[i + 1],
                     '" y="',
                     buffer[i + 2],
