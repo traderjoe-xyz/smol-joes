@@ -1,0 +1,27 @@
+{
+  "name": "smol-joes",
+  "version": "0.1.0",
+  "repository": "https://github.com/traderjoe-xyz/smol-joes.git",
+  "author": "Patate <patate@joepegs.com>",
+  "license": "MIT",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.5",
+    "@typechain/ethers-v5": "^10.2.0",
+    "@typechain/hardhat": "^6.1.5",
+    "@types/node": "^18.14.0",
+    "ethereum-waffle": "^4.0.10",
+    "ethers": "v5",
+    "hardhat": "^2.12.7",
+    "hardhat-preprocessor": "^0.1.5",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.1",
+    "typescript": "^4.9.5"
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "strict": true,
+        "esModuleInterop": true,
+        "outDir": "dist",
+        "declaration": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "esnext"
+        ],
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+    },
+    "include": [
+        "./tasks",
+        "./typechain-types",
+        "./files/*.json"
+    ],
+    "files": [
+        "./hardhat.config.ts"
+    ],
+    "exclude": [
+        "**/dist"
+    ]
+}
