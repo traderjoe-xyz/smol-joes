@@ -65,23 +65,71 @@ interface ISmolJoeArt {
 
     function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
+    function addPants(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addShoes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addShirts(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addBeards(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
+
     function addHeads(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
-    function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+    function addEyes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
+    function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addShoesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addShirtsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addBeardsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
     function addHeadsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addEyesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
+    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 
     function backgroundsCount() external view returns (uint256);
 
     function backgrounds(uint256 index) external view returns (string memory);
 
+    function bodies(uint256 index) external view returns (bytes memory);
+
+    function pants(uint256 index) external view returns (bytes memory);
+
+    function shoes(uint256 index) external view returns (bytes memory);
+
+    function shirts(uint256 index) external view returns (bytes memory);
+
+    function beards(uint256 index) external view returns (bytes memory);
+
     function heads(uint256 index) external view returns (bytes memory);
 
-    function bodies(uint256 index) external view returns (bytes memory);
+    function eyes(uint256 index) external view returns (bytes memory);
+
+    function accessories(uint256 index) external view returns (bytes memory);
 
     function getBodiesTrait() external view returns (Trait memory);
 
+    function getPantsTrait() external view returns (Trait memory);
+
+    function getShoesTrait() external view returns (Trait memory);
+
+    function getShirtsTrait() external view returns (Trait memory);
+
+    function getBeardsTrait() external view returns (Trait memory);
+
     function getHeadsTrait() external view returns (Trait memory);
+
+    function getEyesTrait() external view returns (Trait memory);
+
+    function getAccessoriesTrait() external view returns (Trait memory);
 }

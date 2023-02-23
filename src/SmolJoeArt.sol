@@ -25,8 +25,20 @@ contract SmolJoeArt is ISmolJoeArt {
     /// @notice Smol Joe Bodies Trait
     Trait public bodiesTrait;
 
+    Trait public pantsTrait;
+
+    Trait public shoesTrait;
+
+    Trait public shirtsTrait;
+
+    Trait public beardsTrait;
+
     /// @notice Smol Joe Heads Trait
     Trait public headsTrait;
+
+    Trait public eyesTraits;
+
+    Trait public accessoriesTraits;
 
     /**
      * @notice Require that the sender is the descriptor.
@@ -75,6 +87,22 @@ contract SmolJoeArt is ISmolJoeArt {
         return bodiesTrait;
     }
 
+    function getPantsTrait() external view override returns (Trait memory) {
+        return pantsTrait;
+    }
+
+    function getShoesTrait() external view override returns (Trait memory) {
+        return shoesTrait;
+    }
+
+    function getShirtsTrait() external view override returns (Trait memory) {
+        return shirtsTrait;
+    }
+
+    function getBeardsTrait() external view override returns (Trait memory) {
+        return beardsTrait;
+    }
+
     /**
      * @notice Get the Trait struct for heads.
      * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
@@ -83,6 +111,14 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     function getHeadsTrait() external view override returns (Trait memory) {
         return headsTrait;
+    }
+
+    function getEyesTrait() external view override returns (Trait memory) {
+        return eyesTraits;
+    }
+
+    function getAccessoriesTrait() external view override returns (Trait memory) {
+        return accessoriesTraits;
     }
 
     /**
@@ -144,6 +180,46 @@ contract SmolJoeArt is ISmolJoeArt {
         emit BodiesAdded(imageCount);
     }
 
+    function addPants(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(pantsTrait, encodedCompressed, decompressedLength, imageCount);
+
+        // emit PantsAdded(imageCount);
+    }
+
+    function addShoes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(shoesTrait, encodedCompressed, decompressedLength, imageCount);
+
+        // emit ShoesAdded(imageCount);
+    }
+
+    function addShirts(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(shirtsTrait, encodedCompressed, decompressedLength, imageCount);
+
+        // emit ShirtsAdded(imageCount);
+    }
+
+    function addBeards(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(beardsTrait, encodedCompressed, decompressedLength, imageCount);
+
+        // emit BeardsAdded(imageCount);
+    }
+
     /**
      * @notice Add a batch of head images.
      * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
@@ -160,6 +236,26 @@ contract SmolJoeArt is ISmolJoeArt {
         addPage(headsTrait, encodedCompressed, decompressedLength, imageCount);
 
         emit HeadsAdded(imageCount);
+    }
+
+    function addEyes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(eyesTraits, encodedCompressed, decompressedLength, imageCount);
+
+        // emit EyesAdded(imageCount);
+    }
+
+    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(accessoriesTraits, encodedCompressed, decompressedLength, imageCount);
+
+        // emit AccessoriesAdded(imageCount);
     }
 
     /**
@@ -196,6 +292,46 @@ contract SmolJoeArt is ISmolJoeArt {
         emit BodiesAdded(imageCount);
     }
 
+    function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(pantsTrait, pointer, decompressedLength, imageCount);
+
+        // emit PantsAdded(imageCount);
+    }
+
+    function addShoesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(shoesTrait, pointer, decompressedLength, imageCount);
+
+        // emit ShoesAdded(imageCount);
+    }
+
+    function addShirtsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(shirtsTrait, pointer, decompressedLength, imageCount);
+
+        // emit ShirtsAdded(imageCount);
+    }
+
+    function addBeardsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(beardsTrait, pointer, decompressedLength, imageCount);
+
+        // emit BeardsAdded(imageCount);
+    }
+
     /**
      * @notice Add a batch of head images from an existing storage contract.
      * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
@@ -215,11 +351,66 @@ contract SmolJoeArt is ISmolJoeArt {
         emit HeadsAdded(imageCount);
     }
 
+    function addEyesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(eyesTraits, pointer, decompressedLength, imageCount);
+
+        // emit EyesAdded(imageCount);
+    }
+
+    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(accessoriesTraits, pointer, decompressedLength, imageCount);
+
+        // emit AccessoriesAdded(imageCount);
+    }
+
     /**
      * @notice Get the number of available Smol Joe `backgrounds`.
      */
     function backgroundsCount() public view override returns (uint256) {
         return backgrounds.length;
+    }
+    /**
+     * @notice Get a body image bytes (RLE-encoded).
+     */
+
+    function bodies(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(bodiesTrait, index);
+    }
+
+    /**
+     * @notice Get a pants image bytes (RLE-encoded).
+     */
+    function pants(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(pantsTrait, index);
+    }
+
+    /**
+     * @notice Get a shoes image bytes (RLE-encoded).
+     */
+    function shoes(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(shoesTrait, index);
+    }
+
+    /**
+     * @notice Get a shirt image bytes (RLE-encoded).
+     */
+    function shirts(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(shirtsTrait, index);
+    }
+
+    /**
+     * @notice Get a beard image bytes (RLE-encoded).
+     */
+    function beards(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(beardsTrait, index);
     }
 
     /**
@@ -230,10 +421,19 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Get a body image bytes (RLE-encoded).
+     * @notice Get a eyes image bytes (RLE-encoded).
      */
-    function bodies(uint256 index) public view override returns (bytes memory) {
-        return imageByIndex(bodiesTrait, index);
+
+    function eyes(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(eyesTraits, index);
+    }
+
+    /**
+     * @notice Get a accessories image bytes (RLE-encoded).
+     */
+
+    function accessories(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(accessoriesTraits, index);
     }
 
     /**

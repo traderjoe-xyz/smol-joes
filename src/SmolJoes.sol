@@ -25,9 +25,14 @@ contract SmolJoes is ISmolJoes, Ownable, ERC721 {
         seeder = _seeder;
     }
 
-    function mint(uint256 tokenID) public {
+    function mint(address to, uint256 amount) public {
+        seeds[amount] = seeder.generateSeed(amount, descriptor);
+        _mint(to, amount);
+    }
+
+    function mintSpecial(address to, uint256 tokenID) public override onlyOwner {
         seeds[tokenID] = seeder.generateSeed(tokenID, descriptor);
-        _mint(msg.sender, tokenID);
+        _mint(to, tokenID);
     }
 
     /**

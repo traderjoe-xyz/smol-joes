@@ -23,5 +23,17 @@ interface ISmolJoeDescriptorMinimal {
 
     function bodyCount() external view returns (uint256);
 
+    function pantCount() external view returns (uint256);
+
+    function shoeCount() external view returns (uint256);
+
+    function shirtCount() external view returns (uint256);
+
+    function beardCount() external view returns (uint256);
+
     function headCount() external view returns (uint256);
+
+    function eyeCount() external view returns (uint256);
+
+    function accessoryCount() external view returns (uint256);
 }

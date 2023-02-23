@@ -5,6 +5,7 @@
 pragma solidity ^0.8.6;
 
 import {IERC721} from "openzeppelin/token/ERC721/IERC721.sol";
+import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 
@@ -18,4 +19,8 @@ interface ISmolJoes is IERC721 {
     function setDescriptor(ISmolJoeDescriptorMinimal descriptor) external;
 
     function setSeeder(ISmolJoeSeeder seeder) external;
+
+    function mintSpecial(address to, uint256 tokenId) external;
+
+    function mint(address to, uint256 amount) external;
 }

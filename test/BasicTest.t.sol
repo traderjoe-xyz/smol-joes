@@ -22,28 +22,28 @@ contract BasicTest is Test {
     function setUp() public {}
 
     function test() public {
-        // inflator = new Inflator();
-        // renderer = new SVGRenderer();
-        // seeder = new SmolJoeSeeder();
+        // vm.createSelectFork(StdChains.getChain("avalanche_fuji").rpcUrl);
+        // token = SmolJoes(0x2FeceDF3e697DaFCe67fdD1d5972e2E29e8C8D60);
+        // descriptor = SmolJoeDescriptor(0xcB1444cE17aA1A4Cf00F436EB7Fb99fcAc88BC08);
 
-        // descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(0)), renderer);
-        // art = new SmolJoeArt(address(descriptor), inflator);
-        // descriptor.setArt(art);
+        inflator = new Inflator();
+        renderer = new SVGRenderer();
+        seeder = new SmolJoeSeeder();
 
-        // uint256 gasLeft = gasleft();
-        // _populateDescriptorV2();
-        // console.log("Gas used: ", gasLeft - gasleft());
+        descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(0)), renderer);
+        art = new SmolJoeArt(address(descriptor), inflator);
+        descriptor.setArt(art);
 
-        // token = new SmolJoes(descriptor, seeder);
+        uint256 gasLeft = gasleft();
+        _populateDescriptorV2();
+        console.log("Gas used: ", gasLeft - gasleft());
 
-        vm.createSelectFork(StdChains.getChain("avalanche_fuji").rpcUrl);
+        token = new SmolJoes(descriptor, seeder);
 
-        token = SmolJoes(0xaB3F542aEEf0D4e3c416d784b1b841Ed9A2ba1Ab);
-        uint256 tokenID = 1;
+        uint256 tokenID = 2;
 
-        token.mint(tokenID);
+        token.mint(address(1), tokenID);
         vm.writeFile("./uri.txt", token.tokenURI(tokenID));
-        // console.log(token.tokenURI(2));
     }
 
     function _populateDescriptorV2() internal {
@@ -57,8 +57,32 @@ contract BasicTest is Test {
             abi.decode(vm.parseBytes(vm.readFile("./test/files/bodiesPage.abi")), (bytes, uint80, uint16));
         descriptor.addBodies(bodies, bodiesLength, bodiesCount);
 
+        (bytes memory pants, uint80 pantsLength, uint16 pantsCount) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/pantsPage.abi")), (bytes, uint80, uint16));
+        descriptor.addPants(pants, pantsLength, pantsCount);
+
+        (bytes memory shoes, uint80 shoesLength, uint16 shoesCount) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/shoesPage.abi")), (bytes, uint80, uint16));
+        descriptor.addShoes(shoes, shoesLength, shoesCount);
+
+        (bytes memory shirts, uint80 shirtsLength, uint16 shirtsCount) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/shirtsPage.abi")), (bytes, uint80, uint16));
+        descriptor.addShirts(shirts, shirtsLength, shirtsCount);
+
+        (bytes memory beards, uint80 beardsLength, uint16 beardsCount) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/beardsPage.abi")), (bytes, uint80, uint16));
+        descriptor.addBeards(beards, beardsLength, beardsCount);
+
         (bytes memory heads, uint80 headsLength, uint16 headsCount) =
             abi.decode(vm.parseBytes(vm.readFile("./test/files/headsPage.abi")), (bytes, uint80, uint16));
         descriptor.addHeads(heads, headsLength, headsCount);
+
+        (bytes memory eyes, uint80 eyesLength, uint16 eyesCount) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/eyesPage.abi")), (bytes, uint80, uint16));
+        descriptor.addEyes(eyes, eyesLength, eyesCount);
+
+        (bytes memory accessories, uint80 accessoriesLength, uint16 accessoriesCount) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/accessoriesPage.abi")), (bytes, uint80, uint16));
+        descriptor.addAccessories(accessories, accessoriesLength, accessoriesCount);
     }
 }

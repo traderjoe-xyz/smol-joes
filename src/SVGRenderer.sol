@@ -27,7 +27,7 @@ contract SVGRenderer is ISVGRenderer {
     uint256 private constant _INDEX_TO_BYTES3_FACTOR = 3;
 
     string private constant _SVG_START_TAG =
-        '<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
+        '<svg width="45" height="45" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
     string private constant _SVG_END_TAG = "</svg>";
 
     struct ContentBounds {
@@ -88,7 +88,7 @@ contract SVGRenderer is ISVGRenderer {
      * @notice Given RLE image parts and color palettes, generate SVG rects.
      */
     function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
-        string[64] memory lookup = [
+        string[45] memory lookup = [
             "0",
             "1",
             "2",
@@ -133,26 +133,7 @@ contract SVGRenderer is ISVGRenderer {
             "41",
             "42",
             "43",
-            "44",
-            "45",
-            "46",
-            "47",
-            "48",
-            "49",
-            "50",
-            "51",
-            "52",
-            "53",
-            "54",
-            "55",
-            "56",
-            "57",
-            "58",
-            "59",
-            "60",
-            "61",
-            "62",
-            "63"
+            "44"
         ];
 
         string memory rects;

@@ -86,11 +86,41 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         return art.getBodiesTrait().storedImagesCount;
     }
 
+    function pantCount() external view override returns (uint256) {
+        return art.getPantsTrait().storedImagesCount;
+    }
+
+    function shirtCount() external view override returns (uint256) {
+        return art.getShirtsTrait().storedImagesCount;
+    }
+
+    function shoeCount() external view override returns (uint256) {
+        return art.getShoesTrait().storedImagesCount;
+    }
+
+    function beardCount() external view override returns (uint256) {
+        return art.getBeardsTrait().storedImagesCount;
+    }
+
     /**
      * @notice Get the number of available Smol Joe `heads`.
      */
     function headCount() external view override returns (uint256) {
         return art.getHeadsTrait().storedImagesCount;
+    }
+
+    /**
+     * @notice Get the number of available Smol Joe `eyes`.
+     */
+    function eyeCount() external view override returns (uint256) {
+        return art.getEyesTrait().storedImagesCount;
+    }
+
+    /**
+     * @notice Get the number of available Smol Joe `accessories`.
+     */
+    function accessoryCount() external view override returns (uint256) {
+        return art.getAccessoriesTrait().storedImagesCount;
     }
 
     /**
@@ -137,6 +167,70 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
+     * @notice Add a batch of pant images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addPants(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addPants(encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of shirt images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addShirts(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addShirts(encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of shoe images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addShoes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addShoes(encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of beard images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addBeards(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addBeards(encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
      * @notice Add a batch of head images.
      * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
      * and finally compressing it using deflate.
@@ -150,6 +244,38 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         onlyOwner
     {
         art.addHeads(encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of eye images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addEyes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addEyes(encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of accessories images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addAccessories(encodedCompressed, decompressedLength, imageCount);
     }
 
     /**
@@ -183,6 +309,74 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
+     * @notice Add a batch of pant images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addPantsFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of shoe images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addShoesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addShoesFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of shirt images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addShirtsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addShirtsFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of beard images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addBeardsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addBeardsFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
      * @notice Add a batch of head images from an existing storage contract.
      * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
      * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
@@ -200,12 +394,91 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
+     * @notice Add a batch of eye images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addEyesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addEyesFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a batch of accessory images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addAccessoriesFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
      * @notice Get a background color by ID.
      * @param index the index of the background.
      * @return string the RGB hex value of the background.
      */
     function backgrounds(uint256 index) public view override returns (string memory) {
         return art.backgrounds(index);
+    }
+
+    /**
+     * @notice Get a body image by ID.
+     * @param index the index of the body.
+     * @return bytes the RLE-encoded bytes of the image.
+     */
+    function bodies(uint256 index) public view override returns (bytes memory) {
+        return art.bodies(index);
+    }
+
+    /**
+     * @notice Get a pant image by ID.
+     * @param index the index of the body.
+     * @return bytes the RLE-encoded bytes of the image.
+     */
+    function pants(uint256 index) public view override returns (bytes memory) {
+        return art.pants(index);
+    }
+
+    /**
+     * @notice Get an shoe image by ID.
+     * @param index the index of the eye.
+     * @return bytes the RLE-encoded bytes of the image.
+     */
+    function shoes(uint256 index) public view override returns (bytes memory) {
+        return art.shoes(index);
+    }
+
+    /**
+     * @notice Get a shirt image by ID.
+     * @param index the index of the shirt.
+     * @return bytes the RLE-encoded bytes of the image.
+     */
+    function shirts(uint256 index) public view override returns (bytes memory) {
+        return art.shirts(index);
+    }
+
+    /**
+     * @notice Get a beard image by ID.
+     * @param index the index of the beard.
+     * @return bytes the RLE-encoded bytes of the image.
+     */
+    function beards(uint256 index) public view override returns (bytes memory) {
+        return art.beards(index);
     }
 
     /**
@@ -218,12 +491,21 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
-     * @notice Get a body image by ID.
-     * @param index the index of the body.
+     * @notice Get an eye image by ID.
+     * @param index the index of the eye.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function bodies(uint256 index) public view override returns (bytes memory) {
-        return art.bodies(index);
+    function eyes(uint256 index) public view override returns (bytes memory) {
+        return art.eyes(index);
+    }
+
+    /**
+     * @notice Get an accessory image by ID.
+     * @param index the index of the accessory.
+     * @return bytes the RLE-encoded bytes of the image.
+     */
+    function accessories(uint256 index) public view override returns (bytes memory) {
+        return art.accessories(index);
     }
 
     /**
@@ -318,11 +600,23 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      */
     function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
         bytes memory body = art.bodies(seed.body);
+        bytes memory pant = art.pants(seed.pant);
+        bytes memory shoe = art.shoes(seed.shoe);
+        bytes memory shirt = art.shirts(seed.shirt);
+        bytes memory beard = art.beards(seed.beard);
         bytes memory head = art.heads(seed.head);
+        bytes memory eye = art.eyes(seed.eye);
+        bytes memory accessory = art.accessories(seed.accessory);
 
-        ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](2);
+        ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](8);
         parts[0] = ISVGRenderer.Part({image: body, palette: _getPalette(body)});
-        parts[1] = ISVGRenderer.Part({image: head, palette: _getPalette(head)});
+        parts[1] = ISVGRenderer.Part({image: pant, palette: _getPalette(pant)});
+        parts[2] = ISVGRenderer.Part({image: shoe, palette: _getPalette(shoe)});
+        parts[3] = ISVGRenderer.Part({image: shirt, palette: _getPalette(shirt)});
+        parts[4] = ISVGRenderer.Part({image: beard, palette: _getPalette(beard)});
+        parts[5] = ISVGRenderer.Part({image: head, palette: _getPalette(head)});
+        parts[6] = ISVGRenderer.Part({image: eye, palette: _getPalette(eye)});
+        parts[7] = ISVGRenderer.Part({image: accessory, palette: _getPalette(accessory)});
         return parts;
     }
 
