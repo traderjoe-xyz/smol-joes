@@ -19,6 +19,10 @@ node_modules/
 # Hardhat files
 cache_hardhat/
 artifacts/
+deployments/localhost/
+
+# Temporarly ignore deploy files during dev
+deployments/
 
 # Hardhat plugin files
-typechain-types/
+typechain/

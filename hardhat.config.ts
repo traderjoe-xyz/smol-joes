@@ -1,8 +1,12 @@
 import fs from "fs";
+import "dotenv/config";
+import { HardhatUserConfig } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
+import "@nomiclabs/hardhat-etherscan";
 import "@typechain/hardhat";
 import "hardhat-preprocessor";
-import { HardhatUserConfig } from "hardhat/config";
+import "hardhat-deploy";
 import "./tasks";
 
 function getRemappings() {
@@ -23,10 +27,49 @@ const config: HardhatUserConfig = {
       },
     },
   },
+  networks: {
+    hardhat: {
+      blockGasLimit: 200_000_000,
+      accounts: {
+        count: 2,
+      },
+    },
+    fuji: {
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
+      gasPrice: 25000000000,
+      chainId: 43113,
+      accounts: process.env.DEPLOY_PRIVATE_KEY
+        ? [process.env.DEPLOY_PRIVATE_KEY]
+        : [],
+      saveDeployments: true,
+    },
+    avalanche: {
+      url: "https://api.avax.network/ext/bc/C/rpc",
+      gasPrice: 25000000000,
+      chainId: 43114,
+      accounts: process.env.DEPLOY_PRIVATE_KEY
+        ? [process.env.DEPLOY_PRIVATE_KEY]
+        : [],
+    },
+  },
+  typechain: {
+    outDir: "typechain",
+    target: "ethers-v5",
+  },
+  etherscan: {
+    apiKey: {
+      avalanche: process.env.SNOWTRACE_API_KEY,
+      avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY,
+    },
+  },
+  namedAccounts: {
+    deployer: 0,
+  },
   paths: {
     sources: "./src", // Use ./src rather than ./contracts as Hardhat expects
     cache: "./cache_hardhat", // Use a different cache for Hardhat than Foundry
   },
+
   // This fully resolves paths for imports in the ./lib directory for Hardhat
   preprocess: {
     eachLine: (hre) => ({

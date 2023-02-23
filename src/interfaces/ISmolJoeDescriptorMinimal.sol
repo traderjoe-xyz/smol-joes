@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-/// @title Common interface for SmolJoeDescriptor versions, as used by SmolJoeToken and SmolJoeSeeder.
+/// @title Common interface for SmolJoeDescriptor versions, as used by SmolJoes and SmolJoeSeeder.
 
 pragma solidity ^0.8.6;
 

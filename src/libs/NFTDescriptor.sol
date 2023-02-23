@@ -35,7 +35,7 @@ library NFTDescriptor {
      * @notice Construct an ERC721 token URI.
      */
     function constructTokenURI(ISVGRenderer renderer, TokenURIParams memory params)
-        public
+        internal
         view
         returns (string memory)
     {
@@ -67,7 +67,7 @@ library NFTDescriptor {
      * @notice Generate an SVG image for use in the ERC721 token URI.
      */
     function generateSVGImage(ISVGRenderer renderer, ISVGRenderer.SVGParams memory params)
-        public
+        internal
         view
         returns (string memory svg)
     {

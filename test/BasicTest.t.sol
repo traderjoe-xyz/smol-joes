@@ -4,7 +4,7 @@ pragma solidity ^0.8.6;
 
 import "forge-std/Test.sol";
 
-import {SmolJoeToken} from "src/SmolJoeToken.sol";
+import {SmolJoes} from "src/SmolJoes.sol";
 import {ISmolJoeDescriptor, SmolJoeDescriptor} from "src/SmolJoeDescriptor.sol";
 import {SmolJoeSeeder} from "src/SmolJoeSeeder.sol";
 import {SVGRenderer} from "src/SVGRenderer.sol";
@@ -12,7 +12,7 @@ import {ISmolJoeArt, SmolJoeArt} from "src/SmolJoeArt.sol";
 import {Inflator} from "src/Inflator.sol";
 
 contract BasicTest is Test {
-    SmolJoeToken token;
+    SmolJoes token;
     SmolJoeSeeder seeder;
     SmolJoeDescriptor descriptor;
     SmolJoeArt art;
@@ -22,24 +22,28 @@ contract BasicTest is Test {
     function setUp() public {}
 
     function test() public {
-        inflator = new Inflator();
-        renderer = new SVGRenderer();
-        seeder = new SmolJoeSeeder();
+        // inflator = new Inflator();
+        // renderer = new SVGRenderer();
+        // seeder = new SmolJoeSeeder();
 
-        descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(0)), renderer);
-        art = new SmolJoeArt(address(descriptor), inflator);
-        descriptor.setArt(art);
+        // descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(0)), renderer);
+        // art = new SmolJoeArt(address(descriptor), inflator);
+        // descriptor.setArt(art);
 
-        uint256 gasLeft = gasleft();
-        _populateDescriptorV2();
-        console.log("Gas used: ", gasLeft - gasleft());
+        // uint256 gasLeft = gasleft();
+        // _populateDescriptorV2();
+        // console.log("Gas used: ", gasLeft - gasleft());
 
-        token = new SmolJoeToken(descriptor, seeder);
+        // token = new SmolJoes(descriptor, seeder);
 
-        uint256 tokenID = 2;
+        vm.createSelectFork(StdChains.getChain("avalanche_fuji").rpcUrl);
+
+        token = SmolJoes(0xaB3F542aEEf0D4e3c416d784b1b841Ed9A2ba1Ab);
+        uint256 tokenID = 1;
 
         token.mint(tokenID);
-        console.log(token.tokenURI(2));
+        vm.writeFile("./uri.txt", token.tokenURI(tokenID));
+        // console.log(token.tokenURI(2));
     }
 
     function _populateDescriptorV2() internal {

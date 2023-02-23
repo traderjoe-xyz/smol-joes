@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-/// @title The SmolJoeToken pseudo-random seed generator
+/// @title The SmolJoes pseudo-random seed generator
 
 pragma solidity ^0.8.6;
 

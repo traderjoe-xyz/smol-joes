@@ -7,10 +7,10 @@ pragma solidity ^0.8.6;
 import {Ownable} from "openzeppelin/access/Ownable.sol";
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
-import {ISmolJoeToken} from "./interfaces/ISmolJoeToken.sol";
+import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 import {ERC721} from "openzeppelin/token/ERC721/ERC721.sol";
 
-contract SmolJoeToken is ISmolJoeToken, Ownable, ERC721 {
+contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     // The Smol Joe token URI descriptor
     ISmolJoeDescriptorMinimal public descriptor;
 
@@ -35,7 +35,7 @@ contract SmolJoeToken is ISmolJoeToken, Ownable, ERC721 {
      * @dev See {IERC721Metadata-tokenURI}.
      */
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        require(_exists(tokenId), "SmolJoeToken: URI query for nonexistent token");
+        require(_exists(tokenId), "SmolJoes: URI query for nonexistent token");
         return descriptor.tokenURI(tokenId, seeds[tokenId]);
     }
 
@@ -44,7 +44,7 @@ contract SmolJoeToken is ISmolJoeToken, Ownable, ERC721 {
      * with the JSON contents directly inlined.
      */
     function dataURI(uint256 tokenId) public view returns (string memory) {
-        require(_exists(tokenId), "SmolJoeToken: URI query for nonexistent token");
+        require(_exists(tokenId), "SmolJoes: URI query for nonexistent token");
         return descriptor.dataURI(tokenId, seeds[tokenId]);
     }
 
