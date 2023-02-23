@@ -52,6 +52,7 @@ const config: HardhatUserConfig = {
         : [],
     },
   },
+  // @ts-ignore
   typechain: {
     outDir: "typechain",
     target: "ethers-v5",
@@ -69,10 +70,9 @@ const config: HardhatUserConfig = {
     sources: "./src", // Use ./src rather than ./contracts as Hardhat expects
     cache: "./cache_hardhat", // Use a different cache for Hardhat than Foundry
   },
-
   // This fully resolves paths for imports in the ./lib directory for Hardhat
   preprocess: {
-    eachLine: (hre) => ({
+    eachLine: () => ({
       transform: (line: string) => {
         if (line.match(/^\s*import /i)) {
           getRemappings().forEach(([find, replace]) => {

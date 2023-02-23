@@ -22,7 +22,7 @@ const saveToFileAbiEncoded = (
 };
 
 task(
-  "descriptor-art-to-console",
+  "make-descriptor-art",
   "Prints the descriptor art config in the final format, to be used in foundry / manual tests."
 )
   .addOptionalParam(

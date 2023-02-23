@@ -15,14 +15,12 @@
         "skipLibCheck": true,
     },
     "include": [
+        "./src",
+        "./lib",
         "./tasks",
-        "./typechain-types",
-        "./files/*.json"
-    ],
-    "files": [
-        "./hardhat.config.ts"
-    ],
-    "exclude": [
-        "**/dist"
+        "./deploy",
+        "./typechain",
+        "./files/*.json",
+        "./hardhat.config.ts",
     ]
 }
