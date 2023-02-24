@@ -14,15 +14,15 @@ interface ISmolJoeSeeder {
     }
 
     struct Seed {
-        uint48 background;
-        uint48 body;
-        uint48 pant;
-        uint48 shoe;
-        uint48 shirt;
-        uint48 beard;
-        uint48 head;
-        uint48 eye;
-        uint48 accessory;
+        uint16 background;
+        uint16 body;
+        uint16 pant;
+        uint16 shoe;
+        uint16 shirt;
+        uint16 beard;
+        uint16 head;
+        uint16 eye;
+        uint16 accessory;
     }
 
     function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor) external view returns (Seed memory);

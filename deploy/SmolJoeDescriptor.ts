@@ -12,18 +12,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     from: deployer,
     args: [ethers.constants.AddressZero, renderer],
     log: true,
-    autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
+    autoMine: true,
   });
 
-  if (hre.network.name !== "hardhat") {
-    try {
-      await run("verify:verify", {
-        address: deployResult.address,
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // if (hre.network.name !== "hardhat") {
+  //   try {
+  //     await run("verify:verify", {
+  //       address: deployResult.address,
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 };
 export default func;
 func.tags = ["SmolJoeDescriptor"];

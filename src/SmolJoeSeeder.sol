@@ -17,7 +17,7 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         override
         returns (Seed memory)
     {
-        uint256 pseudorandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
+        uint256 pseudoRandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
 
         uint256 backgroundCount = descriptor.backgroundCount();
         uint256 bodyCount = descriptor.bodyCount();
@@ -30,15 +30,15 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         uint256 accessoryCount = descriptor.accessoryCount();
 
         return Seed({
-            background: uint48(uint48(pseudorandomness) % backgroundCount),
-            body: uint48(uint48(pseudorandomness >> 48) % bodyCount),
-            pant: uint48(uint48(pseudorandomness >> 96) % pantCount),
-            shoe: uint48(uint48(pseudorandomness >> 144) % shoeCount),
-            shirt: uint48(uint48(pseudorandomness >> 192) % shirtCount),
-            beard: uint48(uint48(pseudorandomness >> 240) % beardCount),
-            head: uint48(uint48(pseudorandomness >> 288) % headCount),
-            eye: uint48(uint48(pseudorandomness >> 336) % eyeCount),
-            accessory: uint48(uint48(pseudorandomness >> 384) % accessoryCount)
+            background: uint16(uint16(pseudoRandomness) % backgroundCount),
+            body: uint16(uint16(pseudoRandomness >> 16) % bodyCount),
+            pant: uint16(uint16(pseudoRandomness >> 32) % pantCount),
+            shoe: uint16(uint16(pseudoRandomness >> 48) % shoeCount),
+            shirt: uint16(uint16(pseudoRandomness >> 64) % shirtCount),
+            beard: uint16(uint16(pseudoRandomness >> 80) % beardCount),
+            head: uint16(uint16(pseudoRandomness >> 96) % headCount),
+            eye: uint16(uint16(pseudoRandomness >> 112) % eyeCount),
+            accessory: uint16(uint16(pseudoRandomness >> 128) % accessoryCount)
         });
     }
 }
