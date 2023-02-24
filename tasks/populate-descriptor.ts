@@ -29,56 +29,78 @@ task(
     accessories.map(({ data }) => data)
   );
 
-  await descriptor.addManyBackgrounds(bgcolors);
-  await descriptor.setPalette(0, `0x000000${palette.join("")}`);
+  const txBackgrounds = await descriptor.addManyBackgrounds(bgcolors);
+  await txBackgrounds.wait();
 
-  await descriptor.addBodies(
+  const txPalette = await descriptor.setPalette(
+    0,
+    `0x000000${palette.join("")}`
+  );
+  await txPalette.wait();
+
+  const txBodies = await descriptor.addBodies(
     bodiesPage.encodedCompressed,
     bodiesPage.originalLength,
     bodiesPage.itemCount
   );
+  await txBodies.wait();
 
-  await descriptor.addPants(
+  const txPants = await descriptor.addPants(
     pantsPage.encodedCompressed,
     pantsPage.originalLength,
     pantsPage.itemCount
   );
+  await txPants.wait();
 
-  await descriptor.addShoes(
+  const txShoes = await descriptor.addShoes(
     shoesPage.encodedCompressed,
     shoesPage.originalLength,
     shoesPage.itemCount
   );
+  await txShoes.wait();
 
-  await descriptor.addShirts(
+  const txShirts = await descriptor.addShirts(
     shirtsPage.encodedCompressed,
     shirtsPage.originalLength,
     shirtsPage.itemCount
   );
+  await txShirts.wait();
 
-  await descriptor.addBeards(
+  const txBeards = await descriptor.addBeards(
     beardsPage.encodedCompressed,
     beardsPage.originalLength,
     beardsPage.itemCount
   );
+  await txBeards.wait();
 
-  await descriptor.addHeads(
+  const txHeads = await descriptor.addHeads(
     headsPage.encodedCompressed,
     headsPage.originalLength,
     headsPage.itemCount
   );
+  await txHeads.wait();
 
-  await descriptor.addEyes(
+  const txEyes = await descriptor.addEyes(
     eyesPage.encodedCompressed,
     eyesPage.originalLength,
     eyesPage.itemCount
   );
+  await txEyes.wait();
 
-  await descriptor.addAccessories(
+  const txAccessories = await descriptor.addAccessories(
     accessoriesPage.encodedCompressed,
     accessoriesPage.originalLength,
     accessoriesPage.itemCount
   );
+  await txAccessories.wait();
 
-  console.log("Descriptor populated with palettes and parts.");
+  console.log("Backgrounds added: ", await descriptor.backgroundCount());
+  console.log("Bodies added: ", await descriptor.bodyCount());
+  console.log("Pants added: ", await descriptor.pantCount());
+  console.log("Shoes added: ", await descriptor.shoeCount());
+  console.log("Shirts added: ", await descriptor.shirtCount());
+  console.log("Beards added: ", await descriptor.beardCount());
+  console.log("Heads added: ", await descriptor.headCount());
+  console.log("Eyes added: ", await descriptor.eyeCount());
+  console.log("Accessories added: ", await descriptor.accessoryCount());
 });
