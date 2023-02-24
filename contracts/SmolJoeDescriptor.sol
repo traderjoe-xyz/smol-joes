@@ -5,8 +5,8 @@
 
 pragma solidity ^0.8.6;
 
-import {Ownable} from "openzeppelin/access/Ownable.sol";
-import {Strings} from "openzeppelin/utils/Strings.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {ISmolJoeDescriptor} from "./interfaces/ISmolJoeDescriptor.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {NFTDescriptor} from "./libs/NFTDescriptor.sol";

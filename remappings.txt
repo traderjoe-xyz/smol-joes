@@ -1,5 +1,2 @@
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
-openzeppelin/=lib/openzeppelin-contracts/contracts/
-base64-sol/=lib/base64/
-solady/=lib/solady/src/

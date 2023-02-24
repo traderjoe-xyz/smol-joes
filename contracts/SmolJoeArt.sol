@@ -6,7 +6,7 @@
 pragma solidity ^0.8.6;
 
 import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
-import {SSTORE2} from "solady/utils/SSTORE2.sol";
+import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
 import {IInflator} from "./interfaces/IInflator.sol";
 
 contract SmolJoeArt is ISmolJoeArt {

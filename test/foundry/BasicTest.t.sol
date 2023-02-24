@@ -4,12 +4,12 @@ pragma solidity ^0.8.6;
 
 import "forge-std/Test.sol";
 
-import {SmolJoes} from "src/SmolJoes.sol";
-import {ISmolJoeDescriptor, SmolJoeDescriptor} from "src/SmolJoeDescriptor.sol";
-import {SmolJoeSeeder} from "src/SmolJoeSeeder.sol";
-import {SVGRenderer} from "src/SVGRenderer.sol";
-import {ISmolJoeArt, SmolJoeArt} from "src/SmolJoeArt.sol";
-import {Inflator} from "src/Inflator.sol";
+import {SmolJoes} from "contracts/SmolJoes.sol";
+import {ISmolJoeDescriptor, SmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
+import {SmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
+import {SVGRenderer} from "contracts/SVGRenderer.sol";
+import {ISmolJoeArt, SmolJoeArt} from "contracts/SmolJoeArt.sol";
+import {Inflator} from "contracts/Inflator.sol";
 
 contract BasicTest is Test {
     SmolJoes token;

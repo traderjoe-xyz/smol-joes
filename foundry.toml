@@ -1,8 +1,10 @@
 [profile.default]
-src = 'src'
+src = 'contracts'
 out = 'out'
-libs = ['lib']
-solc_version = '0.8.17'
+libs = ['node_modules', 'lib']
+test = 'test/foundry'
+cache_path  = 'forge-cache'
+solc = '0.8.17'
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
 fs_permissions = [{ access = "read-write", path = "./"}]

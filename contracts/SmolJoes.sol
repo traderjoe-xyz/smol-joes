@@ -4,11 +4,12 @@
 
 pragma solidity ^0.8.6;
 
-import {Ownable} from "openzeppelin/access/Ownable.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
-import {ERC721} from "openzeppelin/token/ERC721/ERC721.sol";
 
 contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     // The Smol Joe token URI descriptor
