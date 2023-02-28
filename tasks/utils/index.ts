@@ -1,12 +1,18 @@
 import { ethers } from "ethers";
 import { deflateRawSync } from "zlib";
 
-export function dataToDescriptorInput(data: string[]): {
+export function dataToDescriptorInput(
+  data: string[],
+  traitNames: string[]
+): {
   encodedCompressed: string;
   originalLength: number;
   itemCount: number;
 } {
-  const abiEncoded = ethers.utils.defaultAbiCoder.encode(["bytes[]"], [data]);
+  const abiEncoded = ethers.utils.defaultAbiCoder.encode(
+    ["bytes[]", "string[]"],
+    [data, traitNames]
+  );
   const encodedCompressed = `0x${deflateRawSync(
     Buffer.from(abiEncoded.substring(2), "hex")
   ).toString("hex")}`;

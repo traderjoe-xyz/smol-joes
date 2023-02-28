@@ -394,49 +394,49 @@ contract SmolJoeArt is ISmolJoeArt {
     /**
      * @notice Get a background image bytes (RLE-encoded).
      */
-    function backgrounds(uint256 index) public view override returns (bytes memory) {
+    function backgrounds(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(backgroundsTrait, index);
     }
 
     /**
      * @notice Get a body image bytes (RLE-encoded).
      */
-    function bodies(uint256 index) public view override returns (bytes memory) {
+    function bodies(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(bodiesTrait, index);
     }
 
     /**
      * @notice Get a pants image bytes (RLE-encoded).
      */
-    function pants(uint256 index) public view override returns (bytes memory) {
+    function pants(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(pantsTrait, index);
     }
 
     /**
      * @notice Get a shoes image bytes (RLE-encoded).
      */
-    function shoes(uint256 index) public view override returns (bytes memory) {
+    function shoes(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(shoesTrait, index);
     }
 
     /**
      * @notice Get a shirt image bytes (RLE-encoded).
      */
-    function shirts(uint256 index) public view override returns (bytes memory) {
+    function shirts(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(shirtsTrait, index);
     }
 
     /**
      * @notice Get a beard image bytes (RLE-encoded).
      */
-    function beards(uint256 index) public view override returns (bytes memory) {
+    function beards(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(beardsTrait, index);
     }
 
     /**
      * @notice Get a head image bytes (RLE-encoded).
      */
-    function heads(uint256 index) public view override returns (bytes memory) {
+    function heads(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(headsTrait, index);
     }
 
@@ -444,7 +444,7 @@ contract SmolJoeArt is ISmolJoeArt {
      * @notice Get a eyes image bytes (RLE-encoded).
      */
 
-    function eyes(uint256 index) public view override returns (bytes memory) {
+    function eyes(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(eyesTraits, index);
     }
 
@@ -452,7 +452,7 @@ contract SmolJoeArt is ISmolJoeArt {
      * @notice Get a accessories image bytes (RLE-encoded).
      */
 
-    function accessories(uint256 index) public view override returns (bytes memory) {
+    function accessories(uint256 index) public view override returns (bytes memory, string memory) {
         return imageByIndex(accessoriesTraits, index);
     }
 
@@ -493,10 +493,15 @@ contract SmolJoeArt is ISmolJoeArt {
         trait.storedImagesCount += imageCount;
     }
 
-    function imageByIndex(ISmolJoeArt.Trait storage trait, uint256 index) internal view returns (bytes memory) {
+    function imageByIndex(ISmolJoeArt.Trait storage trait, uint256 index)
+        internal
+        view
+        returns (bytes memory, string memory)
+    {
         (ISmolJoeArt.SmolJoeArtStoragePage storage page, uint256 indexInPage) = getPage(trait.storagePages, index);
-        bytes[] memory decompressedImages = decompressAndDecode(page);
-        return decompressedImages[indexInPage];
+        (bytes[] memory decompressedImages, string[] memory imagesNames) = decompressAndDecode(page);
+
+        return (decompressedImages[indexInPage], imagesNames[indexInPage]);
     }
 
     /**
@@ -530,10 +535,10 @@ contract SmolJoeArt is ISmolJoeArt {
     function decompressAndDecode(ISmolJoeArt.SmolJoeArtStoragePage storage page)
         internal
         view
-        returns (bytes[] memory)
+        returns (bytes[] memory, string[] memory)
     {
         bytes memory compressedData = SSTORE2.read(page.pointer);
         (, bytes memory decompressedData) = inflator.puff(compressedData, page.decompressedLength);
-        return abi.decode(decompressedData, (bytes[]));
+        return abi.decode(decompressedData, (bytes[], string[]));
     }
 }

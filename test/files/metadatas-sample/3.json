@@ -1,0 +1,43 @@
+{
+    "name": "Smol Joe 3",
+    "description": "This is a empty description",
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "Beige"
+        },
+        {
+            "trait_type": "Body",
+            "value": "white_skin"
+        },
+        {
+            "trait_type": "Pants",
+            "value": "mongol_pants"
+        },
+        {
+            "trait_type": "Shoes",
+            "value": "High_top_trainers"
+        },
+        {
+            "trait_type": "Shirt",
+            "value": "Basketball_vest_orange"
+        },
+        {
+            "trait_type": "Beard",
+            "value": "black_beard"
+        },
+        {
+            "trait_type": "Head",
+            "value": "Mongol_hat"
+        },
+        {
+            "trait_type": "Eye",
+            "value": "Basketball_goggles"
+        },
+        {
+            "trait_type": "Accesory",
+            "value": "00_empty_accessories"
+        }
+    ],
+    "image": "..."
+}

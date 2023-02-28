@@ -1,0 +1,43 @@
+{
+    "name": "Smol Joe 5",
+    "description": "This is a empty description",
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "light_green_water"
+        },
+        {
+            "trait_type": "Body",
+            "value": "white_skin"
+        },
+        {
+            "trait_type": "Pants",
+            "value": "mongol_pants"
+        },
+        {
+            "trait_type": "Shoes",
+            "value": "High_top_trainers"
+        },
+        {
+            "trait_type": "Shirt",
+            "value": "Mongol_shirt"
+        },
+        {
+            "trait_type": "Beard",
+            "value": "White_beard"
+        },
+        {
+            "trait_type": "Head",
+            "value": "00_empty_heads"
+        },
+        {
+            "trait_type": "Eye",
+            "value": "Basketball_goggles"
+        },
+        {
+            "trait_type": "Accesory",
+            "value": "Basketball_on_fire"
+        }
+    ],
+    "image": "..."
+}

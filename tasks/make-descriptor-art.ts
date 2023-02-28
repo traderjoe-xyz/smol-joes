@@ -71,17 +71,40 @@ task(
     }
 
     const backgroundsPage = dataToDescriptorInput(
-      backgrounds.map(({ data }) => data)
+      backgrounds.map(({ data }) => data),
+      backgrounds.map(({ filename }) => filename)
     );
-    const bodiesPage = dataToDescriptorInput(bodies.map(({ data }) => data));
-    const pantsPage = dataToDescriptorInput(pants.map(({ data }) => data));
-    const shoesPage = dataToDescriptorInput(shoes.map(({ data }) => data));
-    const shirtsPage = dataToDescriptorInput(shirts.map(({ data }) => data));
-    const beardsPage = dataToDescriptorInput(beards.map(({ data }) => data));
-    const headsPage = dataToDescriptorInput(heads.map(({ data }) => data));
-    const eyesPage = dataToDescriptorInput(eyes.map(({ data }) => data));
+    const bodiesPage = dataToDescriptorInput(
+      bodies.map(({ data }) => data),
+      bodies.map(({ filename }) => filename)
+    );
+    const pantsPage = dataToDescriptorInput(
+      pants.map(({ data }) => data),
+      pants.map(({ filename }) => filename)
+    );
+    const shoesPage = dataToDescriptorInput(
+      shoes.map(({ data }) => data),
+      shoes.map(({ filename }) => filename)
+    );
+    const shirtsPage = dataToDescriptorInput(
+      shirts.map(({ data }) => data),
+      shirts.map(({ filename }) => filename)
+    );
+    const beardsPage = dataToDescriptorInput(
+      beards.map(({ data }) => data),
+      beards.map(({ filename }) => filename)
+    );
+    const headsPage = dataToDescriptorInput(
+      heads.map(({ data }) => data),
+      heads.map(({ filename }) => filename)
+    );
+    const eyesPage = dataToDescriptorInput(
+      eyes.map(({ data }) => data),
+      eyes.map(({ filename }) => filename)
+    );
     const accessoriesPage = dataToDescriptorInput(
-      accessories.map(({ data }) => data)
+      accessories.map(({ data }) => data),
+      accessories.map(({ filename }) => filename)
     );
 
     const paletteValue = `0x000000${palette.join("")}`;

@@ -30,23 +30,23 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
-    function backgrounds(uint256 index) external view returns (bytes memory);
+    function backgrounds(uint256 index) external view returns (bytes memory, string memory);
 
-    function bodies(uint256 index) external view returns (bytes memory);
+    function bodies(uint256 index) external view returns (bytes memory, string memory);
 
-    function pants(uint256 index) external view returns (bytes memory);
+    function pants(uint256 index) external view returns (bytes memory, string memory);
 
-    function shoes(uint256 index) external view returns (bytes memory);
+    function shoes(uint256 index) external view returns (bytes memory, string memory);
 
-    function shirts(uint256 index) external view returns (bytes memory);
+    function shirts(uint256 index) external view returns (bytes memory, string memory);
 
-    function beards(uint256 index) external view returns (bytes memory);
+    function beards(uint256 index) external view returns (bytes memory, string memory);
 
-    function heads(uint256 index) external view returns (bytes memory);
+    function heads(uint256 index) external view returns (bytes memory, string memory);
 
-    function eyes(uint256 index) external view returns (bytes memory);
+    function eyes(uint256 index) external view returns (bytes memory, string memory);
 
-    function accessories(uint256 index) external view returns (bytes memory);
+    function accessories(uint256 index) external view returns (bytes memory, string memory);
 
     function backgroundCount() external view override returns (uint256);
 

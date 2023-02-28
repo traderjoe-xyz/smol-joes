@@ -50,7 +50,9 @@ library NFTDescriptor {
                             params.name,
                             '", "description":"',
                             params.description,
-                            '", "image": "',
+                            '", "attributes":',
+                            generateTraitData(params.parts),
+                            ', "image": "',
                             "data:image/svg+xml;base64,",
                             image,
                             '"}'
@@ -70,5 +72,28 @@ library NFTDescriptor {
         returns (string memory svg)
     {
         return Base64.encode(bytes(renderer.generateSVG(params)));
+    }
+
+    /**
+     * @notice Generate the trait data for an ERC721 token.
+     */
+    function generateTraitData(ISVGRenderer.Part[] memory parts) internal pure returns (string memory traitData) {
+        string[9] memory traitNames =
+            ["Background", "Body", "Pants", "Shoes", "Shirt", "Beard", "Head", "Eye", "Accesory"];
+
+        traitData = string(abi.encodePacked("["));
+        for (uint256 i = 0; i < parts.length; i++) {
+            traitData = string(
+                abi.encodePacked(traitData, '{"trait_type":"', traitNames[i], '","value":"', parts[i].name, '"}')
+            );
+
+            if (i < parts.length - 1) {
+                traitData = string(abi.encodePacked(traitData, ","));
+            }
+        }
+
+        traitData = string(abi.encodePacked(traitData, "]"));
+
+        return traitData;
     }
 }

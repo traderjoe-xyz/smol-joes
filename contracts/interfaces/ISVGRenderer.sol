@@ -22,6 +22,7 @@ pragma solidity ^0.8.6;
 
 interface ISVGRenderer {
     struct Part {
+        string name;
         bytes image;
         bytes palette;
     }

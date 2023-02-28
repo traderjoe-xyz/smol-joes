@@ -1,0 +1,43 @@
+{
+    "name": "Smol Joe 7",
+    "description": "This is a empty description",
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "light_green_water"
+        },
+        {
+            "trait_type": "Body",
+            "value": "brown_skin"
+        },
+        {
+            "trait_type": "Pants",
+            "value": "white_pants"
+        },
+        {
+            "trait_type": "Shoes",
+            "value": "Mongol_shoes"
+        },
+        {
+            "trait_type": "Shirt",
+            "value": "Mongol_shirt"
+        },
+        {
+            "trait_type": "Beard",
+            "value": "White_beard"
+        },
+        {
+            "trait_type": "Head",
+            "value": "Mongol_hat"
+        },
+        {
+            "trait_type": "Eye",
+            "value": "00_empty_eyes"
+        },
+        {
+            "trait_type": "Accesory",
+            "value": "Cutlas"
+        }
+    ],
+    "image": "..."
+}

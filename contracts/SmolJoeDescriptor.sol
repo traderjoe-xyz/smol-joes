@@ -449,7 +449,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the background.
      * @return string the RLE-encoded bytes value of the background.
      */
-    function backgrounds(uint256 index) public view override returns (bytes memory) {
+    function backgrounds(uint256 index) public view override returns (bytes memory, string memory) {
         return art.backgrounds(index);
     }
 
@@ -458,7 +458,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the body.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function bodies(uint256 index) public view override returns (bytes memory) {
+    function bodies(uint256 index) public view override returns (bytes memory, string memory) {
         return art.bodies(index);
     }
 
@@ -467,7 +467,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the body.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function pants(uint256 index) public view override returns (bytes memory) {
+    function pants(uint256 index) public view override returns (bytes memory, string memory) {
         return art.pants(index);
     }
 
@@ -476,7 +476,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the eye.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function shoes(uint256 index) public view override returns (bytes memory) {
+    function shoes(uint256 index) public view override returns (bytes memory, string memory) {
         return art.shoes(index);
     }
 
@@ -485,7 +485,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the shirt.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function shirts(uint256 index) public view override returns (bytes memory) {
+    function shirts(uint256 index) public view override returns (bytes memory, string memory) {
         return art.shirts(index);
     }
 
@@ -494,7 +494,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the beard.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function beards(uint256 index) public view override returns (bytes memory) {
+    function beards(uint256 index) public view override returns (bytes memory, string memory) {
         return art.beards(index);
     }
 
@@ -503,7 +503,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the head.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function heads(uint256 index) public view override returns (bytes memory) {
+    function heads(uint256 index) public view override returns (bytes memory, string memory) {
         return art.heads(index);
     }
 
@@ -512,7 +512,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the eye.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function eyes(uint256 index) public view override returns (bytes memory) {
+    function eyes(uint256 index) public view override returns (bytes memory, string memory) {
         return art.eyes(index);
     }
 
@@ -521,7 +521,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @param index the index of the accessory.
      * @return bytes the RLE-encoded bytes of the image.
      */
-    function accessories(uint256 index) public view override returns (bytes memory) {
+    function accessories(uint256 index) public view override returns (bytes memory, string memory) {
         return art.accessories(index);
     }
 
@@ -611,26 +611,34 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Get all Smol Joe parts for the passed `seed`.
      */
     function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
-        bytes memory background = art.backgrounds(seed.background);
-        bytes memory body = art.bodies(seed.body);
-        bytes memory pant = art.pants(seed.pant);
-        bytes memory shoe = art.shoes(seed.shoe);
-        bytes memory shirt = art.shirts(seed.shirt);
-        bytes memory beard = art.beards(seed.beard);
-        bytes memory head = art.heads(seed.head);
-        bytes memory eye = art.eyes(seed.eye);
-        bytes memory accessory = art.accessories(seed.accessory);
-
         ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
-        parts[0] = ISVGRenderer.Part({image: background, palette: _getPalette(background)});
-        parts[1] = ISVGRenderer.Part({image: body, palette: _getPalette(body)});
-        parts[2] = ISVGRenderer.Part({image: pant, palette: _getPalette(pant)});
-        parts[3] = ISVGRenderer.Part({image: shoe, palette: _getPalette(shoe)});
-        parts[4] = ISVGRenderer.Part({image: shirt, palette: _getPalette(shirt)});
-        parts[5] = ISVGRenderer.Part({image: beard, palette: _getPalette(beard)});
-        parts[6] = ISVGRenderer.Part({image: head, palette: _getPalette(head)});
-        parts[7] = ISVGRenderer.Part({image: eye, palette: _getPalette(eye)});
-        parts[8] = ISVGRenderer.Part({image: accessory, palette: _getPalette(accessory)});
+
+        {
+            (bytes memory background, string memory backgroundTraitName) = art.backgrounds(seed.background);
+            (bytes memory body, string memory bodyTraitName) = art.bodies(seed.body);
+            (bytes memory pant, string memory pantTraitName) = art.pants(seed.pant);
+            (bytes memory shoe, string memory shoeTraitName) = art.shoes(seed.shoe);
+
+            parts[0] =
+                ISVGRenderer.Part({name: backgroundTraitName, image: background, palette: _getPalette(background)});
+            parts[1] = ISVGRenderer.Part({name: bodyTraitName, image: body, palette: _getPalette(body)});
+            parts[2] = ISVGRenderer.Part({name: pantTraitName, image: pant, palette: _getPalette(pant)});
+            parts[3] = ISVGRenderer.Part({name: shoeTraitName, image: shoe, palette: _getPalette(shoe)});
+        }
+
+        {
+            (bytes memory shirt, string memory shirtTraitName) = art.shirts(seed.shirt);
+            (bytes memory beard, string memory beardTraitName) = art.beards(seed.beard);
+            (bytes memory head, string memory headTraitName) = art.heads(seed.head);
+            (bytes memory eye, string memory eyeTraitName) = art.eyes(seed.eye);
+            (bytes memory accessory, string memory accessoryTraitName) = art.accessories(seed.accessory);
+
+            parts[4] = ISVGRenderer.Part({name: shirtTraitName, image: shirt, palette: _getPalette(shirt)});
+            parts[5] = ISVGRenderer.Part({name: beardTraitName, image: beard, palette: _getPalette(beard)});
+            parts[6] = ISVGRenderer.Part({name: headTraitName, image: head, palette: _getPalette(head)});
+            parts[7] = ISVGRenderer.Part({name: eyeTraitName, image: eye, palette: _getPalette(eye)});
+            parts[8] = ISVGRenderer.Part({name: accessoryTraitName, image: accessory, palette: _getPalette(accessory)});
+        }
         return parts;
     }
 
