@@ -25,5 +25,8 @@ interface ISmolJoeSeeder {
         uint16 accessory;
     }
 
-    function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor) external view returns (Seed memory);
+    function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor, SmolJoeCast upgradeType)
+        external
+        view
+        returns (Seed memory);
 }

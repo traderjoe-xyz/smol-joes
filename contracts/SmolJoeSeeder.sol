@@ -11,14 +11,15 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
     /**
      * @notice Generate a pseudo-random Smol Joe seed using the previous blockhash and noun ID.
      */
-    function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor)
+    function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor, SmolJoeCast upgradeType)
         external
         view
         override
         returns (Seed memory)
     {
-        uint256 pseudoRandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
+        upgradeType;
 
+        uint256 pseudoRandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
         uint256 backgroundCount = descriptor.backgroundCount();
         uint256 bodyCount = descriptor.bodyCount();
         uint256 pantCount = descriptor.pantCount();

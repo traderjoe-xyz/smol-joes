@@ -40,7 +40,7 @@ task(
   .addOptionalParam(
     "exportPath",
     "Where to save abi encoded files to be used in forge tests",
-    path.join(__dirname, "../test/files/")
+    path.join(__dirname, "../test/files/encoded-assets/")
   )
   .setAction(async ({ count, start, exportPath }, { ethers }) => {
     const { bgcolors, palette, images } = ImageData;

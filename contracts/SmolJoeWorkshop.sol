@@ -6,18 +6,11 @@ import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
+import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 
 /// @title The Smol Joe workshop contract, to buy and upgrade Smol Joes
 contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
-    enum UpgradeType {
-        SmolJoe,
-        UniqueSmolCreepWithPumpkin,
-        UniqueSmolCreep,
-        SmolCreepWithPumpkin,
-        SmolCreep
-    }
-
     struct MintPhase {
         uint256 id;
         uint256 startTime;
@@ -61,51 +54,35 @@ contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
         _refundIfOver(mintPrice * amount);
     }
 
-    function upgradeNFT(uint256 tokenId, UpgradeType upgradeType) external payable whenNotPaused {
-        if (upgradeType == UpgradeType.SmolJoe) {
-            _upgradeSmolJoe(tokenId);
-        } else if (upgradeType == UpgradeType.UniqueSmolCreepWithPumpkin) {
-            _upgradeUniqueSmolCreepWithPumpkin(tokenId);
-        } else if (upgradeType == UpgradeType.UniqueSmolCreep) {
-            _upgradeUniqueSmolCreep(tokenId);
-        } else if (upgradeType == UpgradeType.SmolCreepWithPumpkin) {
-            _upgradeSmolCreepWithPumpkin(tokenId);
-        } else if (upgradeType == UpgradeType.SmolCreep) {
-            _upgradeSmolCreep(tokenId);
-        } else {
-            revert SmolJoeWorkshop__InvalidUpgradeType();
-        }
-    }
-
-    function _upgradeSmolJoe(uint256 tokenId) internal {
+    function upgradeSmolJoe(uint256 tokenId) external whenNotPaused {
         smolJoes.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId);
+        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Special);
         _refundIfOver(specialUpgradePrice);
     }
 
-    function _upgradeUniqueSmolCreepWithPumpkin(uint256 tokenId) internal {
+    function upgradeUniqueSmolCreepWithPumpkin(uint256 tokenId, uint256 pumpkinTokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        beegPumpkins.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId);
+        beegPumpkins.transferFrom(msg.sender, BURN_ADDRESS, pumpkinTokenId);
+        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Unique);
         _refundIfOver(specialUpgradePrice);
     }
 
-    function _upgradeUniqueSmolCreep(uint256 tokenId) internal {
+    function upgradeUniqueSmolCreep(uint256 tokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId);
+        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Unique);
         _refundIfOver(specialUpgradePrice);
     }
 
-    function _upgradeSmolCreepWithPumpkin(uint256 tokenId) internal {
+    function upgradeSmolCreepWithPumpkin(uint256 tokenId, uint256 pumpkinTokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        smolPumpkins.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId);
+        smolPumpkins.transferFrom(msg.sender, BURN_ADDRESS, pumpkinTokenId);
+        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Common);
         _refundIfOver(uniqueUpgradePrice);
     }
 
-    function _upgradeSmolCreep(uint256 tokenId) internal {
+    function upgradeSmolCreep(uint256 tokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId);
+        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Common);
         _refundIfOver(uniqueUpgradePrice);
     }
 
@@ -116,6 +93,15 @@ contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
         specialUpgradePrice = newSpecialUpgradePrice;
         uniqueUpgradePrice = newUniqueUpgradePrice;
         commonUpgradePrice = newCommonUpgradePrice;
+    }
+
+    function withdrawAVAX(address to) external onlyOwner {
+        uint256 amount = address(this).balance;
+        (bool success,) = to.call{value: amount}("");
+
+        if (!success) {
+            revert SmolJoeWorkshop__TransferFailed();
+        }
     }
 
     function _refundIfOver(uint256 _price) internal {

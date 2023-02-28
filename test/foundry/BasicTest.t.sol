@@ -4,6 +4,8 @@ pragma solidity ^0.8.6;
 
 import "forge-std/Test.sol";
 
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+
 import {SmolJoes} from "contracts/SmolJoes.sol";
 import {ISmolJoeDescriptor, SmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
 import {SmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
@@ -12,6 +14,8 @@ import {ISmolJoeArt, SmolJoeArt} from "contracts/SmolJoeArt.sol";
 import {Inflator} from "contracts/Inflator.sol";
 
 contract BasicTest is Test {
+    using Strings for uint256;
+
     SmolJoes token;
     SmolJoeSeeder seeder;
     SmolJoeDescriptor descriptor;
@@ -34,55 +38,73 @@ contract BasicTest is Test {
         art = new SmolJoeArt(address(descriptor), inflator);
         descriptor.setArt(art);
 
+        // art.addEmptyItems("");
+
         uint256 gasLeft = gasleft();
         _populateDescriptorV2();
         console.log("Gas used: ", gasLeft - gasleft());
 
         token = new SmolJoes(descriptor, seeder);
 
-        uint256 tokenID = 2;
+        string[] memory inputs = new string[](5);
+        inputs[0] = "yarn";
+        inputs[1] = "hardhat";
+        inputs[2] = "render-images";
+        inputs[3] = "--token-id";
 
-        token.mint(address(1), tokenID);
-        vm.writeFile("./uri.txt", token.tokenURI(tokenID));
+        for (uint256 i = 0; i < 10; i++) {
+            token.mint(address(1), i);
+            vm.writeFile(
+                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+            );
+
+            inputs[4] = i.toString();
+            vm.ffi(inputs);
+        }
     }
 
     function _populateDescriptorV2() internal {
         // created with `npx hardhat descriptor-art-to-console`
-        (bytes memory palette, string[] memory backgrounds) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/paletteAndBackgrounds.abi")), (bytes, string[]));
+        (bytes memory palette, string[] memory backgrounds) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/paletteAndBackgrounds.abi")), (bytes, string[])
+        );
         descriptor.setPalette(0, palette);
         descriptor.addManyBackgrounds(backgrounds);
 
-        (bytes memory bodies, uint80 bodiesLength, uint16 bodiesCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/bodiesPage.abi")), (bytes, uint80, uint16));
+        (bytes memory bodies, uint80 bodiesLength, uint16 bodiesCount) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/bodiesPage.abi")), (bytes, uint80, uint16)
+        );
         descriptor.addBodies(bodies, bodiesLength, bodiesCount);
 
         (bytes memory pants, uint80 pantsLength, uint16 pantsCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/pantsPage.abi")), (bytes, uint80, uint16));
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/pantsPage.abi")), (bytes, uint80, uint16));
         descriptor.addPants(pants, pantsLength, pantsCount);
 
         (bytes memory shoes, uint80 shoesLength, uint16 shoesCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/shoesPage.abi")), (bytes, uint80, uint16));
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/shoesPage.abi")), (bytes, uint80, uint16));
         descriptor.addShoes(shoes, shoesLength, shoesCount);
 
-        (bytes memory shirts, uint80 shirtsLength, uint16 shirtsCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/shirtsPage.abi")), (bytes, uint80, uint16));
+        (bytes memory shirts, uint80 shirtsLength, uint16 shirtsCount) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/shirtsPage.abi")), (bytes, uint80, uint16)
+        );
         descriptor.addShirts(shirts, shirtsLength, shirtsCount);
 
-        (bytes memory beards, uint80 beardsLength, uint16 beardsCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/beardsPage.abi")), (bytes, uint80, uint16));
+        (bytes memory beards, uint80 beardsLength, uint16 beardsCount) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/beardsPage.abi")), (bytes, uint80, uint16)
+        );
         descriptor.addBeards(beards, beardsLength, beardsCount);
 
         (bytes memory heads, uint80 headsLength, uint16 headsCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/headsPage.abi")), (bytes, uint80, uint16));
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/headsPage.abi")), (bytes, uint80, uint16));
         descriptor.addHeads(heads, headsLength, headsCount);
 
         (bytes memory eyes, uint80 eyesLength, uint16 eyesCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/eyesPage.abi")), (bytes, uint80, uint16));
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/eyesPage.abi")), (bytes, uint80, uint16));
         descriptor.addEyes(eyes, eyesLength, eyesCount);
 
-        (bytes memory accessories, uint80 accessoriesLength, uint16 accessoriesCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/accessoriesPage.abi")), (bytes, uint80, uint16));
+        (bytes memory accessories, uint80 accessoriesLength, uint16 accessoriesCount) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/accessoriesPage.abi")), (bytes, uint80, uint16)
+        );
         descriptor.addAccessories(accessories, accessoriesLength, accessoriesCount);
     }
 }

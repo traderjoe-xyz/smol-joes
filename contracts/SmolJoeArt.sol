@@ -40,6 +40,8 @@ contract SmolJoeArt is ISmolJoeArt {
 
     Trait public accessoriesTraits;
 
+    bytes constant emptyItem = "\x00\x00\x00\x00\x00";
+
     /**
      * @notice Require that the sender is the descriptor.
      */
@@ -175,7 +177,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(bodiesTrait, encodedCompressed, decompressedLength, imageCount);
+        _addPage(bodiesTrait, encodedCompressed, decompressedLength, imageCount);
 
         emit BodiesAdded(imageCount);
     }
@@ -185,7 +187,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(pantsTrait, encodedCompressed, decompressedLength, imageCount);
+        _addPage(pantsTrait, encodedCompressed, decompressedLength, imageCount);
 
         // emit PantsAdded(imageCount);
     }
@@ -195,7 +197,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(shoesTrait, encodedCompressed, decompressedLength, imageCount);
+        _addPage(shoesTrait, encodedCompressed, decompressedLength, imageCount);
 
         // emit ShoesAdded(imageCount);
     }
@@ -205,7 +207,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(shirtsTrait, encodedCompressed, decompressedLength, imageCount);
+        _addPage(shirtsTrait, encodedCompressed, decompressedLength, imageCount);
 
         // emit ShirtsAdded(imageCount);
     }
@@ -215,7 +217,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(beardsTrait, encodedCompressed, decompressedLength, imageCount);
+        _addPage(beardsTrait, encodedCompressed, decompressedLength, imageCount);
 
         // emit BeardsAdded(imageCount);
     }
@@ -233,7 +235,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(headsTrait, encodedCompressed, decompressedLength, imageCount);
+        _addPage(headsTrait, encodedCompressed, decompressedLength, imageCount);
 
         emit HeadsAdded(imageCount);
     }
@@ -243,7 +245,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(eyesTraits, encodedCompressed, decompressedLength, imageCount);
+        _addPage(eyesTraits, encodedCompressed, decompressedLength, imageCount);
 
         // emit EyesAdded(imageCount);
     }
@@ -253,7 +255,7 @@ contract SmolJoeArt is ISmolJoeArt {
         override
         onlyDescriptor
     {
-        addPage(accessoriesTraits, encodedCompressed, decompressedLength, imageCount);
+        _addPage(accessoriesTraits, encodedCompressed, decompressedLength, imageCount);
 
         // emit AccessoriesAdded(imageCount);
     }
@@ -451,7 +453,7 @@ contract SmolJoeArt is ISmolJoeArt {
         backgrounds.push(_background);
     }
 
-    function addPage(
+    function _addPage(
         Trait storage trait,
         bytes calldata encodedCompressed,
         uint80 decompressedLength,

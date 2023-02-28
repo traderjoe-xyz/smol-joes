@@ -9,6 +9,7 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
+import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 
 contract SmolJoes is ISmolJoes, Ownable, ERC721 {
@@ -27,12 +28,16 @@ contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     }
 
     function mint(address to, uint256 amount) public {
-        seeds[amount] = seeder.generateSeed(amount, descriptor);
+        seeds[amount] = seeder.generateSeed(amount, descriptor, ISmolJoeSeeder.SmolJoeCast.Common);
         _mint(to, amount);
     }
 
-    function mintSpecial(address to, uint256 tokenID) public override onlyOwner {
-        seeds[tokenID] = seeder.generateSeed(tokenID, descriptor);
+    function mintSpecial(address to, uint256 tokenID, ISmolJoeSeeder.SmolJoeCast upgradeType)
+        public
+        override
+        onlyOwner
+    {
+        seeds[tokenID] = seeder.generateSeed(tokenID, descriptor, upgradeType);
         _mint(to, tokenID);
     }
 
