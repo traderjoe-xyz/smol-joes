@@ -16,11 +16,10 @@ contract SmolJoeArt is ISmolJoeArt {
     /// @notice Current inflator address
     IInflator public override inflator;
 
-    /// @notice Smol Joe Backgrounds (Hex Colors)
-    string[] public override backgrounds;
-
     /// @notice Smol Joe Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
     mapping(uint8 => address) public palettesPointers;
+
+    Trait public backgroundsTrait;
 
     /// @notice Smol Joe Bodies Trait
     Trait public bodiesTrait;
@@ -79,6 +78,10 @@ contract SmolJoeArt is ISmolJoeArt {
         emit InflatorUpdated(oldInflator, address(_inflator));
     }
 
+    function getBackgroundsTrait() external view override returns (Trait memory) {
+        return backgroundsTrait;
+    }
+
     /**
      * @notice Get the Trait struct for bodies.
      * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
@@ -124,28 +127,6 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Batch add Smol Joe backgrounds.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addManyBackgrounds(string[] calldata _backgrounds) external override onlyDescriptor {
-        for (uint256 i = 0; i < _backgrounds.length; i++) {
-            _addBackground(_backgrounds[i]);
-        }
-
-        emit BackgroundsAdded(_backgrounds.length);
-    }
-
-    /**
-     * @notice Add a Smol Joe background.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addBackground(string calldata _background) external override onlyDescriptor {
-        _addBackground(_background);
-
-        emit BackgroundsAdded(1);
-    }
-
-    /**
      * @notice Update a single color palette. This function can be used to
      * add a new color palette or update an existing palette.
      * @param paletteIndex the identifier of this palette
@@ -162,6 +143,24 @@ contract SmolJoeArt is ISmolJoeArt {
         palettesPointers[paletteIndex] = SSTORE2.write(palette);
 
         emit PaletteSet(paletteIndex);
+    }
+
+    /**
+     * @notice Add a batch of background images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the descriptor.
+     */
+    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        _addPage(backgroundsTrait, encodedCompressed, decompressedLength, imageCount);
+
+        emit BackgroundsAdded(imageCount);
     }
 
     /**
@@ -276,6 +275,25 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
+     * @notice Add a batch of background images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the descriptor.
+     */
+    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyDescriptor
+    {
+        addPage(backgroundsTrait, pointer, decompressedLength, imageCount);
+
+        emit BackgroundsAdded(imageCount);
+    }
+
+    /**
      * @notice Add a batch of body images from an existing storage contract.
      * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
      * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
@@ -374,15 +392,15 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Get the number of available Smol Joe `backgrounds`.
+     * @notice Get a background image bytes (RLE-encoded).
      */
-    function backgroundsCount() public view override returns (uint256) {
-        return backgrounds.length;
+    function backgrounds(uint256 index) public view override returns (bytes memory) {
+        return imageByIndex(backgroundsTrait, index);
     }
+
     /**
      * @notice Get a body image bytes (RLE-encoded).
      */
-
     function bodies(uint256 index) public view override returns (bytes memory) {
         return imageByIndex(bodiesTrait, index);
     }
@@ -447,10 +465,6 @@ contract SmolJoeArt is ISmolJoeArt {
             revert PaletteNotFound();
         }
         return SSTORE2.read(palettesPointers[paletteIndex]);
-    }
-
-    function _addBackground(string calldata _background) internal {
-        backgrounds.push(_background);
     }
 
     function _addPage(

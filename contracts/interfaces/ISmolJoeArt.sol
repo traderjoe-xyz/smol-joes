@@ -55,13 +55,11 @@ interface ISmolJoeArt {
 
     function setInflator(IInflator inflator) external;
 
-    function addManyBackgrounds(string[] calldata _backgrounds) external;
-
-    function addBackground(string calldata _background) external;
-
     function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
     function setPalette(uint8 paletteIndex, bytes calldata palette) external;
+
+    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
     function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
@@ -81,6 +79,8 @@ interface ISmolJoeArt {
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
+    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+
     function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 
     function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
@@ -97,9 +97,7 @@ interface ISmolJoeArt {
 
     function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 
-    function backgroundsCount() external view returns (uint256);
-
-    function backgrounds(uint256 index) external view returns (string memory);
+    function backgrounds(uint256 index) external view returns (bytes memory);
 
     function bodies(uint256 index) external view returns (bytes memory);
 
@@ -116,6 +114,8 @@ interface ISmolJoeArt {
     function eyes(uint256 index) external view returns (bytes memory);
 
     function accessories(uint256 index) external view returns (bytes memory);
+
+    function getBackgroundsTrait() external view returns (Trait memory);
 
     function getBodiesTrait() external view returns (Trait memory);
 

@@ -51,19 +51,6 @@ contract SVGRenderer is ISVGRenderer {
      * @notice Given RLE image data and color palette pointers, merge to generate a single SVG image.
      */
     function generateSVG(SVGParams calldata params) external pure override returns (string memory svg) {
-        if (bytes(params.background).length != 0) {
-            // prettier-ignore
-            return string(
-                abi.encodePacked(
-                    _SVG_START_TAG,
-                    '<rect width="100%" height="100%" fill="#',
-                    params.background,
-                    '" />',
-                    _generateSVGRects(params),
-                    _SVG_END_TAG
-                )
-            );
-        }
         return string(abi.encodePacked(_SVG_START_TAG, _generateSVGRects(params), _SVG_END_TAG));
     }
 
@@ -74,14 +61,14 @@ contract SVGRenderer is ISVGRenderer {
         Part[] memory parts = new Part[](1);
         parts[0] = part;
 
-        return _generateSVGRects(SVGParams({parts: parts, background: ""}));
+        return _generateSVGRects(SVGParams({parts: parts}));
     }
 
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a partial SVG image.
      */
     function generateSVGParts(Part[] calldata parts) external pure override returns (string memory partialSVG) {
-        return _generateSVGRects(SVGParams({parts: parts, background: ""}));
+        return _generateSVGRects(SVGParams({parts: parts}));
     }
 
     /**
@@ -89,7 +76,7 @@ contract SVGRenderer is ISVGRenderer {
      */
     function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
         // write every value from 0 to 900 with steps of 20 as strings
-        string[45] memory lookup = [
+        string[46] memory lookup = [
             "0",
             "20",
             "40",
@@ -134,7 +121,8 @@ contract SVGRenderer is ISVGRenderer {
             "820",
             "840",
             "860",
-            "880"
+            "880",
+            "900"
         ];
 
         string memory rects;

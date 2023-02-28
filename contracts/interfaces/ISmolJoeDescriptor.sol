@@ -30,7 +30,7 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
-    function backgrounds(uint256 index) external view returns (string memory);
+    function backgrounds(uint256 index) external view returns (bytes memory);
 
     function bodies(uint256 index) external view returns (bytes memory);
 
@@ -66,11 +66,9 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function accessoryCount() external view override returns (uint256);
 
-    function addManyBackgrounds(string[] calldata backgrounds) external;
-
-    function addBackground(string calldata background) external;
-
     function setPalette(uint8 paletteIndex, bytes calldata palette) external;
+
+    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
     function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
@@ -89,6 +87,8 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
     function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
+
+    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 
     function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
 

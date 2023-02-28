@@ -43,13 +43,23 @@ task(
     path.join(__dirname, "../test/files/encoded-assets/")
   )
   .setAction(async ({ count, start, exportPath }, { ethers }) => {
-    const { bgcolors, palette, images } = ImageData;
-    let { bodies, pants, shoes, shirts, beards, heads, eyes, accessories } =
-      images;
+    const { palette, images } = ImageData;
+    let {
+      backgrounds,
+      bodies,
+      pants,
+      shoes,
+      shirts,
+      beards,
+      heads,
+      eyes,
+      accessories,
+    } = images;
 
     if (count !== undefined) {
       start = start === undefined ? 0 : start;
 
+      backgrounds = backgrounds.slice(start, count + start);
       bodies = bodies.slice(start, count + start);
       pants = pants.slice(start, count + start);
       shoes = shoes.slice(start, count + start);
@@ -60,6 +70,9 @@ task(
       accessories = accessories.slice(start, count + start);
     }
 
+    const backgroundsPage = dataToDescriptorInput(
+      backgrounds.map(({ data }) => data)
+    );
     const bodiesPage = dataToDescriptorInput(bodies.map(({ data }) => data));
     const pantsPage = dataToDescriptorInput(pants.map(({ data }) => data));
     const shoesPage = dataToDescriptorInput(shoes.map(({ data }) => data));
@@ -74,15 +87,21 @@ task(
     const paletteValue = `0x000000${palette.join("")}`;
 
     writeFileSync(
-      path.join(exportPath, "paletteAndBackgrounds.abi"),
-      ethers.utils.defaultAbiCoder.encode(
-        ["bytes", "string[]"],
-        [paletteValue, bgcolors]
-      )
+      path.join(exportPath, "palette.abi"),
+      ethers.utils.defaultAbiCoder.encode(["bytes"], [paletteValue])
     );
 
     // console.log("=== PALETTE ===\n");
     // console.log(`paletteValue: '${paletteValue}'\n`);
+
+    console.log("=== BACKGROUNDS ===\n");
+    // console.log(`bodiesCompressed: '${bodiesPage.encodedCompressed}'\n`);
+    console.log(`backgroundsLength: ${backgroundsPage.originalLength}\n`);
+    console.log(`backgrounds count: ${backgroundsPage.itemCount}`);
+    saveToFileAbiEncoded(
+      path.join(exportPath, "backgroundsPage.abi"),
+      backgroundsPage
+    );
 
     console.log("=== BODIES ===\n");
     // console.log(`bodiesCompressed: '${bodiesPage.encodedCompressed}'\n`);

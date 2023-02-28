@@ -14,10 +14,22 @@ task(
     (await deployments.get("SmolJoeDescriptor")).address
   );
 
-  const { bgcolors, palette, images } = ImageData;
-  let { bodies, pants, shoes, shirts, beards, heads, eyes, accessories } =
-    images;
+  const { palette, images } = ImageData;
+  let {
+    backgrounds,
+    bodies,
+    pants,
+    shoes,
+    shirts,
+    beards,
+    heads,
+    eyes,
+    accessories,
+  } = images;
 
+  const backgroundsPage = dataToDescriptorInput(
+    backgrounds.map(({ data }) => data)
+  );
   const bodiesPage = dataToDescriptorInput(bodies.map(({ data }) => data));
   const pantsPage = dataToDescriptorInput(pants.map(({ data }) => data));
   const shoesPage = dataToDescriptorInput(shoes.map(({ data }) => data));
@@ -29,14 +41,18 @@ task(
     accessories.map(({ data }) => data)
   );
 
-  const txBackgrounds = await descriptor.addManyBackgrounds(bgcolors);
-  await txBackgrounds.wait();
-
   const txPalette = await descriptor.setPalette(
     0,
     `0x000000${palette.join("")}`
   );
   await txPalette.wait();
+
+  const txBackgrounds = await descriptor.addBackgrounds(
+    backgroundsPage.encodedCompressed,
+    backgroundsPage.originalLength,
+    backgroundsPage.itemCount
+  );
+  await txBackgrounds.wait();
 
   const txBodies = await descriptor.addBodies(
     bodiesPage.encodedCompressed,

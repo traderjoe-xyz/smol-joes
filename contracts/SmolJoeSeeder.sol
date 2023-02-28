@@ -32,7 +32,7 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
 
         return Seed({
             background: uint16(uint16(pseudoRandomness) % backgroundCount),
-            body: uint16(uint16(pseudoRandomness >> 16) % bodyCount),
+            body: uint16(uint16(pseudoRandomness >> 16) % (bodyCount - 1) + 1),
             pant: uint16(uint16(pseudoRandomness >> 32) % pantCount),
             shoe: uint16(uint16(pseudoRandomness >> 48) % shoeCount),
             shirt: uint16(uint16(pseudoRandomness >> 64) % shirtCount),

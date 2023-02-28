@@ -76,7 +76,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Get the number of available Smol Joe `backgrounds`.
      */
     function backgroundCount() external view override returns (uint256) {
-        return art.backgroundsCount();
+        return art.getBackgroundsTrait().storedImagesCount;
     }
 
     /**
@@ -124,22 +124,6 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
-     * @notice Batch add Smol Joe backgrounds.
-     * @dev This function can only be called by the owner.
-     */
-    function addManyBackgrounds(string[] calldata _backgrounds) external override onlyOwner {
-        art.addManyBackgrounds(_backgrounds);
-    }
-
-    /**
-     * @notice Add a Smol Joe background.
-     * @dev This function can only be called by the owner.
-     */
-    function addBackground(string calldata _background) external override onlyOwner {
-        art.addBackground(_background);
-    }
-
-    /**
      * @notice Update a single color palette. This function can be used to
      * add a new color palette or update an existing palette.
      * @param paletteIndex the identifier of this palette
@@ -148,6 +132,22 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      */
     function setPalette(uint8 paletteIndex, bytes calldata palette) external override onlyOwner {
         art.setPalette(paletteIndex, palette);
+    }
+
+    /**
+     * @notice Add a batch of background images.
+     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
+     * and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addBackgrounds(encodedCompressed, decompressedLength, imageCount);
     }
 
     /**
@@ -292,6 +292,23 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
+     * @notice Add a batch of background images from an existing storage contract.
+     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
+     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
+     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
+     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
+     * @param imageCount the number of images in this batch; used when searching for images among batches.
+     * @dev This function can only be called by the owner.
+     */
+    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+        external
+        override
+        onlyOwner
+    {
+        art.addBackgroundsFromPointer(pointer, decompressedLength, imageCount);
+    }
+
+    /**
      * @notice Add a batch of body images from an existing storage contract.
      * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
      * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
@@ -430,9 +447,9 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     /**
      * @notice Get a background color by ID.
      * @param index the index of the background.
-     * @return string the RGB hex value of the background.
+     * @return string the RLE-encoded bytes value of the background.
      */
-    function backgrounds(uint256 index) public view override returns (string memory) {
+    function backgrounds(uint256 index) public view override returns (bytes memory) {
         return art.backgrounds(index);
     }
 
@@ -577,12 +594,8 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         override
         returns (string memory)
     {
-        NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
-            name: name,
-            description: description,
-            parts: getPartsForSeed(seed),
-            background: art.backgrounds(seed.background)
-        });
+        NFTDescriptor.TokenURIParams memory params =
+            NFTDescriptor.TokenURIParams({name: name, description: description, parts: getPartsForSeed(seed)});
         return NFTDescriptor.constructTokenURI(renderer, params);
     }
 
@@ -590,8 +603,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
     function generateSVGImage(ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
-        ISVGRenderer.SVGParams memory params =
-            ISVGRenderer.SVGParams({parts: getPartsForSeed(seed), background: art.backgrounds(seed.background)});
+        ISVGRenderer.SVGParams memory params = ISVGRenderer.SVGParams({parts: getPartsForSeed(seed)});
         return NFTDescriptor.generateSVGImage(renderer, params);
     }
 
@@ -599,6 +611,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Get all Smol Joe parts for the passed `seed`.
      */
     function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
+        bytes memory background = art.backgrounds(seed.background);
         bytes memory body = art.bodies(seed.body);
         bytes memory pant = art.pants(seed.pant);
         bytes memory shoe = art.shoes(seed.shoe);
@@ -608,15 +621,16 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         bytes memory eye = art.eyes(seed.eye);
         bytes memory accessory = art.accessories(seed.accessory);
 
-        ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](8);
-        parts[0] = ISVGRenderer.Part({image: body, palette: _getPalette(body)});
-        parts[1] = ISVGRenderer.Part({image: pant, palette: _getPalette(pant)});
-        parts[2] = ISVGRenderer.Part({image: shoe, palette: _getPalette(shoe)});
-        parts[3] = ISVGRenderer.Part({image: shirt, palette: _getPalette(shirt)});
-        parts[4] = ISVGRenderer.Part({image: beard, palette: _getPalette(beard)});
-        parts[5] = ISVGRenderer.Part({image: head, palette: _getPalette(head)});
-        parts[6] = ISVGRenderer.Part({image: eye, palette: _getPalette(eye)});
-        parts[7] = ISVGRenderer.Part({image: accessory, palette: _getPalette(accessory)});
+        ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
+        parts[0] = ISVGRenderer.Part({image: background, palette: _getPalette(background)});
+        parts[1] = ISVGRenderer.Part({image: body, palette: _getPalette(body)});
+        parts[2] = ISVGRenderer.Part({image: pant, palette: _getPalette(pant)});
+        parts[3] = ISVGRenderer.Part({image: shoe, palette: _getPalette(shoe)});
+        parts[4] = ISVGRenderer.Part({image: shirt, palette: _getPalette(shirt)});
+        parts[5] = ISVGRenderer.Part({image: beard, palette: _getPalette(beard)});
+        parts[6] = ISVGRenderer.Part({image: head, palette: _getPalette(head)});
+        parts[7] = ISVGRenderer.Part({image: eye, palette: _getPalette(eye)});
+        parts[8] = ISVGRenderer.Part({image: accessory, palette: _getPalette(accessory)});
         return parts;
     }
 

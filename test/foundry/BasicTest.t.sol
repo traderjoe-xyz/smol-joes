@@ -64,12 +64,15 @@ contract BasicTest is Test {
     }
 
     function _populateDescriptorV2() internal {
-        // created with `npx hardhat descriptor-art-to-console`
-        (bytes memory palette, string[] memory backgrounds) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/paletteAndBackgrounds.abi")), (bytes, string[])
-        );
+        // created with `yarn hardhat make-descriptor-art`
+        (bytes memory palette) =
+            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/palette.abi")), (bytes));
         descriptor.setPalette(0, palette);
-        descriptor.addManyBackgrounds(backgrounds);
+
+        (bytes memory backgrounds, uint80 backgroundsLength, uint16 backgroundsCount) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/backgroundsPage.abi")), (bytes, uint80, uint16)
+        );
+        descriptor.addBackgrounds(backgrounds, backgroundsLength, backgroundsCount);
 
         (bytes memory bodies, uint80 bodiesLength, uint16 bodiesCount) = abi.decode(
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/bodiesPage.abi")), (bytes, uint80, uint16)

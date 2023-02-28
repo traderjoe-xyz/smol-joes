@@ -27,7 +27,6 @@ library NFTDescriptor {
     struct TokenURIParams {
         string name;
         string description;
-        string background;
         ISVGRenderer.Part[] parts;
     }
 
@@ -39,8 +38,7 @@ library NFTDescriptor {
         view
         returns (string memory)
     {
-        string memory image =
-            generateSVGImage(renderer, ISVGRenderer.SVGParams({parts: params.parts, background: params.background}));
+        string memory image = generateSVGImage(renderer, ISVGRenderer.SVGParams({parts: params.parts}));
 
         return string(
             abi.encodePacked(
