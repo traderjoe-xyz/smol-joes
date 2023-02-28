@@ -5,7 +5,7 @@
 pragma solidity ^0.8.6;
 
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
-import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
+import {ISmolJoeDescriptorMinimal, ISmolJoeArt} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 
 contract SmolJoeSeeder is ISmolJoeSeeder {
     /**
@@ -20,15 +20,15 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         upgradeType;
 
         uint256 pseudoRandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
-        uint256 backgroundCount = descriptor.backgroundCount();
-        uint256 bodyCount = descriptor.bodyCount();
-        uint256 pantCount = descriptor.pantCount();
-        uint256 shoeCount = descriptor.shoeCount();
-        uint256 shirtCount = descriptor.shirtCount();
-        uint256 beardCount = descriptor.beardCount();
-        uint256 headCount = descriptor.headCount();
-        uint256 eyeCount = descriptor.eyeCount();
-        uint256 accessoryCount = descriptor.accessoryCount();
+        uint256 backgroundCount = descriptor.traitCount(ISmolJoeArt.TraitType.Backgrounds);
+        uint256 bodyCount = descriptor.traitCount(ISmolJoeArt.TraitType.Bodies);
+        uint256 pantCount = descriptor.traitCount(ISmolJoeArt.TraitType.Pants);
+        uint256 shoeCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shoes);
+        uint256 shirtCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shirts);
+        uint256 beardCount = descriptor.traitCount(ISmolJoeArt.TraitType.Beards);
+        uint256 headCount = descriptor.traitCount(ISmolJoeArt.TraitType.Heads);
+        uint256 eyeCount = descriptor.traitCount(ISmolJoeArt.TraitType.Eyes);
+        uint256 accessoryCount = descriptor.traitCount(ISmolJoeArt.TraitType.Accessories);
 
         return Seed({
             background: uint16(uint16(pseudoRandomness) % backgroundCount),

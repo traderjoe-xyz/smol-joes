@@ -5,6 +5,7 @@
 pragma solidity ^0.8.6;
 
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
+import {ISmolJoeArt} from "./ISmolJoeArt.sol";
 
 interface ISmolJoeDescriptorMinimal {
     ///
@@ -19,21 +20,5 @@ interface ISmolJoeDescriptorMinimal {
     /// USED BY SEEDER
     ///
 
-    function backgroundCount() external view returns (uint256);
-
-    function bodyCount() external view returns (uint256);
-
-    function pantCount() external view returns (uint256);
-
-    function shoeCount() external view returns (uint256);
-
-    function shirtCount() external view returns (uint256);
-
-    function beardCount() external view returns (uint256);
-
-    function headCount() external view returns (uint256);
-
-    function eyeCount() external view returns (uint256);
-
-    function accessoryCount() external view returns (uint256);
+    function traitCount(ISmolJoeArt.TraitType traitType) external view returns (uint256);
 }

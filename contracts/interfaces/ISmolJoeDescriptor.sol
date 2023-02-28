@@ -48,63 +48,25 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function accessories(uint256 index) external view returns (bytes memory, string memory);
 
-    function backgroundCount() external view override returns (uint256);
-
-    function bodyCount() external view override returns (uint256);
-
-    function pantCount() external view override returns (uint256);
-
-    function shoeCount() external view override returns (uint256);
-
-    function shirtCount() external view override returns (uint256);
-
-    function beardCount() external view override returns (uint256);
-
-    function headCount() external view override returns (uint256);
-
-    function eyeCount() external view override returns (uint256);
-
-    function accessoryCount() external view override returns (uint256);
+    function traitCount(ISmolJoeArt.TraitType traitType) external view returns (uint256);
 
     function setPalette(uint8 paletteIndex, bytes calldata palette) external;
 
-    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addPants(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShoes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShirts(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBeards(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addHeads(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addEyes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
+    function addTraits(
+        ISmolJoeArt.TraitType traitType,
+        bytes calldata encodedCompressed,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external;
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
-    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShoesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShirtsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBeardsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addHeadsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addEyesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+    function addTraitsFromPointer(
+        ISmolJoeArt.TraitType traitType,
+        address pointer,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external;
 
     function toggleDataURIEnabled() external;
 

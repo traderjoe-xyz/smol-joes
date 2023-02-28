@@ -2,6 +2,18 @@ import { task } from "hardhat/config";
 import ImageData from "../files/image-data.json";
 import { dataToDescriptorInput } from "./utils";
 
+enum TraitType {
+  Background = 0,
+  Body = 1,
+  Pants = 2,
+  Shoes = 3,
+  Shirts = 4,
+  Beards = 5,
+  Heads = 6,
+  Eyes = 7,
+  Accessories = 8,
+}
+
 task(
   "populate-descriptor",
   "Populates the descriptor with color palettes and Smol Joe parts"
@@ -74,78 +86,93 @@ task(
   );
   await txPalette.wait();
 
-  const txBackgrounds = await descriptor.addBackgrounds(
+  const txBackgrounds = await descriptor.addTraits(
+    TraitType.Background,
     backgroundsPage.encodedCompressed,
     backgroundsPage.originalLength,
     backgroundsPage.itemCount
   );
   await txBackgrounds.wait();
 
-  const txBodies = await descriptor.addBodies(
+  const txBodies = await descriptor.addTraits(
+    TraitType.Body,
     bodiesPage.encodedCompressed,
     bodiesPage.originalLength,
     bodiesPage.itemCount
   );
   await txBodies.wait();
 
-  const txPants = await descriptor.addPants(
+  const txPants = await descriptor.addTraits(
+    TraitType.Pants,
     pantsPage.encodedCompressed,
     pantsPage.originalLength,
     pantsPage.itemCount
   );
   await txPants.wait();
 
-  const txShoes = await descriptor.addShoes(
+  const txShoes = await descriptor.addTraits(
+    TraitType.Shoes,
     shoesPage.encodedCompressed,
     shoesPage.originalLength,
     shoesPage.itemCount
   );
   await txShoes.wait();
 
-  const txShirts = await descriptor.addShirts(
+  const txShirts = await descriptor.addTraits(
+    TraitType.Shirts,
     shirtsPage.encodedCompressed,
     shirtsPage.originalLength,
     shirtsPage.itemCount
   );
   await txShirts.wait();
 
-  const txBeards = await descriptor.addBeards(
+  const txBeards = await descriptor.addTraits(
+    TraitType.Beards,
     beardsPage.encodedCompressed,
     beardsPage.originalLength,
     beardsPage.itemCount
   );
   await txBeards.wait();
 
-  const txHeads = await descriptor.addHeads(
+  const txHeads = await descriptor.addTraits(
+    TraitType.Heads,
     headsPage.encodedCompressed,
     headsPage.originalLength,
     headsPage.itemCount
   );
   await txHeads.wait();
 
-  const txEyes = await descriptor.addEyes(
+  const txEyes = await descriptor.addTraits(
+    TraitType.Eyes,
     eyesPage.encodedCompressed,
     eyesPage.originalLength,
     eyesPage.itemCount
   );
   await txEyes.wait();
 
-  const txAccessories = await descriptor.addAccessories(
+  const txAccessories = await descriptor.addTraits(
+    TraitType.Accessories,
     accessoriesPage.encodedCompressed,
     accessoriesPage.originalLength,
     accessoriesPage.itemCount
   );
   await txAccessories.wait();
 
-  console.log("Backgrounds added: ", await descriptor.backgroundCount());
-  console.log("Bodies added: ", await descriptor.bodyCount());
-  console.log("Pants added: ", await descriptor.pantCount());
-  console.log("Shoes added: ", await descriptor.shoeCount());
-  console.log("Shirts added: ", await descriptor.shirtCount());
-  console.log("Beards added: ", await descriptor.beardCount());
-  console.log("Heads added: ", await descriptor.headCount());
-  console.log("Eyes added: ", await descriptor.eyeCount());
-  console.log("Accessories added: ", await descriptor.accessoryCount());
+  console.log(
+    "Backgrounds added: ",
+    await descriptor.traitCount(TraitType.Background)
+  );
+  console.log("Bodies added: ", await descriptor.traitCount(TraitType.Body));
+  console.log("Pants added: ", await descriptor.traitCount(TraitType.Pants));
+  console.log("Shoes added: ", await descriptor.traitCount(TraitType.Shoes));
+  console.log("Shirts added: ", await descriptor.traitCount(TraitType.Shirts));
+  console.log("Beards added: ", await descriptor.traitCount(TraitType.Beards));
+  console.log("Heads added: ", await descriptor.traitCount(TraitType.Heads));
+  console.log("Eyes added: ", await descriptor.traitCount(TraitType.Eyes));
+  console.log(
+    "Accessories added: ",
+    await descriptor.traitCount(TraitType.Accessories)
+  );
 
   const gasPaid = balanceBefore.sub(await ethers.provider.getBalance(deployer));
   console.log("Gas paid: ", ethers.utils.formatEther(gasPaid));

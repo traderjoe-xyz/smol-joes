@@ -19,25 +19,7 @@ contract SmolJoeArt is ISmolJoeArt {
     /// @notice Smol Joe Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
     mapping(uint8 => address) public palettesPointers;
 
-    Trait public backgroundsTrait;
-
-    /// @notice Smol Joe Bodies Trait
-    Trait public bodiesTrait;
-
-    Trait public pantsTrait;
-
-    Trait public shoesTrait;
-
-    Trait public shirtsTrait;
-
-    Trait public beardsTrait;
-
-    /// @notice Smol Joe Heads Trait
-    Trait public headsTrait;
-
-    Trait public eyesTraits;
-
-    Trait public accessoriesTraits;
+    mapping(TraitType => Trait) public traits;
 
     bytes constant emptyItem = "\x00\x00\x00\x00\x00";
 
@@ -78,52 +60,8 @@ contract SmolJoeArt is ISmolJoeArt {
         emit InflatorUpdated(oldInflator, address(_inflator));
     }
 
-    function getBackgroundsTrait() external view override returns (Trait memory) {
-        return backgroundsTrait;
-    }
-
-    /**
-     * @notice Get the Trait struct for bodies.
-     * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
-     * https://github.com/ethereum/solidity/issues/11826
-     * @return Trait the struct, including a total image count, and an array of storage pages.
-     */
-    function getBodiesTrait() external view override returns (Trait memory) {
-        return bodiesTrait;
-    }
-
-    function getPantsTrait() external view override returns (Trait memory) {
-        return pantsTrait;
-    }
-
-    function getShoesTrait() external view override returns (Trait memory) {
-        return shoesTrait;
-    }
-
-    function getShirtsTrait() external view override returns (Trait memory) {
-        return shirtsTrait;
-    }
-
-    function getBeardsTrait() external view override returns (Trait memory) {
-        return beardsTrait;
-    }
-
-    /**
-     * @notice Get the Trait struct for heads.
-     * @dev This explicit getter is needed because implicit getters for structs aren't fully supported yet:
-     * https://github.com/ethereum/solidity/issues/11826
-     * @return Trait the struct, including a total image count, and an array of storage pages.
-     */
-    function getHeadsTrait() external view override returns (Trait memory) {
-        return headsTrait;
-    }
-
-    function getEyesTrait() external view override returns (Trait memory) {
-        return eyesTraits;
-    }
-
-    function getAccessoriesTrait() external view override returns (Trait memory) {
-        return accessoriesTraits;
+    function getTrait(TraitType traitType) external view override returns (Trait memory) {
+        return traits[traitType];
     }
 
     /**
@@ -145,118 +83,15 @@ contract SmolJoeArt is ISmolJoeArt {
         emit PaletteSet(paletteIndex);
     }
 
-    /**
-     * @notice Add a batch of background images.
-     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
-     * and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(backgroundsTrait, encodedCompressed, decompressedLength, imageCount);
+    function addTraits(
+        TraitType traitType,
+        bytes calldata encodedCompressed,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external override onlyDescriptor {
+        _addPage(traits[traitType], encodedCompressed, decompressedLength, imageCount);
 
         emit BackgroundsAdded(imageCount);
-    }
-
-    /**
-     * @notice Add a batch of body images.
-     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
-     * and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(bodiesTrait, encodedCompressed, decompressedLength, imageCount);
-
-        emit BodiesAdded(imageCount);
-    }
-
-    function addPants(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(pantsTrait, encodedCompressed, decompressedLength, imageCount);
-
-        // emit PantsAdded(imageCount);
-    }
-
-    function addShoes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(shoesTrait, encodedCompressed, decompressedLength, imageCount);
-
-        // emit ShoesAdded(imageCount);
-    }
-
-    function addShirts(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(shirtsTrait, encodedCompressed, decompressedLength, imageCount);
-
-        // emit ShirtsAdded(imageCount);
-    }
-
-    function addBeards(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(beardsTrait, encodedCompressed, decompressedLength, imageCount);
-
-        // emit BeardsAdded(imageCount);
-    }
-
-    /**
-     * @notice Add a batch of head images.
-     * @param encodedCompressed bytes created by taking a string array of RLE-encoded images, abi encoding it as a bytes array,
-     * and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addHeads(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(headsTrait, encodedCompressed, decompressedLength, imageCount);
-
-        emit HeadsAdded(imageCount);
-    }
-
-    function addEyes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(eyesTraits, encodedCompressed, decompressedLength, imageCount);
-
-        // emit EyesAdded(imageCount);
-    }
-
-    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        _addPage(accessoriesTraits, encodedCompressed, decompressedLength, imageCount);
-
-        // emit AccessoriesAdded(imageCount);
     }
 
     /**
@@ -274,170 +109,63 @@ contract SmolJoeArt is ISmolJoeArt {
         emit PaletteSet(paletteIndex);
     }
 
-    /**
-     * @notice Add a batch of background images from an existing storage contract.
-     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
-     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
-     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
+    function addTraitsFromPointer(TraitType traitType, address pointer, uint80 decompressedLength, uint16 imageCount)
         external
         override
         onlyDescriptor
     {
-        addPage(backgroundsTrait, pointer, decompressedLength, imageCount);
+        addPage(traits[traitType], pointer, decompressedLength, imageCount);
 
         emit BackgroundsAdded(imageCount);
-    }
-
-    /**
-     * @notice Add a batch of body images from an existing storage contract.
-     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
-     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
-     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches.
-     * @dev This function can only be called by the descriptor.
-     */
-    function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(bodiesTrait, pointer, decompressedLength, imageCount);
-
-        emit BodiesAdded(imageCount);
-    }
-
-    function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(pantsTrait, pointer, decompressedLength, imageCount);
-
-        // emit PantsAdded(imageCount);
-    }
-
-    function addShoesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(shoesTrait, pointer, decompressedLength, imageCount);
-
-        // emit ShoesAdded(imageCount);
-    }
-
-    function addShirtsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(shirtsTrait, pointer, decompressedLength, imageCount);
-
-        // emit ShirtsAdded(imageCount);
-    }
-
-    function addBeardsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(beardsTrait, pointer, decompressedLength, imageCount);
-
-        // emit BeardsAdded(imageCount);
-    }
-
-    /**
-     * @notice Add a batch of head images from an existing storage contract.
-     * @param pointer the address of a contract where the image batch was stored using SSTORE2. The data
-     * format is expected to be like {encodedCompressed}: bytes created by taking a string array of
-     * RLE-encoded images, abi encoding it as a bytes array, and finally compressing it using deflate.
-     * @param decompressedLength the size in bytes the images bytes were prior to compression; required input for Inflate.
-     * @param imageCount the number of images in this batch; used when searching for images among batches
-     * @dev This function can only be called by the descriptor..
-     */
-    function addHeadsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(headsTrait, pointer, decompressedLength, imageCount);
-
-        emit HeadsAdded(imageCount);
-    }
-
-    function addEyesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(eyesTraits, pointer, decompressedLength, imageCount);
-
-        // emit EyesAdded(imageCount);
-    }
-
-    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(accessoriesTraits, pointer, decompressedLength, imageCount);
-
-        // emit AccessoriesAdded(imageCount);
     }
 
     /**
      * @notice Get a background image bytes (RLE-encoded).
      */
     function backgrounds(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(backgroundsTrait, index);
+        return imageByIndex(traits[TraitType.Backgrounds], index);
     }
 
     /**
      * @notice Get a body image bytes (RLE-encoded).
      */
     function bodies(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(bodiesTrait, index);
+        return imageByIndex(traits[TraitType.Bodies], index);
     }
 
     /**
      * @notice Get a pants image bytes (RLE-encoded).
      */
     function pants(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(pantsTrait, index);
+        return imageByIndex(traits[TraitType.Pants], index);
     }
 
     /**
      * @notice Get a shoes image bytes (RLE-encoded).
      */
     function shoes(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(shoesTrait, index);
+        return imageByIndex(traits[TraitType.Shoes], index);
     }
 
     /**
      * @notice Get a shirt image bytes (RLE-encoded).
      */
     function shirts(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(shirtsTrait, index);
+        return imageByIndex(traits[TraitType.Shirts], index);
     }
 
     /**
      * @notice Get a beard image bytes (RLE-encoded).
      */
     function beards(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(beardsTrait, index);
+        return imageByIndex(traits[TraitType.Beards], index);
     }
 
     /**
      * @notice Get a head image bytes (RLE-encoded).
      */
     function heads(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(headsTrait, index);
+        return imageByIndex(traits[TraitType.Heads], index);
     }
 
     /**
@@ -445,7 +173,7 @@ contract SmolJoeArt is ISmolJoeArt {
      */
 
     function eyes(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(eyesTraits, index);
+        return imageByIndex(traits[TraitType.Eyes], index);
     }
 
     /**
@@ -453,7 +181,7 @@ contract SmolJoeArt is ISmolJoeArt {
      */
 
     function accessories(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(accessoriesTraits, index);
+        return imageByIndex(traits[TraitType.Accessories], index);
     }
 
     /**

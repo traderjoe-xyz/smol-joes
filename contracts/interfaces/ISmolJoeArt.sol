@@ -36,6 +36,18 @@ interface ISmolJoeArt {
 
     event HeadsAdded(uint16 count);
 
+    enum TraitType {
+        Backgrounds,
+        Bodies,
+        Pants,
+        Shoes,
+        Shirts,
+        Beards,
+        Heads,
+        Eyes,
+        Accessories
+    }
+
     struct SmolJoeArtStoragePage {
         uint16 imageCount;
         uint80 decompressedLength;
@@ -55,47 +67,23 @@ interface ISmolJoeArt {
 
     function setInflator(IInflator inflator) external;
 
-    function palettes(uint8 paletteIndex) external view returns (bytes memory);
-
     function setPalette(uint8 paletteIndex, bytes calldata palette) external;
-
-    function addBackgrounds(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBodies(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addPants(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShoes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShirts(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBeards(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addHeads(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addEyes(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addAccessories(bytes calldata encodedCompressed, uint80 decompressedLength, uint16 imageCount) external;
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
-    function addBackgroundsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+    function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
-    function addBodiesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+    function addTraits(
+        TraitType traitType,
+        bytes calldata encodedCompressed,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external;
 
-    function addPantsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+    function addTraitsFromPointer(TraitType traitType, address pointer, uint80 decompressedLength, uint16 imageCount)
+        external;
 
-    function addShoesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addShirtsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addBeardsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addHeadsFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addEyesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
-
-    function addAccessoriesFromPointer(address pointer, uint80 decompressedLength, uint16 imageCount) external;
+    function getTrait(TraitType traitType) external view returns (Trait memory);
 
     function backgrounds(uint256 index) external view returns (bytes memory, string memory);
 
@@ -114,22 +102,4 @@ interface ISmolJoeArt {
     function eyes(uint256 index) external view returns (bytes memory, string memory);
 
     function accessories(uint256 index) external view returns (bytes memory, string memory);
-
-    function getBackgroundsTrait() external view returns (Trait memory);
-
-    function getBodiesTrait() external view returns (Trait memory);
-
-    function getPantsTrait() external view returns (Trait memory);
-
-    function getShoesTrait() external view returns (Trait memory);
-
-    function getShirtsTrait() external view returns (Trait memory);
-
-    function getBeardsTrait() external view returns (Trait memory);
-
-    function getHeadsTrait() external view returns (Trait memory);
-
-    function getEyesTrait() external view returns (Trait memory);
-
-    function getAccessoriesTrait() external view returns (Trait memory);
 }
