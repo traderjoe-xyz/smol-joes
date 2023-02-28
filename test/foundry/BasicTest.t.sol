@@ -11,6 +11,7 @@ import {ISmolJoeDescriptor, SmolJoeDescriptor} from "contracts/SmolJoeDescriptor
 import {SmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
 import {SVGRenderer} from "contracts/SVGRenderer.sol";
 import {ISmolJoeArt, SmolJoeArt} from "contracts/SmolJoeArt.sol";
+import {ISmolJoeSeeder} from "contracts/interfaces/ISmolJoeSeeder.sol";
 import {Inflator} from "contracts/Inflator.sol";
 
 contract BasicTest is Test {
@@ -53,7 +54,11 @@ contract BasicTest is Test {
         inputs[3] = "--token-id";
 
         for (uint256 i = 0; i < 10; i++) {
-            token.mint(address(1), i);
+            if (i < 2) {
+                token.mintSpecial(address(1), i, ISmolJoeSeeder.SmolJoeCast.Special);
+            } else {
+                token.mint(address(1), i);
+            }
             vm.writeFile(
                 string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
@@ -109,5 +114,10 @@ contract BasicTest is Test {
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/accessoriesPage.abi")), (bytes, uint80, uint16)
         );
         descriptor.addTraits(ISmolJoeArt.TraitType.Accessories, accessories, accessoriesLength, accessoriesCount);
+
+        (bytes memory specials, uint80 specialsLength, uint16 specialsCount) = abi.decode(
+            vm.parseBytes(vm.readFile("./test/files/encoded-assets/specialsPage.abi")), (bytes, uint80, uint16)
+        );
+        descriptor.addTraits(ISmolJoeArt.TraitType.Special, specials, specialsLength, specialsCount);
     }
 }

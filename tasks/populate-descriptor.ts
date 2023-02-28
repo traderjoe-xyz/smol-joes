@@ -3,15 +3,16 @@ import ImageData from "../files/image-data.json";
 import { dataToDescriptorInput } from "./utils";
 
 enum TraitType {
-  Background = 0,
-  Body = 1,
-  Pants = 2,
-  Shoes = 3,
-  Shirts = 4,
-  Beards = 5,
-  Heads = 6,
-  Eyes = 7,
-  Accessories = 8,
+  Special,
+  Background,
+  Body,
+  Pants,
+  Shoes,
+  Shirts,
+  Beards,
+  Heads,
+  Eyes,
+  Accessories,
 }
 
 task(

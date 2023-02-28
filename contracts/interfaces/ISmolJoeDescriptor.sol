@@ -30,6 +30,8 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
+    function specials(uint256 index) external view returns (bytes memory, string memory);
+
     function backgrounds(uint256 index) external view returns (bytes memory, string memory);
 
     function bodies(uint256 index) external view returns (bytes memory, string memory);

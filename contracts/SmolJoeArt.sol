@@ -68,14 +68,16 @@ contract SmolJoeArt is ISmolJoeArt {
      * @notice Update a single color palette. This function can be used to
      * add a new color palette or update an existing palette.
      * @param paletteIndex the identifier of this palette
-     * @param palette byte array of colors. every 3 bytes represent an RGB color. max length: 256 * 3 = 768
+     * @param palette byte array of colors. every 3 bytes represent an RGB color. max length: 16**4 * 3 = 196_608
      * @dev This function can only be called by the descriptor.
      */
     function setPalette(uint8 paletteIndex, bytes calldata palette) external override onlyDescriptor {
         if (palette.length == 0) {
             revert EmptyPalette();
         }
-        if (palette.length % 3 != 0 || palette.length > 768) {
+
+        // @todo check palette length
+        if (palette.length % 3 != 0 || palette.length > 196_608) {
             revert BadPaletteLength();
         }
         palettesPointers[paletteIndex] = SSTORE2.write(palette);
@@ -117,6 +119,13 @@ contract SmolJoeArt is ISmolJoeArt {
         addPage(traits[traitType], pointer, decompressedLength, imageCount);
 
         emit BackgroundsAdded(imageCount);
+    }
+
+    /**
+     * @notice Get a special image bytes (RLE-encoded).
+     */
+    function specials(uint256 index) public view override returns (bytes memory, string memory) {
+        return imageByIndex(traits[TraitType.Special], index);
     }
 
     /**

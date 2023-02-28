@@ -39,7 +39,7 @@ contract SVGRenderer is ISVGRenderer {
 
     struct Draw {
         uint8 length;
-        uint8 colorIndex;
+        uint16 colorIndex;
     }
 
     struct DecodedImage {
@@ -75,54 +75,13 @@ contract SVGRenderer is ISVGRenderer {
      * @notice Given RLE image parts and color palettes, generate SVG rects.
      */
     function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
-        // write every value from 0 to 900 with steps of 20 as strings
-        string[46] memory lookup = [
-            "0",
-            "20",
-            "40",
-            "60",
-            "80",
-            "100",
-            "120",
-            "140",
-            "160",
-            "180",
-            "200",
-            "220",
-            "240",
-            "260",
-            "280",
-            "300",
-            "320",
-            "340",
-            "360",
-            "380",
-            "400",
-            "420",
-            "440",
-            "460",
-            "480",
-            "500",
-            "520",
-            "540",
-            "560",
-            "580",
-            "600",
-            "620",
-            "640",
-            "660",
-            "680",
-            "700",
-            "720",
-            "740",
-            "760",
-            "780",
-            "800",
-            "820",
-            "840",
-            "860",
-            "880",
-            "900"
+        // forgefmt: disable-next-item
+        string[46] memory lookup = [    
+            "0", "20", "40", "60", "80", "100", "120", "140", "160", "180",    
+            "200", "220", "240", "260", "280", "300", "320", "340", "360", "380",    
+            "400", "420", "440", "460", "480", "500", "520", "540", "560", "580",    
+            "600", "620", "640", "660", "680", "700", "720", "740", "760", "780",    
+            "800", "820", "840", "860", "880", "900"
         ];
 
         string memory rects;
@@ -132,6 +91,7 @@ contract SVGRenderer is ISVGRenderer {
             cache = new string[](256); // Initialize color cache
 
             DecodedImage memory image = _decodeRLEImage(params.parts[p].image);
+
             bytes memory palette = params.parts[p].palette;
             uint256 currentX = image.bounds.left;
             uint256 currentY = image.bounds.top;
@@ -148,6 +108,7 @@ contract SVGRenderer is ISVGRenderer {
                         buffer[cursor] = lookup[length]; // width
                         buffer[cursor + 1] = lookup[currentX]; // x
                         buffer[cursor + 2] = lookup[currentY]; // y
+
                         buffer[cursor + 3] = _getColor(palette, draw.colorIndex, cache); // color
 
                         cursor += 4;
@@ -223,9 +184,13 @@ contract SVGRenderer is ISVGRenderer {
         });
 
         uint256 cursor;
-        Draw[] memory draws = new Draw[]((image.length - 5) / 2);
-        for (uint256 i = 5; i < image.length; i += 2) {
-            draws[cursor] = Draw({length: uint8(image[i]), colorIndex: uint8(image[i + 1])});
+        Draw[] memory draws = new Draw[]((image.length - 5) / 3);
+
+        for (uint256 i = 5; i < image.length; i += 3) {
+            draws[cursor] = Draw({
+                length: uint8(image[i]),
+                colorIndex: (uint16(uint8(image[i + 1])) << 2) + uint16(uint8(image[i + 2]))
+            });
             cursor++;
         }
         return DecodedImage({bounds: bounds, draws: draws});

@@ -54,6 +54,7 @@ task(
       heads,
       eyes,
       accessories,
+      specials,
     } = images;
 
     if (count !== undefined) {
@@ -68,6 +69,7 @@ task(
       heads = heads.slice(start, count + start);
       eyes = eyes.slice(start, count + start);
       accessories = accessories.slice(start, count + start);
+      specials = specials.slice(start, count + start);
     }
 
     const backgroundsPage = dataToDescriptorInput(
@@ -105,6 +107,11 @@ task(
     const accessoriesPage = dataToDescriptorInput(
       accessories.map(({ data }) => data),
       accessories.map(({ filename }) => filename)
+    );
+
+    const specialsPage = dataToDescriptorInput(
+      specials.map(({ data }) => data),
+      specials.map(({ filename }) => filename)
     );
 
     const paletteValue = `0x000000${palette.join("")}`;
@@ -175,5 +182,14 @@ task(
     saveToFileAbiEncoded(
       path.join(exportPath, "accessoriesPage.abi"),
       accessoriesPage
+    );
+
+    console.log("=== SPECIALS ===\n");
+    // console.log(`accessoriesCompressed: '${accessoriesPage.encodedCompressed}'\n`);
+    console.log(`specialsLength: ${specialsPage.originalLength}\n`);
+    console.log(`specials count: ${specialsPage.itemCount}`);
+    saveToFileAbiEncoded(
+      path.join(exportPath, "specialsPage.abi"),
+      specialsPage
     );
   });

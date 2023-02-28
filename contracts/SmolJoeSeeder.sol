@@ -17,8 +17,6 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         override
         returns (Seed memory)
     {
-        upgradeType;
-
         uint256 pseudoRandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
         uint256 backgroundCount = descriptor.traitCount(ISmolJoeArt.TraitType.Backgrounds);
         uint256 bodyCount = descriptor.traitCount(ISmolJoeArt.TraitType.Bodies);
@@ -31,6 +29,7 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         uint256 accessoryCount = descriptor.traitCount(ISmolJoeArt.TraitType.Accessories);
 
         return Seed({
+            smolJoeType: upgradeType,
             background: uint16(uint16(pseudoRandomness) % backgroundCount),
             body: uint16(uint16(pseudoRandomness >> 16) % (bodyCount - 1) + 1),
             pant: uint16(uint16(pseudoRandomness >> 32) % pantCount),

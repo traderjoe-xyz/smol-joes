@@ -37,6 +37,7 @@ interface ISmolJoeArt {
     event HeadsAdded(uint16 count);
 
     enum TraitType {
+        Special,
         Backgrounds,
         Bodies,
         Pants,
@@ -84,6 +85,8 @@ interface ISmolJoeArt {
         external;
 
     function getTrait(TraitType traitType) external view returns (Trait memory);
+
+    function specials(uint256 index) external view returns (bytes memory, string memory);
 
     function backgrounds(uint256 index) external view returns (bytes memory, string memory);
 

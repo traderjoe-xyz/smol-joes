@@ -80,7 +80,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Update a single color palette. This function can be used to
      * add a new color palette or update an existing palette.
      * @param paletteIndex the identifier of this palette
-     * @param palette byte array of colors. every 3 bytes represent an RGB color. max length: 256 * 3 = 768
+     * @param palette byte array of colors. every 3 bytes represent an RGB color. max length: 16**4 * 3 = 196_608
      * @dev This function can only be called by the owner.
      */
     function setPalette(uint8 paletteIndex, bytes calldata palette) external override onlyOwner {
@@ -119,7 +119,16 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
-     * @notice Get a background color by ID.
+     * @notice Get a specal image by ID.
+     * @param index the index of the special.
+     * @return string the RLE-encoded bytes value of the background.
+     */
+    function specials(uint256 index) public view override returns (bytes memory, string memory) {
+        return art.specials(index);
+    }
+
+    /**
+     * @notice Get a background image by ID.
      * @param index the index of the background.
      * @return string the RLE-encoded bytes value of the background.
      */
@@ -285,35 +294,44 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Get all Smol Joe parts for the passed `seed`.
      */
     function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
-        ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
+        if (seed.smolJoeType == ISmolJoeSeeder.SmolJoeCast.Special) {
+            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](1);
+            (bytes memory special, string memory specialTraitName) = art.specials(0);
 
-        {
-            (bytes memory background, string memory backgroundTraitName) = art.backgrounds(seed.background);
-            (bytes memory body, string memory bodyTraitName) = art.bodies(seed.body);
-            (bytes memory pant, string memory pantTraitName) = art.pants(seed.pant);
-            (bytes memory shoe, string memory shoeTraitName) = art.shoes(seed.shoe);
+            parts[0] = ISVGRenderer.Part({name: specialTraitName, image: special, palette: _getPalette(special)});
+            return parts;
+        } else {
+            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
 
-            parts[0] =
-                ISVGRenderer.Part({name: backgroundTraitName, image: background, palette: _getPalette(background)});
-            parts[1] = ISVGRenderer.Part({name: bodyTraitName, image: body, palette: _getPalette(body)});
-            parts[2] = ISVGRenderer.Part({name: pantTraitName, image: pant, palette: _getPalette(pant)});
-            parts[3] = ISVGRenderer.Part({name: shoeTraitName, image: shoe, palette: _getPalette(shoe)});
+            {
+                (bytes memory background, string memory backgroundTraitName) = art.backgrounds(seed.background);
+                (bytes memory body, string memory bodyTraitName) = art.bodies(seed.body);
+                (bytes memory pant, string memory pantTraitName) = art.pants(seed.pant);
+                (bytes memory shoe, string memory shoeTraitName) = art.shoes(seed.shoe);
+
+                parts[0] =
+                    ISVGRenderer.Part({name: backgroundTraitName, image: background, palette: _getPalette(background)});
+                parts[1] = ISVGRenderer.Part({name: bodyTraitName, image: body, palette: _getPalette(body)});
+                parts[2] = ISVGRenderer.Part({name: pantTraitName, image: pant, palette: _getPalette(pant)});
+                parts[3] = ISVGRenderer.Part({name: shoeTraitName, image: shoe, palette: _getPalette(shoe)});
+            }
+
+            {
+                (bytes memory shirt, string memory shirtTraitName) = art.shirts(seed.shirt);
+                (bytes memory beard, string memory beardTraitName) = art.beards(seed.beard);
+                (bytes memory head, string memory headTraitName) = art.heads(seed.head);
+                (bytes memory eye, string memory eyeTraitName) = art.eyes(seed.eye);
+                (bytes memory accessory, string memory accessoryTraitName) = art.accessories(seed.accessory);
+
+                parts[4] = ISVGRenderer.Part({name: shirtTraitName, image: shirt, palette: _getPalette(shirt)});
+                parts[5] = ISVGRenderer.Part({name: beardTraitName, image: beard, palette: _getPalette(beard)});
+                parts[6] = ISVGRenderer.Part({name: headTraitName, image: head, palette: _getPalette(head)});
+                parts[7] = ISVGRenderer.Part({name: eyeTraitName, image: eye, palette: _getPalette(eye)});
+                parts[8] =
+                    ISVGRenderer.Part({name: accessoryTraitName, image: accessory, palette: _getPalette(accessory)});
+            }
+            return parts;
         }
-
-        {
-            (bytes memory shirt, string memory shirtTraitName) = art.shirts(seed.shirt);
-            (bytes memory beard, string memory beardTraitName) = art.beards(seed.beard);
-            (bytes memory head, string memory headTraitName) = art.heads(seed.head);
-            (bytes memory eye, string memory eyeTraitName) = art.eyes(seed.eye);
-            (bytes memory accessory, string memory accessoryTraitName) = art.accessories(seed.accessory);
-
-            parts[4] = ISVGRenderer.Part({name: shirtTraitName, image: shirt, palette: _getPalette(shirt)});
-            parts[5] = ISVGRenderer.Part({name: beardTraitName, image: beard, palette: _getPalette(beard)});
-            parts[6] = ISVGRenderer.Part({name: headTraitName, image: head, palette: _getPalette(head)});
-            parts[7] = ISVGRenderer.Part({name: eyeTraitName, image: eye, palette: _getPalette(eye)});
-            parts[8] = ISVGRenderer.Part({name: accessoryTraitName, image: accessory, palette: _getPalette(accessory)});
-        }
-        return parts;
     }
 
     /**
