@@ -5,7 +5,9 @@ import { dataToDescriptorInput } from "./utils";
 task(
   "populate-descriptor",
   "Populates the descriptor with color palettes and Smol Joe parts"
-).setAction(async ({}, { ethers, deployments }) => {
+).setAction(async ({}, { ethers, deployments, getNamedAccounts }) => {
+  const { deployer } = await getNamedAccounts();
+
   const descriptorFactory = await ethers.getContractFactory(
     "SmolJoeDescriptor"
   );
@@ -28,18 +30,43 @@ task(
   } = images;
 
   const backgroundsPage = dataToDescriptorInput(
-    backgrounds.map(({ data }) => data)
+    backgrounds.map(({ data }) => data),
+    backgrounds.map(({ filename }) => filename)
   );
-  const bodiesPage = dataToDescriptorInput(bodies.map(({ data }) => data));
-  const pantsPage = dataToDescriptorInput(pants.map(({ data }) => data));
-  const shoesPage = dataToDescriptorInput(shoes.map(({ data }) => data));
-  const shirtsPage = dataToDescriptorInput(shirts.map(({ data }) => data));
-  const beardsPage = dataToDescriptorInput(beards.map(({ data }) => data));
-  const headsPage = dataToDescriptorInput(heads.map(({ data }) => data));
-  const eyesPage = dataToDescriptorInput(eyes.map(({ data }) => data));
+  const bodiesPage = dataToDescriptorInput(
+    bodies.map(({ data }) => data),
+    bodies.map(({ filename }) => filename)
+  );
+  const pantsPage = dataToDescriptorInput(
+    pants.map(({ data }) => data),
+    pants.map(({ filename }) => filename)
+  );
+  const shoesPage = dataToDescriptorInput(
+    shoes.map(({ data }) => data),
+    shoes.map(({ filename }) => filename)
+  );
+  const shirtsPage = dataToDescriptorInput(
+    shirts.map(({ data }) => data),
+    shirts.map(({ filename }) => filename)
+  );
+  const beardsPage = dataToDescriptorInput(
+    beards.map(({ data }) => data),
+    beards.map(({ filename }) => filename)
+  );
+  const headsPage = dataToDescriptorInput(
+    heads.map(({ data }) => data),
+    heads.map(({ filename }) => filename)
+  );
+  const eyesPage = dataToDescriptorInput(
+    eyes.map(({ data }) => data),
+    eyes.map(({ filename }) => filename)
+  );
   const accessoriesPage = dataToDescriptorInput(
-    accessories.map(({ data }) => data)
+    accessories.map(({ data }) => data),
+    accessories.map(({ filename }) => filename)
   );
+
+  const balanceBefore = await ethers.provider.getBalance(deployer);
 
   const txPalette = await descriptor.setPalette(
     0,
@@ -119,4 +146,7 @@ task(
   console.log("Heads added: ", await descriptor.headCount());
   console.log("Eyes added: ", await descriptor.eyeCount());
   console.log("Accessories added: ", await descriptor.accessoryCount());
+
+  const gasPaid = balanceBefore.sub(await ethers.provider.getBalance(deployer));
+  console.log("Gas paid: ", ethers.utils.formatEther(gasPaid));
 });
