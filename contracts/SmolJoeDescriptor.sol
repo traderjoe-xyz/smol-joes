@@ -296,7 +296,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
         if (seed.smolJoeType == ISmolJoeSeeder.SmolJoeCast.Special) {
             ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](1);
-            (bytes memory special, string memory specialTraitName) = art.specials(0);
+            (bytes memory special, string memory specialTraitName) = art.specials(seed.special);
 
             parts[0] = ISVGRenderer.Part({name: specialTraitName, image: special, palette: _getPalette(special)});
             return parts;

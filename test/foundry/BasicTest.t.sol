@@ -24,13 +24,7 @@ contract BasicTest is Test {
     SVGRenderer renderer;
     Inflator inflator;
 
-    function setUp() public {}
-
-    function test() public {
-        // vm.createSelectFork(StdChains.getChain("avalanche_fuji").rpcUrl);
-        // token = SmolJoes(0x2FeceDF3e697DaFCe67fdD1d5972e2E29e8C8D60);
-        // descriptor = SmolJoeDescriptor(0xcB1444cE17aA1A4Cf00F436EB7Fb99fcAc88BC08);
-
+    function setUp() public {
         inflator = new Inflator();
         renderer = new SVGRenderer();
         seeder = new SmolJoeSeeder();
@@ -39,14 +33,20 @@ contract BasicTest is Test {
         art = new SmolJoeArt(address(descriptor), inflator);
         descriptor.setArt(art);
 
-        // art.addEmptyItems("");
-
         uint256 gasLeft = gasleft();
         _populateDescriptorV2();
         console.log("Gas used: ", gasLeft - gasleft());
 
-        token = new SmolJoes(descriptor, seeder);
+        uint16[100] memory artMapping;
+        for (uint16 i = 0; i < artMapping.length; i++) {
+            artMapping[i] = i;
+        }
+        seeder.updateUniquesArtMapping(artMapping);
 
+        token = new SmolJoes(descriptor, seeder);
+    }
+
+    function testSVGGeneration() public {
         string[] memory inputs = new string[](5);
         inputs[0] = "yarn";
         inputs[1] = "hardhat";
@@ -65,6 +65,19 @@ contract BasicTest is Test {
 
             inputs[4] = i.toString();
             vm.ffi(inputs);
+        }
+    }
+
+    function test_UpdateUniquesArtMapping() public {
+        uint16[100] memory artMapping;
+        for (uint16 i = 0; i < artMapping.length; i++) {
+            artMapping[i] = i + 5;
+        }
+
+        seeder.updateUniquesArtMapping(artMapping);
+
+        for (uint256 i = 0; i < artMapping.length; i++) {
+            assertEq(seeder.getUniqueArtMapping(i), i + 5);
         }
     }
 

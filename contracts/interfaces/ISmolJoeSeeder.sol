@@ -15,6 +15,7 @@ interface ISmolJoeSeeder {
 
     struct Seed {
         SmolJoeCast smolJoeType;
+        uint16 special;
         uint16 background;
         uint16 body;
         uint16 pant;
