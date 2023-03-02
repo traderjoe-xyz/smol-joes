@@ -121,8 +121,8 @@ task(
       ethers.utils.defaultAbiCoder.encode(["bytes"], [paletteValue])
     );
 
-    // console.log("=== PALETTE ===\n");
-    // console.log(`paletteValue: '${paletteValue}'\n`);
+    console.log("=== PALETTE ===\n");
+    console.log(`palette length: '${palette.length}'\n`);
 
     console.log("=== BACKGROUNDS ===\n");
     // console.log(`bodiesCompressed: '${bodiesPage.encodedCompressed}'\n`);

@@ -29,8 +29,14 @@ task(
     (await deployments.get("SmolJoeDescriptor")).address
   );
 
+  const seederFactory = await ethers.getContractFactory("SmolJoeSeeder");
+
+  const seeder = seederFactory.attach(
+    (await deployments.get("SmolJoeSeeder")).address
+  );
   const { palette, images } = ImageData;
   let {
+    specials,
     backgrounds,
     bodies,
     pants,
@@ -42,6 +48,10 @@ task(
     accessories,
   } = images;
 
+  const specialsPage = dataToDescriptorInput(
+    specials.map(({ data }) => data),
+    specials.map(({ filename }) => filename)
+  );
   const backgroundsPage = dataToDescriptorInput(
     backgrounds.map(({ data }) => data),
     backgrounds.map(({ filename }) => filename)
@@ -86,6 +96,14 @@ task(
     `0x000000${palette.join("")}`
   );
   await txPalette.wait();
+
+  const txSpecials = await descriptor.addTraits(
+    TraitType.Special,
+    specialsPage.encodedCompressed,
+    specialsPage.originalLength,
+    specialsPage.itemCount
+  );
+  await txSpecials.wait();
 
   const txBackgrounds = await descriptor.addTraits(
     TraitType.Background,
@@ -159,6 +177,20 @@ task(
   );
   await txAccessories.wait();
 
+  const mappings = [
+    0,
+    ...Array(99)
+      .fill(0)
+      .map((_, i) => i + 1),
+  ];
+
+  const txMapping = await seeder.updateUniquesArtMapping(mappings);
+  await txMapping.wait();
+
+  console.log(
+    "Specials added: ",
+    await descriptor.traitCount(TraitType.Special)
+  );
   console.log(
     "Backgrounds added: ",
     await descriptor.traitCount(TraitType.Background)
@@ -176,5 +208,8 @@ task(
   );
 
   const gasPaid = balanceBefore.sub(await ethers.provider.getBalance(deployer));
-  console.log("Gas paid: ", ethers.utils.formatEther(gasPaid));
+  console.log(
+    "Gas paid to populate the descriptor: ",
+    ethers.utils.formatEther(gasPaid)
+  );
 });
