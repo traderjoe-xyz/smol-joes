@@ -1,0 +1,43 @@
+{
+    "name": "Smol Joe 106",
+    "description": "This is a empty description",
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "light_green_water"
+        },
+        {
+            "trait_type": "Body",
+            "value": "brown_skin"
+        },
+        {
+            "trait_type": "Pants",
+            "value": "Long_white_shorts"
+        },
+        {
+            "trait_type": "Shoes",
+            "value": "00_empty_shoes"
+        },
+        {
+            "trait_type": "Shirt",
+            "value": "Basketball_vest_orange"
+        },
+        {
+            "trait_type": "Beard",
+            "value": "black_beard"
+        },
+        {
+            "trait_type": "Head",
+            "value": "Headband"
+        },
+        {
+            "trait_type": "Eye",
+            "value": "00_empty_eyes"
+        },
+        {
+            "trait_type": "Accesory",
+            "value": "Cutlas"
+        }
+    ],
+    "image": "..."
+}

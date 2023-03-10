@@ -4,39 +4,7 @@
     "attributes": [
         {
             "trait_type": "Background",
-            "value": "light_green_water"
-        },
-        {
-            "trait_type": "Body",
-            "value": "brown_skin"
-        },
-        {
-            "trait_type": "Pants",
-            "value": "Long_white_shorts"
-        },
-        {
-            "trait_type": "Shoes",
-            "value": "00_empty_shoes"
-        },
-        {
-            "trait_type": "Shirt",
-            "value": "00_empty_shirts"
-        },
-        {
-            "trait_type": "Beard",
-            "value": "00_empty_beards"
-        },
-        {
-            "trait_type": "Head",
-            "value": "Bicorne_Hat_white_hair"
-        },
-        {
-            "trait_type": "Eye",
-            "value": "00_empty_eyes"
-        },
-        {
-            "trait_type": "Accesory",
-            "value": "00_empty_accessories"
+            "value": "Creep_worshiper"
         }
     ],
     "image": "..."

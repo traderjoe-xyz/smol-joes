@@ -4,39 +4,7 @@
     "attributes": [
         {
             "trait_type": "Background",
-            "value": "light_green_water"
-        },
-        {
-            "trait_type": "Body",
-            "value": "brown_skin"
-        },
-        {
-            "trait_type": "Pants",
-            "value": "Long_white_shorts"
-        },
-        {
-            "trait_type": "Shoes",
-            "value": "00_empty_shoes"
-        },
-        {
-            "trait_type": "Shirt",
-            "value": "Red_military_Dinner_jacket"
-        },
-        {
-            "trait_type": "Beard",
-            "value": "White_beard"
-        },
-        {
-            "trait_type": "Head",
-            "value": "Headband"
-        },
-        {
-            "trait_type": "Eye",
-            "value": "Basketball_goggles"
-        },
-        {
-            "trait_type": "Accesory",
-            "value": "Basketball_on_fire"
+            "value": "Socrates"
         }
     ],
     "image": "..."

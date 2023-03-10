@@ -1,0 +1,43 @@
+{
+    "name": "Smol Joe 107",
+    "description": "This is a empty description",
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "light_green_water"
+        },
+        {
+            "trait_type": "Body",
+            "value": "tan_skin"
+        },
+        {
+            "trait_type": "Pants",
+            "value": "white_pants"
+        },
+        {
+            "trait_type": "Shoes",
+            "value": "High_top_trainers"
+        },
+        {
+            "trait_type": "Shirt",
+            "value": "Red_military_Dinner_jacket"
+        },
+        {
+            "trait_type": "Beard",
+            "value": "black_beard"
+        },
+        {
+            "trait_type": "Head",
+            "value": "Headband"
+        },
+        {
+            "trait_type": "Eye",
+            "value": "00_empty_eyes"
+        },
+        {
+            "trait_type": "Accesory",
+            "value": "00_empty_accessories"
+        }
+    ],
+    "image": "..."
+}

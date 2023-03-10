@@ -1,0 +1,43 @@
+{
+    "name": "Smol Joe 102",
+    "description": "This is a empty description",
+    "attributes": [
+        {
+            "trait_type": "Background",
+            "value": "Beige"
+        },
+        {
+            "trait_type": "Body",
+            "value": "tan_skin"
+        },
+        {
+            "trait_type": "Pants",
+            "value": "00_empty_pants"
+        },
+        {
+            "trait_type": "Shoes",
+            "value": "00_empty_shoes"
+        },
+        {
+            "trait_type": "Shirt",
+            "value": "Red_military_Dinner_jacket"
+        },
+        {
+            "trait_type": "Beard",
+            "value": "black_beard"
+        },
+        {
+            "trait_type": "Head",
+            "value": "00_empty_heads"
+        },
+        {
+            "trait_type": "Eye",
+            "value": "Basketball_goggles"
+        },
+        {
+            "trait_type": "Accesory",
+            "value": "eagle"
+        }
+    ],
+    "image": "..."
+}

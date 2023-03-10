@@ -54,11 +54,18 @@ contract BasicTest is Test {
         inputs[3] = "--token-id";
 
         for (uint256 i = 0; i < 10; i++) {
-            if (i < 2) {
-                token.mintSpecial(address(1), i, ISmolJoeSeeder.SmolJoeCast.Special);
-            } else {
-                token.mint(address(1), i);
-            }
+            token.mintSpecial(address(1), i, ISmolJoeSeeder.SmolJoeCast.Special);
+
+            vm.writeFile(
+                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+            );
+
+            inputs[4] = i.toString();
+            vm.ffi(inputs);
+        }
+
+        for (uint256 i = 100; i < 110; i++) {
+            token.mint(address(1), i);
             vm.writeFile(
                 string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
