@@ -1,42 +1,42 @@
 {
-    "name": "Smol Joe 105",
+    "name": "Smol Joe 100",
     "description": "This is a empty description",
     "attributes": [
         {
             "trait_type": "Background",
-            "value": "blue"
+            "value": "9"
         },
         {
             "trait_type": "Body",
-            "value": "brown_skin"
+            "value": "brown skin"
         },
         {
             "trait_type": "Pants",
-            "value": "Long_white_shorts"
+            "value": "brown skirt"
         },
         {
             "trait_type": "Shoes",
-            "value": "00_empty_shoes"
+            "value": "Black buckle shoes"
         },
         {
             "trait_type": "Shirt",
-            "value": "00_empty_shirts"
+            "value": "White cloak with red cross"
         },
         {
             "trait_type": "Beard",
-            "value": "black_beard"
+            "value": "Green beard"
         },
         {
             "trait_type": "Head",
-            "value": "00_empty_heads"
+            "value": "Short black hair"
         },
         {
             "trait_type": "Eye",
-            "value": "Basketball_goggles"
+            "value": "lighting bolt face paint"
         },
         {
             "trait_type": "Accesory",
-            "value": "Cutlas"
+            "value": "wrench"
         }
     ],
     "image": "..."
