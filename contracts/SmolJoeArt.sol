@@ -76,7 +76,6 @@ contract SmolJoeArt is ISmolJoeArt {
             revert EmptyPalette();
         }
 
-        // @todo check palette length
         if (palette.length % 3 != 0 || palette.length > 196_608) {
             revert BadPaletteLength();
         }

@@ -88,7 +88,7 @@ contract SVGRenderer is ISVGRenderer {
         string[] memory cache;
 
         for (uint8 p = 0; p < params.parts.length; p++) {
-            cache = new string[](600); // Initialize color cache
+            cache = new string[](2800); // Initialize color cache
 
             DecodedImage memory image = _decodeRLEImage(params.parts[p].image);
 

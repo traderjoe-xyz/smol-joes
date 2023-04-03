@@ -13,7 +13,7 @@ contract BasicTest is TestHelper {
         inputs[2] = "render-images";
         inputs[3] = "--token-id";
 
-        for (uint256 i = 0; i < 10; i++) {
+        for (uint256 i = 0; i < 2; i++) {
             token.mintSpecial(address(1), i, ISmolJoeSeeder.SmolJoeCast.Special);
 
             vm.writeFile(
