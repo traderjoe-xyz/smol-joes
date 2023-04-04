@@ -30,44 +30,45 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
-    function specials(uint256 index) external view returns (bytes memory, string memory);
-
-    function backgrounds(uint256 index) external view returns (bytes memory, string memory);
-
-    function bodies(uint256 index) external view returns (bytes memory, string memory);
-
-    function pants(uint256 index) external view returns (bytes memory, string memory);
-
-    function shoes(uint256 index) external view returns (bytes memory, string memory);
-
-    function shirts(uint256 index) external view returns (bytes memory, string memory);
-
-    function beards(uint256 index) external view returns (bytes memory, string memory);
-
-    function heads(uint256 index) external view returns (bytes memory, string memory);
-
-    function eyes(uint256 index) external view returns (bytes memory, string memory);
-
-    function accessories(uint256 index) external view returns (bytes memory, string memory);
-
-    function traitCount(ISmolJoeArt.TraitType traitType) external view returns (uint256);
+    function traitCount(ISmolJoeArt.TraitType traitType, ISmolJoeArt.Brotherhood brotherhood)
+        external
+        view
+        returns (uint256);
 
     function setPalette(uint8 paletteIndex, bytes calldata palette) external;
 
+    function setPalettePointer(uint8 paletteIndex, address pointer) external;
+
     function addTraits(
         ISmolJoeArt.TraitType traitType,
+        ISmolJoeArt.Brotherhood brotherhood,
         bytes calldata encodedCompressed,
         uint80 decompressedLength,
         uint16 imageCount
     ) external;
 
-    function setPalettePointer(uint8 paletteIndex, address pointer) external;
+    function addMultipleTraits(
+        ISmolJoeArt.TraitType[] calldata traitType,
+        ISmolJoeArt.Brotherhood[] calldata brotherhood,
+        bytes[] calldata encodedCompressed,
+        uint80[] calldata decompressedLength,
+        uint16[] calldata imageCount
+    ) external;
 
     function addTraitsFromPointer(
         ISmolJoeArt.TraitType traitType,
+        ISmolJoeArt.Brotherhood brotherhood,
         address pointer,
         uint80 decompressedLength,
         uint16 imageCount
+    ) external;
+
+    function addMultipleTraitsFromPointer(
+        ISmolJoeArt.TraitType[] calldata traitType,
+        ISmolJoeArt.Brotherhood[] calldata brotherhood,
+        address[] calldata pointer,
+        uint80[] calldata decompressedLength,
+        uint16[] calldata imageCount
     ) external;
 
     function toggleDataURIEnabled() external;

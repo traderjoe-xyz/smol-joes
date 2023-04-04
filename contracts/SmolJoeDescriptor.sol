@@ -72,8 +72,13 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         art.setInflator(inflator);
     }
 
-    function traitCount(ISmolJoeArt.TraitType traitType) external view override returns (uint256) {
-        return art.getTrait(traitType).storedImagesCount;
+    function traitCount(ISmolJoeArt.TraitType traitType, ISmolJoeArt.Brotherhood brotherhood)
+        external
+        view
+        override
+        returns (uint256)
+    {
+        return art.getTrait(traitType, brotherhood).storedImagesCount;
     }
 
     /**
@@ -85,15 +90,6 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      */
     function setPalette(uint8 paletteIndex, bytes calldata palette) external override onlyOwner {
         art.setPalette(paletteIndex, palette);
-    }
-
-    function addTraits(
-        ISmolJoeArt.TraitType traitType,
-        bytes calldata encodedCompressed,
-        uint80 decompressedLength,
-        uint16 imageCount
-    ) external override onlyOwner {
-        art.addTraits(traitType, encodedCompressed, decompressedLength, imageCount);
     }
 
     /**
@@ -109,103 +105,48 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         art.setPalettePointer(paletteIndex, pointer);
     }
 
+    function addTraits(
+        ISmolJoeArt.TraitType traitType,
+        ISmolJoeArt.Brotherhood brotherhood,
+        bytes calldata encodedCompressed,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external override onlyOwner {
+        art.addTraits(traitType, brotherhood, encodedCompressed, decompressedLength, imageCount);
+    }
+
+    function addMultipleTraits(
+        ISmolJoeArt.TraitType[] calldata traitType,
+        ISmolJoeArt.Brotherhood[] calldata brotherhood,
+        bytes[] calldata encodedCompressed,
+        uint80[] calldata decompressedLength,
+        uint16[] calldata imageCount
+    ) external override onlyOwner {
+        for (uint256 i = 0; i < traitType.length; i++) {
+            art.addTraits(traitType[i], brotherhood[i], encodedCompressed[i], decompressedLength[i], imageCount[i]);
+        }
+    }
+
     function addTraitsFromPointer(
         ISmolJoeArt.TraitType traitType,
+        ISmolJoeArt.Brotherhood brotherhood,
         address pointer,
         uint80 decompressedLength,
         uint16 imageCount
     ) external override onlyOwner {
-        art.addTraitsFromPointer(traitType, pointer, decompressedLength, imageCount);
+        art.addTraitsFromPointer(traitType, brotherhood, pointer, decompressedLength, imageCount);
     }
 
-    /**
-     * @notice Get a specal image by ID.
-     * @param index the index of the special.
-     * @return string the RLE-encoded bytes value of the background.
-     */
-    function specials(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.specials(index);
-    }
-
-    /**
-     * @notice Get a background image by ID.
-     * @param index the index of the background.
-     * @return string the RLE-encoded bytes value of the background.
-     */
-    function backgrounds(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.backgrounds(index);
-    }
-
-    /**
-     * @notice Get a body image by ID.
-     * @param index the index of the body.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function bodies(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.bodies(index);
-    }
-
-    /**
-     * @notice Get a pant image by ID.
-     * @param index the index of the body.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function pants(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.pants(index);
-    }
-
-    /**
-     * @notice Get an shoe image by ID.
-     * @param index the index of the eye.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function shoes(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.shoes(index);
-    }
-
-    /**
-     * @notice Get a shirt image by ID.
-     * @param index the index of the shirt.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function shirts(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.shirts(index);
-    }
-
-    /**
-     * @notice Get a beard image by ID.
-     * @param index the index of the beard.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function beards(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.beards(index);
-    }
-
-    /**
-     * @notice Get a head image by ID.
-     * @param index the index of the head.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function heads(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.heads(index);
-    }
-
-    /**
-     * @notice Get an eye image by ID.
-     * @param index the index of the eye.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function eyes(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.eyes(index);
-    }
-
-    /**
-     * @notice Get an accessory image by ID.
-     * @param index the index of the accessory.
-     * @return bytes the RLE-encoded bytes of the image.
-     */
-    function accessories(uint256 index) public view override returns (bytes memory, string memory) {
-        return art.accessories(index);
+    function addMultipleTraitsFromPointer(
+        ISmolJoeArt.TraitType[] calldata traitType,
+        ISmolJoeArt.Brotherhood[] calldata brotherhood,
+        address[] calldata pointer,
+        uint80[] calldata decompressedLength,
+        uint16[] calldata imageCount
+    ) external override onlyOwner {
+        for (uint256 i = 0; i < traitType.length; i++) {
+            art.addTraitsFromPointer(traitType[i], brotherhood[i], pointer[i], decompressedLength[i], imageCount[i]);
+        }
     }
 
     /**
@@ -242,7 +183,7 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     }
 
     /**
-     * @notice Given a token ID and seed, construct a token URI for an official Nouns DAO noun.
+     * @notice Given a token ID and seed, construct a token URI for a Smol Joe.
      * @dev The returned value may be a base64 encoded data URI or an API URL.
      */
     function tokenURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed)
@@ -252,51 +193,70 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         returns (string memory)
     {
         if (isDataURIEnabled) {
-            return dataURI(tokenId, seed);
+            return _dataURI(tokenId, seed);
         }
         return string(abi.encodePacked(baseURI, tokenId.toString()));
     }
 
     /**
-     * @notice Given a token ID and seed, construct a base64 encoded data URI for an official Nouns DAO noun.
+     * @notice Given a token ID and seed, construct a base64 encoded data URI for a Smol Joe.
      */
-    function dataURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) public view override returns (string memory) {
-        string memory joeId = tokenId.toString();
-        string memory name = string(abi.encodePacked("Smol Joe ", joeId));
-        string memory description = string(abi.encodePacked("This is a empty description"));
-
-        return genericDataURI(name, description, seed);
+    function dataURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
+        return _dataURI(tokenId, seed);
     }
 
     /**
      * @notice Given a name, description, and seed, construct a base64 encoded data URI.
      */
     function genericDataURI(string memory name, string memory description, ISmolJoeSeeder.Seed memory seed)
-        public
+        external
         view
         override
         returns (string memory)
     {
-        NFTDescriptor.TokenURIParams memory params =
-            NFTDescriptor.TokenURIParams({name: name, description: description, parts: getPartsForSeed(seed)});
-        return NFTDescriptor.constructTokenURI(renderer, params);
+        return _genericDataURI(name, description, seed);
     }
 
     /**
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
     function generateSVGImage(ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
-        ISVGRenderer.SVGParams memory params = ISVGRenderer.SVGParams({parts: getPartsForSeed(seed)});
+        ISVGRenderer.SVGParams memory params = ISVGRenderer.SVGParams({parts: _getPartsForSeed(seed)});
         return NFTDescriptor.generateSVGImage(renderer, params);
+    }
+
+    /**
+     * @dev Given a token ID and seed, construct a base64 encoded data URI for a Smol Joe.
+     */
+    function _dataURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) internal view returns (string memory) {
+        string memory joeId = tokenId.toString();
+        string memory name = string(abi.encodePacked("Smol Joe ", joeId));
+        string memory description = string(abi.encodePacked("This is a empty description"));
+
+        return _genericDataURI(name, description, seed);
+    }
+
+    /**
+     * @dev Given a name, description, and seed, construct a base64 encoded data URI.
+     */
+    function _genericDataURI(string memory name, string memory description, ISmolJoeSeeder.Seed memory seed)
+        internal
+        view
+        returns (string memory)
+    {
+        NFTDescriptor.TokenURIParams memory params =
+            NFTDescriptor.TokenURIParams({name: name, description: description, parts: _getPartsForSeed(seed)});
+        return NFTDescriptor.constructTokenURI(renderer, params);
     }
 
     /**
      * @notice Get all Smol Joe parts for the passed `seed`.
      */
-    function getPartsForSeed(ISmolJoeSeeder.Seed memory seed) public view returns (ISVGRenderer.Part[] memory) {
+    function _getPartsForSeed(ISmolJoeSeeder.Seed memory seed) internal view returns (ISVGRenderer.Part[] memory) {
         if (seed.smolJoeType == ISmolJoeSeeder.SmolJoeCast.Special) {
             ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](1);
-            (bytes memory special, string memory specialTraitName) = art.specials(seed.special);
+            (bytes memory special, string memory specialTraitName) =
+                art.getImageByIndex(ISmolJoeArt.TraitType.Special, ISmolJoeArt.Brotherhood.None, seed.special);
 
             parts[0] = ISVGRenderer.Part({name: specialTraitName, image: special, palette: _getPalette(special)});
             return parts;
@@ -304,27 +264,40 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
             ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
 
             {
-                (bytes memory background, string memory backgroundTraitName) = art.backgrounds(seed.background);
-                (bytes memory body, string memory bodyTraitName) = art.bodies(seed.body);
-                (bytes memory pant, string memory pantTraitName) = art.pants(seed.pant);
-                (bytes memory shoe, string memory shoeTraitName) = art.shoes(seed.shoe);
+                (bytes memory background, string memory backgroundTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Background, ISmolJoeArt.Brotherhood.None, seed.background);
+                (bytes memory body, string memory bodyTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Body, ISmolJoeArt.Brotherhood.None, seed.body);
+                (bytes memory shoe, string memory shoeTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Shoes, ISmolJoeArt.Brotherhood.None, seed.shoe);
 
                 parts[0] =
                     ISVGRenderer.Part({name: backgroundTraitName, image: background, palette: _getPalette(background)});
                 parts[1] = ISVGRenderer.Part({name: bodyTraitName, image: body, palette: _getPalette(body)});
-                parts[2] = ISVGRenderer.Part({name: pantTraitName, image: pant, palette: _getPalette(pant)});
-                parts[3] = ISVGRenderer.Part({name: shoeTraitName, image: shoe, palette: _getPalette(shoe)});
+                parts[2] = ISVGRenderer.Part({name: shoeTraitName, image: shoe, palette: _getPalette(shoe)});
             }
 
             {
-                (bytes memory shirt, string memory shirtTraitName) = art.shirts(seed.shirt);
-                (bytes memory beard, string memory beardTraitName) = art.beards(seed.beard);
-                (bytes memory head, string memory headTraitName) = art.heads(seed.head);
-                (bytes memory eye, string memory eyeTraitName) = art.eyes(seed.eye);
-                (bytes memory accessory, string memory accessoryTraitName) = art.accessories(seed.accessory);
+                (bytes memory pant, string memory pantTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Pants, ISmolJoeArt.Brotherhood.None, seed.pant);
+                (bytes memory shirt, string memory shirtTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Shirt, ISmolJoeArt.Brotherhood.None, seed.shirt);
+                (bytes memory beard, string memory beardTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Beard, ISmolJoeArt.Brotherhood.None, seed.beard);
 
+                parts[3] = ISVGRenderer.Part({name: pantTraitName, image: pant, palette: _getPalette(pant)});
                 parts[4] = ISVGRenderer.Part({name: shirtTraitName, image: shirt, palette: _getPalette(shirt)});
                 parts[5] = ISVGRenderer.Part({name: beardTraitName, image: beard, palette: _getPalette(beard)});
+            }
+
+            {
+                (bytes memory head, string memory headTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.HairCapHead, ISmolJoeArt.Brotherhood.None, seed.head);
+                (bytes memory eye, string memory eyeTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.EyeAccessory, ISmolJoeArt.Brotherhood.None, seed.eye);
+                (bytes memory accessory, string memory accessoryTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Accessories, ISmolJoeArt.Brotherhood.None, seed.accessory);
+
                 parts[6] = ISVGRenderer.Part({name: headTraitName, image: head, palette: _getPalette(head)});
                 parts[7] = ISVGRenderer.Part({name: eyeTraitName, image: eye, palette: _getPalette(eye)});
                 parts[8] =

@@ -19,9 +19,7 @@ contract SmolJoeArt is ISmolJoeArt {
     /// @notice Smol Joe Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
     mapping(uint8 => address) public palettesPointers;
 
-    mapping(TraitType => Trait) public traits;
-
-    bytes constant emptyItem = "\x00\x00\x00\x00\x00";
+    mapping(TraitType => mapping(Brotherhood => Trait)) public traits;
 
     /**
      * @notice Require that the sender is the descriptor.
@@ -60,8 +58,8 @@ contract SmolJoeArt is ISmolJoeArt {
         emit InflatorUpdated(oldInflator, address(_inflator));
     }
 
-    function getTrait(TraitType traitType) external view override returns (Trait memory) {
-        return traits[traitType];
+    function getTrait(TraitType traitType, Brotherhood brotherhood) external view override returns (Trait memory) {
+        return traits[traitType][brotherhood];
     }
 
     /**
@@ -86,11 +84,12 @@ contract SmolJoeArt is ISmolJoeArt {
 
     function addTraits(
         TraitType traitType,
+        Brotherhood brotherhood,
         bytes calldata encodedCompressed,
         uint80 decompressedLength,
         uint16 imageCount
     ) external override onlyDescriptor {
-        _addPage(traits[traitType], encodedCompressed, decompressedLength, imageCount);
+        _addPage(traits[traitType][brotherhood], encodedCompressed, decompressedLength, imageCount);
 
         emit BackgroundsAdded(imageCount);
     }
@@ -110,92 +109,31 @@ contract SmolJoeArt is ISmolJoeArt {
         emit PaletteSet(paletteIndex);
     }
 
-    function addTraitsFromPointer(TraitType traitType, address pointer, uint80 decompressedLength, uint16 imageCount)
-        external
-        override
-        onlyDescriptor
-    {
-        addPage(traits[traitType], pointer, decompressedLength, imageCount);
+    function addTraitsFromPointer(
+        TraitType traitType,
+        Brotherhood brotherhood,
+        address pointer,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external override onlyDescriptor {
+        _addPage(traits[traitType][brotherhood], pointer, decompressedLength, imageCount);
 
         emit BackgroundsAdded(imageCount);
     }
 
-    /**
-     * @notice Get a special image bytes (RLE-encoded).
-     */
-    function specials(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Special], index);
-    }
-
-    /**
-     * @notice Get a background image bytes (RLE-encoded).
-     */
-    function backgrounds(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Background], index);
-    }
-
-    /**
-     * @notice Get a body image bytes (RLE-encoded).
-     */
-    function bodies(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Body], index);
-    }
-
-    /**
-     * @notice Get a pants image bytes (RLE-encoded).
-     */
-    function pants(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Pants], index);
-    }
-
-    /**
-     * @notice Get a shoes image bytes (RLE-encoded).
-     */
-    function shoes(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Shoes], index);
-    }
-
-    /**
-     * @notice Get a shirt image bytes (RLE-encoded).
-     */
-    function shirts(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Shirt], index);
-    }
-
-    /**
-     * @notice Get a beard image bytes (RLE-encoded).
-     */
-    function beards(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Beard], index);
-    }
-
-    /**
-     * @notice Get a head image bytes (RLE-encoded).
-     */
-    function heads(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.HairCapHead], index);
-    }
-
-    /**
-     * @notice Get a eyes image bytes (RLE-encoded).
-     */
-
-    function eyes(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.EyeAccessory], index);
-    }
-
-    /**
-     * @notice Get a accessories image bytes (RLE-encoded).
-     */
-
-    function accessories(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Accessories], index);
+    function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
+        external
+        view
+        override
+        returns (bytes memory, string memory)
+    {
+        return _imageByIndex(traits[traitType][brotherhood], index);
     }
 
     /**
      * @notice Get a color palette bytes.
      */
-    function palettes(uint8 paletteIndex) public view override returns (bytes memory) {
+    function palettes(uint8 paletteIndex) external view override returns (bytes memory) {
         address pointer = palettesPointers[paletteIndex];
         if (pointer == address(0)) {
             revert PaletteNotFound();
@@ -213,10 +151,10 @@ contract SmolJoeArt is ISmolJoeArt {
             revert EmptyBytes();
         }
         address pointer = SSTORE2.write(encodedCompressed);
-        addPage(trait, pointer, decompressedLength, imageCount);
+        _addPage(trait, pointer, decompressedLength, imageCount);
     }
 
-    function addPage(Trait storage trait, address pointer, uint80 decompressedLength, uint16 imageCount) internal {
+    function _addPage(Trait storage trait, address pointer, uint80 decompressedLength, uint16 imageCount) internal {
         if (decompressedLength == 0) {
             revert BadDecompressedLength();
         }
@@ -229,13 +167,13 @@ contract SmolJoeArt is ISmolJoeArt {
         trait.storedImagesCount += imageCount;
     }
 
-    function imageByIndex(ISmolJoeArt.Trait storage trait, uint256 index)
+    function _imageByIndex(ISmolJoeArt.Trait storage trait, uint256 index)
         internal
         view
         returns (bytes memory, string memory)
     {
-        (ISmolJoeArt.SmolJoeArtStoragePage storage page, uint256 indexInPage) = getPage(trait.storagePages, index);
-        (bytes[] memory decompressedImages, string[] memory imagesNames) = decompressAndDecode(page);
+        (ISmolJoeArt.SmolJoeArtStoragePage storage page, uint256 indexInPage) = _getPage(trait.storagePages, index);
+        (bytes[] memory decompressedImages, string[] memory imagesNames) = _decompressAndDecode(page);
 
         return (decompressedImages[indexInPage], imagesNames[indexInPage]);
     }
@@ -248,7 +186,7 @@ contract SmolJoeArt is ISmolJoeArt {
      * @return ISmolJoeArt.SmolJoeArtStoragePage the page containing the image at index
      * @return uint256 the index of the image in the page
      */
-    function getPage(ISmolJoeArt.SmolJoeArtStoragePage[] storage pages, uint256 index)
+    function _getPage(ISmolJoeArt.SmolJoeArtStoragePage[] storage pages, uint256 index)
         internal
         view
         returns (ISmolJoeArt.SmolJoeArtStoragePage storage, uint256)
@@ -268,7 +206,7 @@ contract SmolJoeArt is ISmolJoeArt {
         revert ImageNotFound();
     }
 
-    function decompressAndDecode(ISmolJoeArt.SmolJoeArtStoragePage storage page)
+    function _decompressAndDecode(ISmolJoeArt.SmolJoeArtStoragePage storage page)
         internal
         view
         returns (bytes[] memory, string[] memory)

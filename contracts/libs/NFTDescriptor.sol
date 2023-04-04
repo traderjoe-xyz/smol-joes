@@ -51,7 +51,7 @@ library NFTDescriptor {
                             '", "description":"',
                             params.description,
                             '", "attributes":',
-                            generateTraitData(params.parts),
+                            _generateTraitData(params.parts),
                             ', "image": "',
                             "data:image/svg+xml;base64,",
                             image,
@@ -77,7 +77,7 @@ library NFTDescriptor {
     /**
      * @notice Generate the trait data for an ERC721 token.
      */
-    function generateTraitData(ISVGRenderer.Part[] memory parts) internal pure returns (string memory traitData) {
+    function _generateTraitData(ISVGRenderer.Part[] memory parts) internal pure returns (string memory traitData) {
         string[9] memory traitNames =
             ["Background", "Body", "Pants", "Shoes", "Shirt", "Beard", "Head", "Eye", "Accesory"];
 

@@ -20,5 +20,8 @@ interface ISmolJoeDescriptorMinimal {
     /// USED BY SEEDER
     ///
 
-    function traitCount(ISmolJoeArt.TraitType traitType) external view returns (uint256);
+    function traitCount(ISmolJoeArt.TraitType traitType, ISmolJoeArt.Brotherhood brotherhood)
+        external
+        view
+        returns (uint256);
 }

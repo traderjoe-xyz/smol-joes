@@ -45,15 +45,15 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
     {
         uint256 pseudoRandomness = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
 
-        uint256 backgroundCount = descriptor.traitCount(ISmolJoeArt.TraitType.Background);
-        uint256 bodyCount = descriptor.traitCount(ISmolJoeArt.TraitType.Body);
-        uint256 pantCount = descriptor.traitCount(ISmolJoeArt.TraitType.Pants);
-        uint256 shoeCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shoes);
-        uint256 shirtCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shirt);
-        uint256 beardCount = descriptor.traitCount(ISmolJoeArt.TraitType.Beard);
-        uint256 headCount = descriptor.traitCount(ISmolJoeArt.TraitType.HairCapHead);
-        uint256 eyeCount = descriptor.traitCount(ISmolJoeArt.TraitType.EyeAccessory);
-        uint256 accessoryCount = descriptor.traitCount(ISmolJoeArt.TraitType.Accessories);
+        uint256 backgroundCount = descriptor.traitCount(ISmolJoeArt.TraitType.Background, ISmolJoeArt.Brotherhood.None);
+        uint256 bodyCount = descriptor.traitCount(ISmolJoeArt.TraitType.Body, ISmolJoeArt.Brotherhood.None);
+        uint256 pantCount = descriptor.traitCount(ISmolJoeArt.TraitType.Pants, ISmolJoeArt.Brotherhood.None);
+        uint256 shoeCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shoes, ISmolJoeArt.Brotherhood.None);
+        uint256 shirtCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shirt, ISmolJoeArt.Brotherhood.None);
+        uint256 beardCount = descriptor.traitCount(ISmolJoeArt.TraitType.Beard, ISmolJoeArt.Brotherhood.None);
+        uint256 headCount = descriptor.traitCount(ISmolJoeArt.TraitType.HairCapHead, ISmolJoeArt.Brotherhood.None);
+        uint256 eyeCount = descriptor.traitCount(ISmolJoeArt.TraitType.EyeAccessory, ISmolJoeArt.Brotherhood.None);
+        uint256 accessoryCount = descriptor.traitCount(ISmolJoeArt.TraitType.Accessories, ISmolJoeArt.Brotherhood.None);
 
         uint16 specialSeed = upgradeType == SmolJoeCast.Special ? _getUniqueArtMapping(tokenId) : 0;
 

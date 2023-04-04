@@ -91,33 +91,24 @@ interface ISmolJoeArt {
 
     function addTraits(
         TraitType traitType,
+        Brotherhood brotherhood,
         bytes calldata encodedCompressed,
         uint80 decompressedLength,
         uint16 imageCount
     ) external;
 
-    function addTraitsFromPointer(TraitType traitType, address pointer, uint80 decompressedLength, uint16 imageCount)
-        external;
+    function addTraitsFromPointer(
+        TraitType traitType,
+        Brotherhood brotherhood,
+        address pointer,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external;
 
-    function getTrait(TraitType traitType) external view returns (Trait memory);
+    function getTrait(TraitType traitType, Brotherhood brotherhood) external view returns (Trait memory);
 
-    function specials(uint256 index) external view returns (bytes memory, string memory);
-
-    function backgrounds(uint256 index) external view returns (bytes memory, string memory);
-
-    function bodies(uint256 index) external view returns (bytes memory, string memory);
-
-    function pants(uint256 index) external view returns (bytes memory, string memory);
-
-    function shoes(uint256 index) external view returns (bytes memory, string memory);
-
-    function shirts(uint256 index) external view returns (bytes memory, string memory);
-
-    function beards(uint256 index) external view returns (bytes memory, string memory);
-
-    function heads(uint256 index) external view returns (bytes memory, string memory);
-
-    function eyes(uint256 index) external view returns (bytes memory, string memory);
-
-    function accessories(uint256 index) external view returns (bytes memory, string memory);
+    function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
+        external
+        view
+        returns (bytes memory rle, string memory name);
 }
