@@ -21,7 +21,16 @@ contract TestHelper is Test {
     SVGRenderer renderer;
     Inflator inflator;
 
-    function setUp() public {
+    /**
+     * @dev Used in `_populateDescriptor()`
+     */
+    ISmolJoeArt.TraitType[] traitTypeList;
+    ISmolJoeArt.Brotherhood[] brotherhoodList;
+    bytes[] traitsList;
+    uint80[] traitsLengthList;
+    uint16[] traitsCountList;
+
+    function setUp() public virtual {
         inflator = new Inflator();
         renderer = new SVGRenderer();
         seeder = new SmolJoeSeeder();
@@ -29,10 +38,6 @@ contract TestHelper is Test {
         descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(0)), renderer);
         art = new SmolJoeArt(address(descriptor), inflator);
         descriptor.setArt(art);
-
-        uint256 gasLeft = gasleft();
-        _populateDescriptorV2();
-        console.log("Gas used: ", gasLeft - gasleft());
 
         uint16[100] memory artMapping;
         for (uint16 i = 0; i < artMapping.length; i++) {
@@ -43,80 +48,65 @@ contract TestHelper is Test {
         token = new SmolJoes(descriptor, seeder);
     }
 
-    function _populateDescriptorV2() internal {
-        // created with `yarn hardhat make-descriptor-art`
+    // created with `yarn hardhat make-descriptor-art`
+    function _populateDescriptor() internal {
+        string[11] memory traitTypes = [
+            "backgrounds",
+            "bodies",
+            "shoes",
+            "pants",
+            "shirts",
+            "beards",
+            "heads",
+            "eyes",
+            "accessories",
+            "uniques",
+            "specials"
+        ];
+
+        string[11] memory brotherhoods = [
+            "None",
+            "Academics",
+            "Athletes",
+            "Creatives",
+            "Gentlemans",
+            "MagicalBeings",
+            "Military",
+            "Musicians",
+            "Outlaws",
+            "Religious",
+            "Superheros"
+        ];
+
         (bytes memory palette) =
             abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/palette.abi")), (bytes));
         descriptor.setPalette(0, palette);
 
-        (bytes memory backgrounds, uint80 backgroundsLength, uint16 backgroundsCount) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/backgroundsPage.abi")), (bytes, uint80, uint16)
-        );
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Background,
-            ISmolJoeArt.Brotherhood.None,
-            backgrounds,
-            backgroundsLength,
-            backgroundsCount
-        );
+        for (uint256 i = 0; i < traitTypes.length; i++) {
+            for (uint256 j = 0; j < brotherhoods.length; j++) {
+                try vm.readFile(
+                    string(abi.encodePacked("./test/files/encoded-assets/", traitTypes[i], brotherhoods[j], "Page.abi"))
+                ) returns (string memory result) {
+                    (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
+                        abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
 
-        (bytes memory bodies, uint80 bodiesLength, uint16 bodiesCount) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/bodiesPage.abi")), (bytes, uint80, uint16)
-        );
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Body, ISmolJoeArt.Brotherhood.None, bodies, bodiesLength, bodiesCount
-        );
+                    traitTypeList.push(ISmolJoeArt.TraitType(i));
+                    brotherhoodList.push(ISmolJoeArt.Brotherhood(j));
+                    traitsList.push(traits);
+                    traitsLengthList.push(traitsLength);
+                    traitsCountList.push(traitsCount);
+                } catch {}
+            }
 
-        (bytes memory pants, uint80 pantsLength, uint16 pantsCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/pantsPage.abi")), (bytes, uint80, uint16));
-        descriptor.addTraits(ISmolJoeArt.TraitType.Pants, ISmolJoeArt.Brotherhood.None, pants, pantsLength, pantsCount);
+            console.log("Adding %s brotherhoods for trait: ", brotherhoodList.length, traitTypes[i]);
 
-        (bytes memory shoes, uint80 shoesLength, uint16 shoesCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/shoesPage.abi")), (bytes, uint80, uint16));
-        descriptor.addTraits(ISmolJoeArt.TraitType.Shoes, ISmolJoeArt.Brotherhood.None, shoes, shoesLength, shoesCount);
+            descriptor.addMultipleTraits(traitTypeList, brotherhoodList, traitsList, traitsLengthList, traitsCountList);
 
-        (bytes memory shirts, uint80 shirtsLength, uint16 shirtsCount) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/shirtsPage.abi")), (bytes, uint80, uint16)
-        );
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Shirt, ISmolJoeArt.Brotherhood.None, shirts, shirtsLength, shirtsCount
-        );
-
-        (bytes memory beards, uint80 beardsLength, uint16 beardsCount) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/beardsPage.abi")), (bytes, uint80, uint16)
-        );
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Beard, ISmolJoeArt.Brotherhood.None, beards, beardsLength, beardsCount
-        );
-
-        (bytes memory heads, uint80 headsLength, uint16 headsCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/headsPage.abi")), (bytes, uint80, uint16));
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.HairCapHead, ISmolJoeArt.Brotherhood.None, heads, headsLength, headsCount
-        );
-
-        (bytes memory eyes, uint80 eyesLength, uint16 eyesCount) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/eyesPage.abi")), (bytes, uint80, uint16));
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.EyeAccessory, ISmolJoeArt.Brotherhood.None, eyes, eyesLength, eyesCount
-        );
-
-        (bytes memory accessories, uint80 accessoriesLength, uint16 accessoriesCount) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/accessoriesPage.abi")), (bytes, uint80, uint16)
-        );
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Accessories,
-            ISmolJoeArt.Brotherhood.None,
-            accessories,
-            accessoriesLength,
-            accessoriesCount
-        );
-
-        (bytes memory specials, uint80 specialsLength, uint16 specialsCount) = abi.decode(
-            vm.parseBytes(vm.readFile("./test/files/encoded-assets/specialsPage.abi")), (bytes, uint80, uint16)
-        );
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Special, ISmolJoeArt.Brotherhood.None, specials, specialsLength, specialsCount
-        );
+            traitTypeList = new ISmolJoeArt.TraitType[](0);
+            brotherhoodList = new ISmolJoeArt.Brotherhood[](0);
+            traitsList = new bytes[](0);
+            traitsLengthList = new uint80[](0);
+            traitsCountList = new uint16[](0);
+        }
     }
 }

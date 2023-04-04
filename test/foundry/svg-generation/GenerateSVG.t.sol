@@ -7,6 +7,10 @@ contract BasicTest is TestHelper {
     using Strings for uint256;
 
     function test_SVGGeneration() public {
+        uint256 gasLeft = gasleft();
+        _populateDescriptor();
+        console.log("Gas used: ", gasLeft - gasleft());
+
         string[] memory inputs = new string[](5);
         inputs[0] = "yarn";
         inputs[1] = "hardhat";

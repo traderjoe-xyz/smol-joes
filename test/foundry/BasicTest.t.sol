@@ -5,6 +5,10 @@ pragma solidity ^0.8.6;
 import "./TestHelper.sol";
 
 contract BasicTest is TestHelper {
+    function test_Populate() public {
+        _populateDescriptor();
+    }
+
     function test_UpdateUniquesArtMapping() public {
         uint16[100] memory artMapping;
         for (uint16 i = 0; i < artMapping.length; i++) {
