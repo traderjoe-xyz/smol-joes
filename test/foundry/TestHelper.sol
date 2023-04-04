@@ -52,12 +52,12 @@ contract TestHelper is Test {
         (bytes memory backgrounds, uint80 backgroundsLength, uint16 backgroundsCount) = abi.decode(
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/backgroundsPage.abi")), (bytes, uint80, uint16)
         );
-        descriptor.addTraits(ISmolJoeArt.TraitType.Backgrounds, backgrounds, backgroundsLength, backgroundsCount);
+        descriptor.addTraits(ISmolJoeArt.TraitType.Background, backgrounds, backgroundsLength, backgroundsCount);
 
         (bytes memory bodies, uint80 bodiesLength, uint16 bodiesCount) = abi.decode(
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/bodiesPage.abi")), (bytes, uint80, uint16)
         );
-        descriptor.addTraits(ISmolJoeArt.TraitType.Bodies, bodies, bodiesLength, bodiesCount);
+        descriptor.addTraits(ISmolJoeArt.TraitType.Body, bodies, bodiesLength, bodiesCount);
 
         (bytes memory pants, uint80 pantsLength, uint16 pantsCount) =
             abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/pantsPage.abi")), (bytes, uint80, uint16));
@@ -70,20 +70,20 @@ contract TestHelper is Test {
         (bytes memory shirts, uint80 shirtsLength, uint16 shirtsCount) = abi.decode(
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/shirtsPage.abi")), (bytes, uint80, uint16)
         );
-        descriptor.addTraits(ISmolJoeArt.TraitType.Shirts, shirts, shirtsLength, shirtsCount);
+        descriptor.addTraits(ISmolJoeArt.TraitType.Shirt, shirts, shirtsLength, shirtsCount);
 
         (bytes memory beards, uint80 beardsLength, uint16 beardsCount) = abi.decode(
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/beardsPage.abi")), (bytes, uint80, uint16)
         );
-        descriptor.addTraits(ISmolJoeArt.TraitType.Beards, beards, beardsLength, beardsCount);
+        descriptor.addTraits(ISmolJoeArt.TraitType.Beard, beards, beardsLength, beardsCount);
 
         (bytes memory heads, uint80 headsLength, uint16 headsCount) =
             abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/headsPage.abi")), (bytes, uint80, uint16));
-        descriptor.addTraits(ISmolJoeArt.TraitType.Heads, heads, headsLength, headsCount);
+        descriptor.addTraits(ISmolJoeArt.TraitType.HairCapHead, heads, headsLength, headsCount);
 
         (bytes memory eyes, uint80 eyesLength, uint16 eyesCount) =
             abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/eyesPage.abi")), (bytes, uint80, uint16));
-        descriptor.addTraits(ISmolJoeArt.TraitType.Eyes, eyes, eyesLength, eyesCount);
+        descriptor.addTraits(ISmolJoeArt.TraitType.EyeAccessory, eyes, eyesLength, eyesCount);
 
         (bytes memory accessories, uint80 accessoriesLength, uint16 accessoriesCount) = abi.decode(
             vm.parseBytes(vm.readFile("./test/files/encoded-assets/accessoriesPage.abi")), (bytes, uint80, uint16)

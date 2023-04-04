@@ -38,15 +38,30 @@ interface ISmolJoeArt {
 
     enum TraitType {
         Special,
-        Backgrounds,
-        Bodies,
+        Unique,
+        Background,
+        Body,
         Pants,
         Shoes,
-        Shirts,
-        Beards,
-        Heads,
-        Eyes,
+        Shirt,
+        Beard,
+        HairCapHead,
+        EyeAccessory,
         Accessories
+    }
+
+    enum Brotherhood {
+        None,
+        Academics,
+        Athletes,
+        Creatives,
+        Gentlemans,
+        MagicalBeings,
+        Military,
+        Musicians,
+        Outlaws,
+        Religious,
+        Superheros
     }
 
     struct SmolJoeArtStoragePage {

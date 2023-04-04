@@ -131,14 +131,14 @@ contract SmolJoeArt is ISmolJoeArt {
      * @notice Get a background image bytes (RLE-encoded).
      */
     function backgrounds(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Backgrounds], index);
+        return imageByIndex(traits[TraitType.Background], index);
     }
 
     /**
      * @notice Get a body image bytes (RLE-encoded).
      */
     function bodies(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Bodies], index);
+        return imageByIndex(traits[TraitType.Body], index);
     }
 
     /**
@@ -159,21 +159,21 @@ contract SmolJoeArt is ISmolJoeArt {
      * @notice Get a shirt image bytes (RLE-encoded).
      */
     function shirts(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Shirts], index);
+        return imageByIndex(traits[TraitType.Shirt], index);
     }
 
     /**
      * @notice Get a beard image bytes (RLE-encoded).
      */
     function beards(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Beards], index);
+        return imageByIndex(traits[TraitType.Beard], index);
     }
 
     /**
      * @notice Get a head image bytes (RLE-encoded).
      */
     function heads(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Heads], index);
+        return imageByIndex(traits[TraitType.HairCapHead], index);
     }
 
     /**
@@ -181,7 +181,7 @@ contract SmolJoeArt is ISmolJoeArt {
      */
 
     function eyes(uint256 index) public view override returns (bytes memory, string memory) {
-        return imageByIndex(traits[TraitType.Eyes], index);
+        return imageByIndex(traits[TraitType.EyeAccessory], index);
     }
 
     /**
