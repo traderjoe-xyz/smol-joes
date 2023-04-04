@@ -51,6 +51,8 @@ contract TestHelper is Test {
     // created with `yarn hardhat make-descriptor-art`
     function _populateDescriptor() internal {
         string[11] memory traitTypes = [
+            "specials",
+            "uniques",
             "backgrounds",
             "bodies",
             "shoes",
@@ -59,9 +61,7 @@ contract TestHelper is Test {
             "beards",
             "heads",
             "eyes",
-            "accessories",
-            "uniques",
-            "specials"
+            "accessories"
         ];
 
         string[11] memory brotherhoods = [
@@ -90,6 +90,10 @@ contract TestHelper is Test {
                     (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
                         abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
 
+                    // console.log(
+                    //     "Adding %s traits for trait: %s, brotherhood: %s", traitsCount, traitTypes[i], brotherhoods[j]
+                    // );
+
                     traitTypeList.push(ISmolJoeArt.TraitType(i));
                     brotherhoodList.push(ISmolJoeArt.Brotherhood(j));
                     traitsList.push(traits);
@@ -98,7 +102,7 @@ contract TestHelper is Test {
                 } catch {}
             }
 
-            console.log("Adding %s brotherhoods for trait: ", brotherhoodList.length, traitTypes[i]);
+            // console.log("Adding %s brotherhoods for trait: ", brotherhoodList.length, traitTypes[i]);
 
             descriptor.addMultipleTraits(traitTypeList, brotherhoodList, traitsList, traitsLengthList, traitsCountList);
 

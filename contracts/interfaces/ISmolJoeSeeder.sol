@@ -5,6 +5,7 @@
 pragma solidity ^0.8.6;
 
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
+import {ISmolJoeArt} from "./ISmolJoeArt.sol";
 
 interface ISmolJoeSeeder {
     enum SmolJoeCast {
@@ -14,8 +15,9 @@ interface ISmolJoeSeeder {
     }
 
     struct Seed {
-        SmolJoeCast smolJoeType;
-        uint16 special;
+        ISmolJoeArt.Brotherhood brotherhood;
+        uint16 specialId;
+        uint16 uniqueId;
         uint16 background;
         uint16 body;
         uint16 pant;
@@ -29,6 +31,5 @@ interface ISmolJoeSeeder {
 
     function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor, SmolJoeCast upgradeType)
         external
-        view
         returns (Seed memory);
 }

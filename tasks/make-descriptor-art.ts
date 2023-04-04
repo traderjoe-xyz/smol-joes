@@ -62,7 +62,9 @@ task(
 
       bodyparts.forEach((bodypart) => {
         const brotherhoodBodyparts = bodypart.object.filter(
-          (item) => item.brotherhood === brotherhood
+          (item) =>
+            item.brotherhood ===
+            (brotherhood === "MagicalBeings" ? "Magical Beings" : brotherhood)
         );
 
         if (brotherhoodBodyparts.length > 0) {

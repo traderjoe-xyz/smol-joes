@@ -253,10 +253,17 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @notice Get all Smol Joe parts for the passed `seed`.
      */
     function _getPartsForSeed(ISmolJoeSeeder.Seed memory seed) internal view returns (ISVGRenderer.Part[] memory) {
-        if (seed.smolJoeType == ISmolJoeSeeder.SmolJoeCast.Special) {
+        if (seed.specialId > 0) {
             ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](1);
             (bytes memory special, string memory specialTraitName) =
-                art.getImageByIndex(ISmolJoeArt.TraitType.Special, ISmolJoeArt.Brotherhood.None, seed.special);
+                art.getImageByIndex(ISmolJoeArt.TraitType.Special, ISmolJoeArt.Brotherhood.None, seed.specialId - 1);
+
+            parts[0] = ISVGRenderer.Part({name: specialTraitName, image: special, palette: _getPalette(special)});
+            return parts;
+        } else if (seed.uniqueId > 0) {
+            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](1);
+            (bytes memory special, string memory specialTraitName) =
+                art.getImageByIndex(ISmolJoeArt.TraitType.Unique, seed.brotherhood, seed.uniqueId - 1);
 
             parts[0] = ISVGRenderer.Part({name: specialTraitName, image: special, palette: _getPalette(special)});
             return parts;

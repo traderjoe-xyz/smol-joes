@@ -9,7 +9,7 @@ contract BasicTest is TestHelper {
     function test_SVGGeneration() public {
         uint256 gasLeft = gasleft();
         _populateDescriptor();
-        console.log("Gas used: ", gasLeft - gasleft());
+        console.log("Gas used to populate descriptor: ", gasLeft - gasleft());
 
         string[] memory inputs = new string[](5);
         inputs[0] = "yarn";
@@ -17,7 +17,7 @@ contract BasicTest is TestHelper {
         inputs[2] = "render-images";
         inputs[3] = "--token-id";
 
-        for (uint256 i = 0; i < 2; i++) {
+        for (uint256 i = 0; i < 5; i++) {
             token.mintSpecial(address(1), i, ISmolJoeSeeder.SmolJoeCast.Special);
 
             vm.writeFile(
@@ -28,7 +28,17 @@ contract BasicTest is TestHelper {
             vm.ffi(inputs);
         }
 
-        for (uint256 i = 100; i < 110; i++) {
+        for (uint256 i = 100; i < 105; i++) {
+            token.mint(address(1), i);
+            vm.writeFile(
+                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+            );
+
+            inputs[4] = i.toString();
+            vm.ffi(inputs);
+        }
+
+        for (uint256 i = 200; i < 205; i++) {
             token.mint(address(1), i);
             vm.writeFile(
                 string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
