@@ -227,9 +227,12 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
      * @dev Given a token ID and seed, construct a base64 encoded data URI for a Smol Joe.
      */
     function _dataURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) internal view returns (string memory) {
-        string memory joeId = tokenId.toString();
-        string memory name = string(abi.encodePacked("Smol Joe ", joeId));
-        string memory description = string(abi.encodePacked("This is a empty description"));
+        string memory name;
+        if (tokenId >= 200) {
+            string memory joeId = tokenId.toString();
+            name = string(abi.encodePacked("Smol Joe ", joeId));
+        }
+        string memory description = string(abi.encodePacked("This is an empty description"));
 
         return _genericDataURI(name, description, seed);
     }
@@ -242,8 +245,18 @@ contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
         view
         returns (string memory)
     {
-        NFTDescriptor.TokenURIParams memory params =
-            NFTDescriptor.TokenURIParams({name: name, description: description, parts: _getPartsForSeed(seed)});
+        NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
+            name: name,
+            description: description,
+            parts: _getPartsForSeed(seed),
+            brotherhood: seed.brotherhood
+        });
+
+        // The Uniques and the Luminaries are named after the name of their attribute.
+        if (bytes(name).length == 0) {
+            params.name = params.parts[0].name;
+        }
+
         return NFTDescriptor.constructTokenURI(renderer, params);
     }
 

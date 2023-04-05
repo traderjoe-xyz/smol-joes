@@ -17,7 +17,9 @@ contract BasicTest is TestHelper {
         inputs[2] = "render-images";
         inputs[3] = "--token-id";
 
-        for (uint256 i = 0; i < 3; i++) {
+        uint256 amountToGenerate = 1;
+
+        for (uint256 i = 0; i < amountToGenerate; i++) {
             token.mint(address(1), i);
 
             vm.writeFile(
@@ -28,7 +30,7 @@ contract BasicTest is TestHelper {
             vm.ffi(inputs);
         }
 
-        for (uint256 i = 50; i < 53; i++) {
+        for (uint256 i = 50; i < 50 + amountToGenerate; i++) {
             token.mint(address(1), i);
 
             vm.writeFile(
@@ -39,7 +41,7 @@ contract BasicTest is TestHelper {
             vm.ffi(inputs);
         }
 
-        for (uint256 i = 100; i < 105; i++) {
+        for (uint256 i = 100; i < 100 + amountToGenerate; i++) {
             token.mint(address(1), i);
             vm.writeFile(
                 string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
@@ -49,7 +51,7 @@ contract BasicTest is TestHelper {
             vm.ffi(inputs);
         }
 
-        for (uint256 i = 200; i < 205; i++) {
+        for (uint256 i = 200; i < 200 + amountToGenerate; i++) {
             token.mint(address(1), i);
             vm.writeFile(
                 string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
