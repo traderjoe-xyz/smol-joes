@@ -44,22 +44,22 @@ task(
       specials,
     } = images;
 
-    Object.keys(Brotherhood).map((brotherhood) => {
-      // Create a list of all bodyparts
-      const bodyparts = [
-        { object: background, name: "backgrounds" },
-        { object: body, name: "bodies" },
-        { object: shoes, name: "shoes" },
-        { object: pants, name: "pants" },
-        { object: shirt, name: "shirts" },
-        { object: beard, name: "beards" },
-        { object: hair_cap_head, name: "heads" },
-        { object: eye_accessory, name: "eyes" },
-        { object: accessories, name: "accessories" },
-        { object: uniques, name: "uniques" },
-        { object: specials, name: "specials" },
-      ];
+    // Create a list of all bodyparts
+    const bodyparts = [
+      { object: background, name: "backgrounds" },
+      { object: body, name: "bodies" },
+      { object: shoes, name: "shoes" },
+      { object: pants, name: "pants" },
+      { object: shirt, name: "shirts" },
+      { object: beard, name: "beards" },
+      { object: hair_cap_head, name: "heads" },
+      { object: eye_accessory, name: "eyes" },
+      { object: accessories, name: "accessories" },
+      { object: uniques, name: "uniques" },
+      { object: specials, name: "specials" },
+    ];
 
+    Object.keys(Brotherhood).map((brotherhood) => {
       bodyparts.forEach((bodypart) => {
         const brotherhoodBodyparts = bodypart.object.filter(
           (item) =>
@@ -68,15 +68,45 @@ task(
         );
 
         if (brotherhoodBodyparts.length > 0) {
-          const bodypartsPage = dataToDescriptorInput(
-            brotherhoodBodyparts.map(({ data }) => data),
-            brotherhoodBodyparts.map(({ filename }) => filename)
-          );
+          if (bodypart.name === "specials") {
+            const bodypartsPage = dataToDescriptorInput(
+              brotherhoodBodyparts
+                .filter((_, index) => index < 50)
+                .map(({ data }) => data),
+              brotherhoodBodyparts
+                .filter((_, index) => index < 50)
+                .map(({ filename }) => filename)
+            );
 
-          saveToFileAbiEncoded(
-            path.join(exportPath, `${bodypart.name}${brotherhood}Page.abi`),
-            bodypartsPage
-          );
+            saveToFileAbiEncoded(
+              path.join(exportPath, `${bodypart.name}${brotherhood}Page.abi`),
+              bodypartsPage
+            );
+
+            const bodypartsPage_2 = dataToDescriptorInput(
+              brotherhoodBodyparts
+                .filter((_, index) => index >= 50)
+                .map(({ data }) => data),
+              brotherhoodBodyparts
+                .filter((_, index) => index >= 50)
+                .map(({ filename }) => filename)
+            );
+
+            saveToFileAbiEncoded(
+              path.join(exportPath, `${bodypart.name}${brotherhood}Page_2.abi`),
+              bodypartsPage_2
+            );
+          } else {
+            const bodypartsPage = dataToDescriptorInput(
+              brotherhoodBodyparts.map(({ data }) => data),
+              brotherhoodBodyparts.map(({ filename }) => filename)
+            );
+
+            saveToFileAbiEncoded(
+              path.join(exportPath, `${bodypart.name}${brotherhood}Page.abi`),
+              bodypartsPage
+            );
+          }
         }
       });
     });

@@ -112,5 +112,19 @@ contract TestHelper is Test {
             traitsLengthList = new uint80[](0);
             traitsCountList = new uint16[](0);
         }
+
+        (bytes memory extraSpecialsTraits, uint80 extraSpecialsTraitsLength, uint16 extraSpecialsTraitsCount) = abi
+            .decode(
+            vm.parseBytes(vm.readFile(string(abi.encodePacked("./test/files/encoded-assets/specialsNonePage_2.abi")))),
+            (bytes, uint80, uint16)
+        );
+
+        descriptor.addTraits(
+            ISmolJoeArt.TraitType.Special,
+            ISmolJoeArt.Brotherhood.None,
+            extraSpecialsTraits,
+            extraSpecialsTraitsLength,
+            extraSpecialsTraitsCount
+        );
     }
 }

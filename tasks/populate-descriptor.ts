@@ -2,17 +2,40 @@ import { task } from "hardhat/config";
 import ImageData from "../files/image-data.json";
 import { dataToDescriptorInput } from "./utils";
 
+enum Brotherhood {
+  None,
+  Academics,
+  Athletes,
+  Creatives,
+  Gentlemans,
+  MagicalBeings,
+  Military,
+  Musicians,
+  Outlaws,
+  Religious,
+  Superheros,
+}
+
 enum TraitType {
   Special,
+  Unique,
   Background,
   Body,
   Pants,
   Shoes,
-  Shirts,
-  Beards,
-  Heads,
-  Eyes,
+  Shirt,
+  Beard,
+  HairCapHead,
+  EyeAccessory,
   Accessories,
+}
+
+interface AddMultipleTraitsData {
+  traitTypes: TraitType[];
+  brotherhoods: Brotherhood[];
+  encodedCompressedData: string[];
+  originalLengths: number[];
+  itemCounts: number[];
 }
 
 task(
@@ -35,147 +58,159 @@ task(
     (await deployments.get("SmolJoeSeeder")).address
   );
   const { palette, images } = ImageData;
+
   let {
-    specials,
-    backgrounds,
-    bodies,
-    pants,
+    background,
+    body,
     shoes,
-    shirts,
-    beards,
-    heads,
-    eyes,
+    pants,
+    shirt,
+    beard,
+    hair_cap_head,
+    eye_accessory,
     accessories,
+    uniques,
+    specials,
   } = images;
 
-  const specialsPage = dataToDescriptorInput(
-    specials.map(({ data }) => data),
-    specials.map(({ filename }) => filename)
-  );
-  const backgroundsPage = dataToDescriptorInput(
-    backgrounds.map(({ data }) => data),
-    backgrounds.map(({ filename }) => filename)
-  );
-  const bodiesPage = dataToDescriptorInput(
-    bodies.map(({ data }) => data),
-    bodies.map(({ filename }) => filename)
-  );
-  const pantsPage = dataToDescriptorInput(
-    pants.map(({ data }) => data),
-    pants.map(({ filename }) => filename)
-  );
-  const shoesPage = dataToDescriptorInput(
-    shoes.map(({ data }) => data),
-    shoes.map(({ filename }) => filename)
-  );
-  const shirtsPage = dataToDescriptorInput(
-    shirts.map(({ data }) => data),
-    shirts.map(({ filename }) => filename)
-  );
-  const beardsPage = dataToDescriptorInput(
-    beards.map(({ data }) => data),
-    beards.map(({ filename }) => filename)
-  );
-  const headsPage = dataToDescriptorInput(
-    heads.map(({ data }) => data),
-    heads.map(({ filename }) => filename)
-  );
-  const eyesPage = dataToDescriptorInput(
-    eyes.map(({ data }) => data),
-    eyes.map(({ filename }) => filename)
-  );
-  const accessoriesPage = dataToDescriptorInput(
-    accessories.map(({ data }) => data),
-    accessories.map(({ filename }) => filename)
-  );
+  const emptyData: AddMultipleTraitsData = {
+    traitTypes: [],
+    brotherhoods: [],
+    encodedCompressedData: [],
+    originalLengths: [],
+    itemCounts: [],
+  };
 
   const balanceBefore = await ethers.provider.getBalance(deployer);
+  // Create a list of all bodyparts
+  const bodyparts = [
+    {
+      object: specials,
+      name: "specials",
+    },
+    {
+      object: uniques,
+      name: "uniques",
+    },
+    {
+      object: background,
+      name: "backgrounds",
+    },
+    {
+      object: body,
+      name: "bodies",
+    },
+    {
+      object: shoes,
+      name: "shoes",
+    },
+    {
+      object: pants,
+      name: "pants",
+    },
+    {
+      object: shirt,
+      name: "shirts",
+    },
+    {
+      object: beard,
+      name: "beards",
+    },
+    {
+      object: hair_cap_head,
+      name: "heads",
+    },
+    {
+      object: eye_accessory,
+      name: "eyes",
+    },
+    {
+      object: accessories,
+      name: "accessories",
+    },
+  ];
+
+  for (let i = 0; i < Object.keys(Brotherhood).length; i++) {
+    const brotherhood = Object.keys(Brotherhood)[i];
+
+    for (let j = 0; j < bodyparts.length; j++) {
+      const bodypart = bodyparts[j];
+
+      const brotherhoodBodyparts = bodypart.object.filter(
+        (item) =>
+          item.brotherhood ===
+          (brotherhood === "MagicalBeings" ? "Magical Beings" : brotherhood)
+      );
+
+      if (brotherhoodBodyparts.length > 0) {
+        if (bodypart.name === "specials") {
+          const bodypartsPage = dataToDescriptorInput(
+            brotherhoodBodyparts
+              .filter((_, index) => index < 50)
+              .map(({ data }) => data),
+            brotherhoodBodyparts
+              .filter((_, index) => index < 50)
+              .map(({ filename }) => filename)
+          );
+
+          const tx = await descriptor.addTraits(
+            j,
+            Brotherhood[brotherhood],
+            bodypartsPage.encodedCompressed,
+            bodypartsPage.originalLength,
+            bodypartsPage.itemCount
+          );
+          await tx.wait();
+
+          const bodypartsPage_2 = dataToDescriptorInput(
+            brotherhoodBodyparts
+              .filter((_, index) => index >= 50)
+              .map(({ data }) => data),
+            brotherhoodBodyparts
+              .filter((_, index) => index >= 50)
+              .map(({ filename }) => filename)
+          );
+
+          const tx_2 = await descriptor.addTraits(
+            j,
+            Brotherhood[brotherhood],
+            bodypartsPage_2.encodedCompressed,
+            bodypartsPage_2.originalLength,
+            bodypartsPage_2.itemCount
+          );
+          await tx_2.wait();
+        } else {
+          const bodypartsPage = dataToDescriptorInput(
+            brotherhoodBodyparts.map(({ data }) => data),
+            brotherhoodBodyparts.map(({ filename }) => filename)
+          );
+
+          const tx = await descriptor.addTraits(
+            j,
+            Brotherhood[brotherhood],
+            bodypartsPage.encodedCompressed,
+            bodypartsPage.originalLength,
+            bodypartsPage.itemCount
+          );
+          await tx.wait();
+        }
+
+        // bodyparts[j].data.traitTypes.push(j);
+        // bodyparts[j].data.brotherhoods.push(Brotherhood[brotherhood]);
+        // bodyparts[j].data.encodedCompressedData.push(
+        //   bodypartsPage.encodedCompressed
+        // );
+        // bodyparts[j].data.originalLengths.push(bodypartsPage.originalLength);
+        // bodyparts[j].data.itemCounts.push(bodypartsPage.itemCount);
+      }
+    }
+  }
 
   const txPalette = await descriptor.setPalette(
     0,
     `0x000000${palette.join("")}`
   );
   await txPalette.wait();
-
-  const txSpecials = await descriptor.addTraits(
-    TraitType.Special,
-    specialsPage.encodedCompressed,
-    specialsPage.originalLength,
-    specialsPage.itemCount
-  );
-  await txSpecials.wait();
-
-  const txBackgrounds = await descriptor.addTraits(
-    TraitType.Background,
-    backgroundsPage.encodedCompressed,
-    backgroundsPage.originalLength,
-    backgroundsPage.itemCount
-  );
-  await txBackgrounds.wait();
-
-  const txBodies = await descriptor.addTraits(
-    TraitType.Body,
-    bodiesPage.encodedCompressed,
-    bodiesPage.originalLength,
-    bodiesPage.itemCount
-  );
-  await txBodies.wait();
-
-  const txPants = await descriptor.addTraits(
-    TraitType.Pants,
-    pantsPage.encodedCompressed,
-    pantsPage.originalLength,
-    pantsPage.itemCount
-  );
-  await txPants.wait();
-
-  const txShoes = await descriptor.addTraits(
-    TraitType.Shoes,
-    shoesPage.encodedCompressed,
-    shoesPage.originalLength,
-    shoesPage.itemCount
-  );
-  await txShoes.wait();
-
-  const txShirts = await descriptor.addTraits(
-    TraitType.Shirts,
-    shirtsPage.encodedCompressed,
-    shirtsPage.originalLength,
-    shirtsPage.itemCount
-  );
-  await txShirts.wait();
-
-  const txBeards = await descriptor.addTraits(
-    TraitType.Beards,
-    beardsPage.encodedCompressed,
-    beardsPage.originalLength,
-    beardsPage.itemCount
-  );
-  await txBeards.wait();
-
-  const txHeads = await descriptor.addTraits(
-    TraitType.Heads,
-    headsPage.encodedCompressed,
-    headsPage.originalLength,
-    headsPage.itemCount
-  );
-  await txHeads.wait();
-
-  const txEyes = await descriptor.addTraits(
-    TraitType.Eyes,
-    eyesPage.encodedCompressed,
-    eyesPage.originalLength,
-    eyesPage.itemCount
-  );
-  await txEyes.wait();
-
-  const txAccessories = await descriptor.addTraits(
-    TraitType.Accessories,
-    accessoriesPage.encodedCompressed,
-    accessoriesPage.originalLength,
-    accessoriesPage.itemCount
-  );
-  await txAccessories.wait();
 
   const mappings = [
     0,
@@ -184,27 +219,57 @@ task(
       .map((_, i) => i + 1),
   ];
 
-  const txMapping = await seeder.updateUniquesArtMapping(mappings);
+  const txMapping = await seeder.updateSpecialsArtMapping(mappings);
   await txMapping.wait();
 
   console.log(
     "Specials added: ",
-    await descriptor.traitCount(TraitType.Special)
+    await descriptor.traitCount(TraitType.Special, Brotherhood.None)
+  );
+  console.log(
+    "Uniques added: ",
+    await descriptor.traitCount(TraitType.Unique, Brotherhood.Outlaws)
   );
   console.log(
     "Backgrounds added: ",
-    await descriptor.traitCount(TraitType.Background)
+    await descriptor.traitCount(TraitType.Background, Brotherhood.None)
   );
-  console.log("Bodies added: ", await descriptor.traitCount(TraitType.Body));
-  console.log("Pants added: ", await descriptor.traitCount(TraitType.Pants));
-  console.log("Shoes added: ", await descriptor.traitCount(TraitType.Shoes));
-  console.log("Shirts added: ", await descriptor.traitCount(TraitType.Shirts));
-  console.log("Beards added: ", await descriptor.traitCount(TraitType.Beards));
-  console.log("Heads added: ", await descriptor.traitCount(TraitType.Heads));
-  console.log("Eyes added: ", await descriptor.traitCount(TraitType.Eyes));
+  console.log(
+    "Bodies added: ",
+    await descriptor.traitCount(TraitType.Body, Brotherhood.None)
+  );
+  console.log(
+    "Shoes added: ",
+    await descriptor.traitCount(TraitType.Shoes, Brotherhood.None)
+  );
+  console.log(
+    "Pants added: ",
+    await descriptor.traitCount(TraitType.Pants, Brotherhood.None)
+  );
+  console.log(
+    "Shirts added: ",
+    await descriptor.traitCount(TraitType.Shirt, Brotherhood.None)
+  );
+  console.log(
+    "Beards added: ",
+    await descriptor.traitCount(TraitType.Beard, Brotherhood.None)
+  );
+  console.log(
+    "Hair Cap Head added: ",
+    await descriptor.traitCount(TraitType.HairCapHead, Brotherhood.None)
+  );
+  console.log(
+    "Eye Accessories added: ",
+    await descriptor.traitCount(TraitType.EyeAccessory, Brotherhood.None)
+  );
   console.log(
     "Accessories added: ",
-    await descriptor.traitCount(TraitType.Accessories)
+    await descriptor.traitCount(TraitType.Accessories, Brotherhood.None)
+  );
+
+  console.log(
+    "Art mapping for Smol Joe 5",
+    await seeder.getSpecialsArtMapping(5)
   );
 
   const gasPaid = balanceBefore.sub(await ethers.provider.getBalance(deployer));

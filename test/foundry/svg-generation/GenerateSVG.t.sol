@@ -28,6 +28,17 @@ contract BasicTest is TestHelper {
             vm.ffi(inputs);
         }
 
+        for (uint256 i = 50; i < 53; i++) {
+            token.mint(address(1), i);
+
+            vm.writeFile(
+                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+            );
+
+            inputs[4] = i.toString();
+            vm.ffi(inputs);
+        }
+
         for (uint256 i = 100; i < 105; i++) {
             token.mint(address(1), i);
             vm.writeFile(

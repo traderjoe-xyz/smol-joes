@@ -20,6 +20,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   //   try {
   //     await run("verify:verify", {
   //       address: deployResult.address,
+  //       constructorArguments: [descriptor, seeder],
   //     });
   //   } catch (err) {
   //     console.error(err);
