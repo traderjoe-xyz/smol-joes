@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title Interface for SmolJoeDescriptor
-
 pragma solidity ^0.8.6;
 
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
@@ -9,15 +6,12 @@ import {ISVGRenderer} from "./ISVGRenderer.sol";
 import {ISmolJoeArt} from "./ISmolJoeArt.sol";
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 
+/// @title Interface for SmolJoeDescriptor
 interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
     event PartsLocked();
-
     event DataURIToggled(bool enabled);
-
     event BaseURIUpdated(string baseURI);
-
     event ArtUpdated(ISmolJoeArt art);
-
     event RendererUpdated(ISVGRenderer renderer);
 
     error EmptyPalette();

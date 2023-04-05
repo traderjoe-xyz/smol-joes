@@ -1,27 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @author NounsDAO: https://github.com/nounsDAO/nouns-monorepo
-/// @title A contract used to convert multi-part RLE compressed images to SVG
-
-/**
- *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░█████████░░█████████░░░ *
- * ░░░░░░██░░░████░░██░░░████░░░ *
- * ░░██████░░░████████░░░████░░░ *
- * ░░██░░██░░░████░░██░░░████░░░ *
- * ░░██░░██░░░████░░██░░░████░░░ *
- * ░░░░░░█████████░░█████████░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- *
- */
-
 pragma solidity ^0.8.6;
 
 import {ISVGRenderer} from "./interfaces/ISVGRenderer.sol";
 
+/// @title A contract used to convert multi-part RLE compressed images to SVG
+/// @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
 contract SVGRenderer is ISVGRenderer {
     bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
     uint256 private constant _INDEX_TO_BYTES3_FACTOR = 3;
@@ -50,14 +33,14 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a single SVG image.
      */
-    function generateSVG(SVGParams calldata params) external view override returns (string memory svg) {
+    function generateSVG(SVGParams calldata params) external pure override returns (string memory svg) {
         return string(abi.encodePacked(_SVG_START_TAG, _generateSVGRects(params), _SVG_END_TAG));
     }
 
     /**
      * @notice Given RLE image data and a color palette pointer, merge to generate a partial SVG image.
      */
-    function generateSVGPart(Part calldata part) external view override returns (string memory partialSVG) {
+    function generateSVGPart(Part calldata part) external pure override returns (string memory partialSVG) {
         Part[] memory parts = new Part[](1);
         parts[0] = part;
 
@@ -67,14 +50,14 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a partial SVG image.
      */
-    function generateSVGParts(Part[] calldata parts) external view override returns (string memory partialSVG) {
+    function generateSVGParts(Part[] calldata parts) external pure override returns (string memory partialSVG) {
         return _generateSVGRects(SVGParams({parts: parts}));
     }
 
     /**
      * @notice Given RLE image parts and color palettes, generate SVG rects.
      */
-    function _generateSVGRects(SVGParams memory params) private view returns (string memory svg) {
+    function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
         // forgefmt: disable-next-item
         string[46] memory lookup = [    
             "0", "20", "40", "60", "80", "100", "120", "140", "160", "180", "200", 

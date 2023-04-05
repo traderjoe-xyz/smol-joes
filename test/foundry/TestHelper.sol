@@ -39,11 +39,11 @@ contract TestHelper is Test {
         art = new SmolJoeArt(address(descriptor), inflator);
         descriptor.setArt(art);
 
-        uint16[100] memory artMapping;
-        for (uint16 i = 0; i < artMapping.length; i++) {
+        uint8[100] memory artMapping;
+        for (uint8 i = 0; i < artMapping.length; i++) {
             artMapping[i] = i;
         }
-        seeder.updateUniquesArtMapping(artMapping);
+        seeder.updateSpecialsArtMapping(artMapping);
 
         token = new SmolJoes(descriptor, seeder);
     }

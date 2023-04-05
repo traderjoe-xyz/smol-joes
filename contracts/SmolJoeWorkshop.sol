@@ -56,33 +56,33 @@ contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
 
     function upgradeSmolJoe(uint256 tokenId) external whenNotPaused {
         smolJoes.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Special);
+        newSmolJoes.mint(msg.sender, tokenId);
         _refundIfOver(specialUpgradePrice);
     }
 
     function upgradeUniqueSmolCreepWithPumpkin(uint256 tokenId, uint256 pumpkinTokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         beegPumpkins.transferFrom(msg.sender, BURN_ADDRESS, pumpkinTokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Unique);
+        newSmolJoes.mint(msg.sender, tokenId);
         _refundIfOver(specialUpgradePrice);
     }
 
     function upgradeUniqueSmolCreep(uint256 tokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Unique);
+        newSmolJoes.mint(msg.sender, tokenId);
         _refundIfOver(specialUpgradePrice);
     }
 
     function upgradeSmolCreepWithPumpkin(uint256 tokenId, uint256 pumpkinTokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         smolPumpkins.transferFrom(msg.sender, BURN_ADDRESS, pumpkinTokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Common);
+        newSmolJoes.mint(msg.sender, tokenId);
         _refundIfOver(uniqueUpgradePrice);
     }
 
     function upgradeSmolCreep(uint256 tokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
-        newSmolJoes.mintSpecial(msg.sender, tokenId, ISmolJoeSeeder.SmolJoeCast.Common);
+        newSmolJoes.mint(msg.sender, tokenId);
         _refundIfOver(uniqueUpgradePrice);
     }
 

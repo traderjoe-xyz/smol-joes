@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title The Smol Joe NFT descriptor
-/// Inspired by Nouns DAO's NounsDescriptor contract
-
 pragma solidity ^0.8.6;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -14,6 +10,8 @@ import {ISVGRenderer} from "./interfaces/ISVGRenderer.sol";
 import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {IInflator} from "./interfaces/IInflator.sol";
 
+/// @title The Smol Joe NFT descriptor
+/// @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
 contract SmolJoeDescriptor is ISmolJoeDescriptor, Ownable {
     using Strings for uint256;
 

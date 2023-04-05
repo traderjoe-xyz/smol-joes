@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title The Smol Joe ERC-721 token
-
 pragma solidity ^0.8.6;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -12,6 +9,7 @@ import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 
+/// @title The Smol Joe ERC-721 token
 contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     // The Smol Joe token URI descriptor
     ISmolJoeDescriptorMinimal public descriptor;
@@ -27,17 +25,8 @@ contract SmolJoes is ISmolJoes, Ownable, ERC721 {
         seeder = _seeder;
     }
 
-    function mint(address to, uint256 amount) public {
-        seeds[amount] = seeder.generateSeed(amount, descriptor, ISmolJoeSeeder.SmolJoeCast.Common);
-        _mint(to, amount);
-    }
-
-    function mintSpecial(address to, uint256 tokenID, ISmolJoeSeeder.SmolJoeCast upgradeType)
-        public
-        override
-        onlyOwner
-    {
-        seeds[tokenID] = seeder.generateSeed(tokenID, descriptor, upgradeType);
+    function mint(address to, uint256 tokenID) public {
+        seeds[tokenID] = seeder.generateSeed(tokenID, descriptor);
         _mint(to, tokenID);
     }
 

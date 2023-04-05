@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title The Smol Joe art storage contract
-/// Inspired by Nouns DAO's NounsArt contract
-
 pragma solidity ^0.8.6;
 
 import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
 import {IInflator} from "./interfaces/IInflator.sol";
 
+/// @title The Smol Joe art storage contract
+/// @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
 contract SmolJoeArt is ISmolJoeArt {
     /// @notice Current Smol Joe Descriptor address
     address public override descriptor;

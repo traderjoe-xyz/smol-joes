@@ -2,7 +2,6 @@
 pragma solidity ^0.8.6;
 
 /// @title Interface for SmolJoeWorkshop
-
 interface ISmolJoeWorkshop {
     error SmolJoeWorkshop__NotEnoughAVAX();
     error SmolJoeWorkshop__TransferFailed();

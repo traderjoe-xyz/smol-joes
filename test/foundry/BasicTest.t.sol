@@ -10,15 +10,15 @@ contract BasicTest is TestHelper {
     }
 
     function test_UpdateUniquesArtMapping() public {
-        uint16[100] memory artMapping;
-        for (uint16 i = 0; i < artMapping.length; i++) {
+        uint8[100] memory artMapping;
+        for (uint8 i = 0; i < artMapping.length; i++) {
             artMapping[i] = i + 5;
         }
 
-        seeder.updateUniquesArtMapping(artMapping);
+        seeder.updateSpecialsArtMapping(artMapping);
 
         for (uint256 i = 0; i < artMapping.length; i++) {
-            assertEq(seeder.getUniqueArtMapping(i), i + 5);
+            assertEq(seeder.getSpecialsArtMapping(i), i + 5);
         }
     }
 }

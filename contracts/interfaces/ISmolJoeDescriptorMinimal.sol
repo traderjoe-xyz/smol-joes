@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title Common interface for SmolJoeDescriptor versions, as used by SmolJoes and SmolJoeSeeder.
-
 pragma solidity ^0.8.6;
 
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 import {ISmolJoeArt} from "./ISmolJoeArt.sol";
 
+/// @title Common interface for SmolJoeDescriptor versions, as used by SmolJoes and SmolJoeSeeder.
 interface ISmolJoeDescriptorMinimal {
     ///
     /// USED BY TOKEN

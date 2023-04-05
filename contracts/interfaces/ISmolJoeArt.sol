@@ -1,39 +1,25 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title Interface for SmolJoeArt
-
 pragma solidity ^0.8.6;
 
 import {Inflate} from "../libs/Inflate.sol";
 import {IInflator} from "./IInflator.sol";
 
+/// @title Interface for SmolJoeArt
 interface ISmolJoeArt {
     error SenderIsNotDescriptor();
-
     error EmptyPalette();
-
     error BadPaletteLength();
-
     error EmptyBytes();
-
     error BadDecompressedLength();
-
     error BadImageCount();
-
     error ImageNotFound();
-
     error PaletteNotFound();
 
     event DescriptorUpdated(address oldDescriptor, address newDescriptor);
-
     event InflatorUpdated(address oldInflator, address newInflator);
-
     event BackgroundsAdded(uint256 count);
-
     event PaletteSet(uint8 paletteIndex);
-
     event BodiesAdded(uint16 count);
-
     event HeadsAdded(uint16 count);
 
     enum TraitType {

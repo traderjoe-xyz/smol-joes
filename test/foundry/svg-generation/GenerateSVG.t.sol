@@ -17,8 +17,8 @@ contract BasicTest is TestHelper {
         inputs[2] = "render-images";
         inputs[3] = "--token-id";
 
-        for (uint256 i = 0; i < 5; i++) {
-            token.mintSpecial(address(1), i, ISmolJoeSeeder.SmolJoeCast.Special);
+        for (uint256 i = 0; i < 3; i++) {
+            token.mint(address(1), i);
 
             vm.writeFile(
                 string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)

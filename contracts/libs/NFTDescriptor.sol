@@ -1,28 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @author NounsDAO: https://github.com/nounsDAO/nouns-monorepo
-/// @title A library used to construct ERC721 token URIs and SVG images
-
-/**
- *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░█████████░░█████████░░░ *
- * ░░░░░░██░░░████░░██░░░████░░░ *
- * ░░██████░░░████████░░░████░░░ *
- * ░░██░░██░░░████░░██░░░████░░░ *
- * ░░██░░██░░░████░░██░░░████░░░ *
- * ░░░░░░█████████░░█████████░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- *
- */
-
 pragma solidity ^0.8.6;
 
 import {Base64} from "base64-sol/base64.sol";
 import {ISVGRenderer} from "../interfaces/ISVGRenderer.sol";
 
+/// @title A library used to construct ERC721 token URIs and SVG images
 library NFTDescriptor {
     struct TokenURIParams {
         string name;

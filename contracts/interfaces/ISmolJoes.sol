@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @title Interface for SmolJoes
-
 pragma solidity ^0.8.6;
 
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
@@ -10,6 +7,7 @@ import {ISmolJoeWorkshop} from "./ISmolJoeWorkshop.sol";
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 
+/// @title Interface for SmolJoes
 interface ISmolJoes is IERC721 {
     event DescriptorUpdated(ISmolJoeDescriptorMinimal descriptor);
 
@@ -20,8 +18,6 @@ interface ISmolJoes is IERC721 {
     function setDescriptor(ISmolJoeDescriptorMinimal descriptor) external;
 
     function setSeeder(ISmolJoeSeeder seeder) external;
-
-    function mintSpecial(address to, uint256 tokenId, ISmolJoeSeeder.SmolJoeCast upgradeType) external;
 
     function mint(address to, uint256 amount) external;
 }
