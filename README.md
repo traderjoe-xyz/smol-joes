@@ -16,7 +16,7 @@ Metadata and images for the Smol Joes collection are fully generated on chain, b
 
 Instead of storing each pixel individually, which would take `{x, y, color} = 5 bytes` of data, each image is deconstructed in rectangles of the same color. Each rectangle being described by `{x, y, length, color} = 6 bytes`. If we take a 9x9 example (Smol Joes images are 45x45) :
 
-![RLE](RLE.png)
+![RLE](files/readme/RLE.png)
 
 Here, instead of storing `9 * 5 = 45 bytes` of data, we do `5 * 6 = 30 bytes`. This optimization is particularly suited for images that have large parts of the same color.
 
@@ -27,7 +27,7 @@ Smol Joes images have been encoded using a script forked from the Nouns reposito
 ### Image reconstruction
 
 To reconstruct the final image, different contracts will be used, following this architecture:
-![Metadata generation architecture](Smol%20Joes%20Metadata.png)
+![Metadata generation architecture](files/readme/Smol%20Joes%20Metadata.png)
 
 **Descriptor**: This is the main point of entry. The Smol Joes contract will request the `tokenURI` from the descriptor.\
 **Art**: This contract will manage the uploaded images. Each group of images is called a `page` and will be stored in contract bytecode using Solady's `SSTORE2`. The contract is controlled by the `Descriptor`.\
@@ -40,7 +40,7 @@ To reconstruct the final image, different contracts will be used, following this
 
 This project uses both `Hardhat` and `Foundry`. Tests are using Foundry.
 
-`GenerateSVG.t.sol` can be used to test the SVG generation during devellopment. To run test using this contract, set the `FFOUNDRY_PROFILE` env variable to `svgtesting`:
+`GenerateSVG.t.sol` can be used to test the SVG generation during development. To run the test in this contract, set the `FOUNDRY_PROFILE` env variable to `svgtesting`:
 
 ```
 export FOUNDRY_PROFILE=svgtesting
