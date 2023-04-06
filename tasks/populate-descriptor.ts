@@ -1,5 +1,5 @@
 import { task } from "hardhat/config";
-import ImageData from "../files/image-data.json";
+import ImageData from "../files/assets-data/image-data.json";
 import { dataToDescriptorInput } from "./utils";
 
 enum Brotherhood {

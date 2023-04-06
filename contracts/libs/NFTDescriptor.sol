@@ -68,39 +68,54 @@ library NFTDescriptor {
     {
         string[9] memory traitNames =
             ["Background", "Body", "Pants", "Shoes", "Shirt", "Beard", "Head", "Eye", "Accesory"];
+
+        // forgefmt: disable-next-item
         string[11] memory brotherhoodNames = [
-            "None",
-            "Academics",
-            "Athletes",
-            "Creatives",
-            "Gentlemans",
-            "MagicalBeings",
-            "Military",
-            "Musicians",
-            "Outlaws",
-            "Religious",
-            "Superheros"
+            "None", "Academics", "Athletes", "Creatives", "Gentlemans", "MagicalBeings",
+            "Military",  "Musicians",  "Outlaws", "Religious", "Superheros"
         ];
 
         traitData = string(abi.encodePacked("["));
-        traitData = string(
-            abi.encodePacked(
-                traitData, '{"trait_type":"Brotherhood","value":"', brotherhoodNames[uint8(brotherhood)], '"},'
-            )
-        );
 
-        for (uint256 i = 0; i < parts.length; i++) {
-            traitData = string(
-                abi.encodePacked(traitData, '{"trait_type":"', traitNames[i], '","value":"', parts[i].name, '"}')
-            );
+        traitData = _appendTrait(traitData, "Brotherhood", brotherhoodNames[uint8(brotherhood)]);
+        traitData = string(abi.encodePacked(traitData, ","));
 
-            if (i < parts.length - 1) {
-                traitData = string(abi.encodePacked(traitData, ","));
+        // Originals and Luminarys have a single part
+        if (parts.length == 1) {
+            traitData =
+                _appendTrait(traitData, "Rarity", brotherhood == ISmolJoeArt.Brotherhood.None ? "Original" : "Luminary");
+            traitData = string(abi.encodePacked(traitData, ","));
+
+            for (uint256 i = 0; i < traitNames.length; i++) {
+                traitData = _appendTrait(traitData, traitNames[i], parts[0].name);
+
+                if (i < traitNames.length - 1) {
+                    traitData = string(abi.encodePacked(traitData, ","));
+                }
+            }
+        } else {
+            traitData = _appendTrait(traitData, "Rarity", "Generative");
+            traitData = string(abi.encodePacked(traitData, ","));
+
+            for (uint256 i = 0; i < parts.length; i++) {
+                traitData = _appendTrait(traitData, traitNames[i], parts[i].name);
+
+                if (i < parts.length - 1) {
+                    traitData = string(abi.encodePacked(traitData, ","));
+                }
             }
         }
 
         traitData = string(abi.encodePacked(traitData, "]"));
 
         return traitData;
+    }
+
+    function _appendTrait(string memory traitData, string memory traitName, string memory traitValue)
+        internal
+        pure
+        returns (string memory)
+    {
+        return string(abi.encodePacked(traitData, '{"trait_type":"', traitName, '","value":"', traitValue, '"}'));
     }
 }
