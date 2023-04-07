@@ -40,8 +40,8 @@ task(
       hair_cap_head,
       eye_accessory,
       accessories,
-      uniques,
-      specials,
+      luminaries,
+      originals,
     } = images;
 
     // Create a list of all bodyparts
@@ -55,8 +55,8 @@ task(
       { object: hair_cap_head, name: "heads" },
       { object: eye_accessory, name: "eyes" },
       { object: accessories, name: "accessories" },
-      { object: uniques, name: "uniques" },
-      { object: specials, name: "specials" },
+      { object: luminaries, name: "luminaries" },
+      { object: originals, name: "originals" },
     ];
 
     Object.keys(Brotherhood).map((brotherhood) => {
@@ -68,7 +68,7 @@ task(
         );
 
         if (brotherhoodBodyparts.length > 0) {
-          if (bodypart.name === "specials") {
+          if (bodypart.name === "originals") {
             const bodypartsPage = dataToDescriptorInput(
               brotherhoodBodyparts
                 .filter((_, index) => index < 50)

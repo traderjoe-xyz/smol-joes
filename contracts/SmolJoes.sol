@@ -9,7 +9,9 @@ import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 
-/// @title The Smol Joe ERC-721 token
+/**
+ * @title The Smol Joe ERC-721 token
+ */
 contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     // The Smol Joe token URI descriptor
     ISmolJoeDescriptorMinimal public descriptor;

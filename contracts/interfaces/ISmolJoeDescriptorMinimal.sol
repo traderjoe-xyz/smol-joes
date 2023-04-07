@@ -4,19 +4,21 @@ pragma solidity ^0.8.6;
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 import {ISmolJoeArt} from "./ISmolJoeArt.sol";
 
-/// @title Common interface for SmolJoeDescriptor versions, as used by SmolJoes and SmolJoeSeeder.
+/**
+ * @title Common interface for SmolJoeDescriptor versions, as used by SmolJoes and SmolJoeSeeder.
+ */
 interface ISmolJoeDescriptorMinimal {
-    ///
-    /// USED BY TOKEN
-    ///
+    /**
+     * USED BY TOKEN
+     */
 
     function tokenURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) external view returns (string memory);
 
     function dataURI(uint256 tokenId, ISmolJoeSeeder.Seed memory seed) external view returns (string memory);
 
-    ///
-    /// USED BY SEEDER
-    ///
+    /**
+     * USED BY SEEDER
+     */
 
     function traitCount(ISmolJoeArt.TraitType traitType, ISmolJoeArt.Brotherhood brotherhood)
         external

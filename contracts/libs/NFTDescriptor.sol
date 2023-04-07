@@ -5,7 +5,10 @@ import {Base64} from "base64-sol/base64.sol";
 import {ISVGRenderer} from "../interfaces/ISVGRenderer.sol";
 import {ISmolJoeArt} from "../interfaces/ISmolJoeArt.sol";
 
-/// @title A library used to construct ERC721 token URIs and SVG images
+/**
+ * @title A library used to construct ERC721 token URIs and SVG images
+ * @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
+ */
 library NFTDescriptor {
     struct TokenURIParams {
         string name;
@@ -16,6 +19,9 @@ library NFTDescriptor {
 
     /**
      * @notice Construct an ERC721 token URI.
+     * @param renderer The SVG renderer contract.
+     * @param params The parameters used to construct the token URI.
+     * @return The constructed token URI.
      */
     function constructTokenURI(ISVGRenderer renderer, TokenURIParams memory params)
         internal
@@ -49,6 +55,9 @@ library NFTDescriptor {
 
     /**
      * @notice Generate an SVG image for use in the ERC721 token URI.
+     * @param renderer The SVG renderer contract.
+     * @param params The parameters used to construct the SVG image.
+     * @return svg The constructed SVG image.
      */
     function generateSVGImage(ISVGRenderer renderer, ISVGRenderer.SVGParams memory params)
         internal
@@ -60,6 +69,9 @@ library NFTDescriptor {
 
     /**
      * @notice Generate the trait data for an ERC721 token.
+     * @param parts The parts used to construct the token.
+     * @param brotherhood The brotherhood of the token.
+     * @return traitData The constructed trait data.
      */
     function _generateTraitData(ISVGRenderer.Part[] memory parts, ISmolJoeArt.Brotherhood brotherhood)
         internal
@@ -67,7 +79,7 @@ library NFTDescriptor {
         returns (string memory traitData)
     {
         string[9] memory traitNames =
-            ["Background", "Body", "Pants", "Shoes", "Shirt", "Beard", "Head", "Eye", "Accesory"];
+            ["Background", "Body", "Shoes", "Pants", "Shirt", "Beard", "HairCapHead", "EyeAccessory", "Accesory"];
 
         // forgefmt: disable-next-item
         string[11] memory brotherhoodNames = [
@@ -111,6 +123,13 @@ library NFTDescriptor {
         return traitData;
     }
 
+    /**
+     * @dev Append a trait to the trait data.
+     * @param traitData The trait data to append to.
+     * @param traitName The name of the trait.
+     * @param traitValue The value of the trait.
+     * @return traitData The appended trait data.
+     */
     function _appendTrait(string memory traitData, string memory traitName, string memory traitValue)
         internal
         pure

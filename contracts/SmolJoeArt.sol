@@ -5,19 +5,30 @@ import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
 import {IInflator} from "./interfaces/IInflator.sol";
 
-/// @title The Smol Joe art storage contract
-/// @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
+/**
+ * @title The Smol Joe art storage contract
+ * @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
+ */
 contract SmolJoeArt is ISmolJoeArt {
-    /// @notice Current Smol Joe Descriptor address
+    /**
+     * @notice Current Smol Joe Descriptor address
+     */
     address public override descriptor;
 
-    /// @notice Current inflator address
+    /**
+     * @notice Current inflator address
+     */
     IInflator public override inflator;
 
-    /// @notice Smol Joe Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
-    mapping(uint8 => address) public palettesPointers;
+    /**
+     * @notice Smol Joe Color Palettes (Index => Hex Colors, stored as a contract using SSTORE2)
+     */
+    mapping(uint8 => address) public override palettesPointers;
 
-    mapping(TraitType => mapping(Brotherhood => Trait)) public traits;
+    /**
+     * @dev Smol Joe Art Traits
+     */
+    mapping(TraitType => mapping(Brotherhood => Trait)) private _traits;
 
     /**
      * @notice Require that the sender is the descriptor.
@@ -30,19 +41,17 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     constructor(address _descriptor, IInflator _inflator) {
-        descriptor = _descriptor;
-        inflator = _inflator;
+        _setDescriptor(_descriptor);
+        _setInflator(_inflator);
     }
 
     /**
-     * @notice Set the descriptor.
+     * @notice Set the descriptor address.
      * @dev This function can only be called by the current descriptor.
+     * @param _descriptor New descriptor address
      */
     function setDescriptor(address _descriptor) external override onlyDescriptor {
-        address oldDescriptor = descriptor;
-        descriptor = _descriptor;
-
-        emit DescriptorUpdated(oldDescriptor, descriptor);
+        _setDescriptor(_descriptor);
     }
 
     /**
@@ -50,22 +59,25 @@ contract SmolJoeArt is ISmolJoeArt {
      * @dev This function can only be called by the descriptor.
      */
     function setInflator(IInflator _inflator) external override onlyDescriptor {
-        address oldInflator = address(inflator);
-        inflator = _inflator;
-
-        emit InflatorUpdated(oldInflator, address(_inflator));
+        _setInflator(_inflator);
     }
 
+    /**
+     * @notice Get the trait for a given trait type and brotherhood.
+     * @param traitType The trait type
+     * @param brotherhood The brotherhood
+     * @return Trait struct
+     */
     function getTrait(TraitType traitType, Brotherhood brotherhood) external view override returns (Trait memory) {
-        return traits[traitType][brotherhood];
+        return _traits[traitType][brotherhood];
     }
 
     /**
      * @notice Update a single color palette. This function can be used to
      * add a new color palette or update an existing palette.
+     * @dev This function can only be called by the descriptor.
      * @param paletteIndex the identifier of this palette
      * @param palette byte array of colors. every 3 bytes represent an RGB color. max length: 16**4 * 3 = 196_608
-     * @dev This function can only be called by the descriptor.
      */
     function setPalette(uint8 paletteIndex, bytes calldata palette) external override onlyDescriptor {
         if (palette.length == 0) {
@@ -80,25 +92,11 @@ contract SmolJoeArt is ISmolJoeArt {
         emit PaletteSet(paletteIndex);
     }
 
-    function addTraits(
-        TraitType traitType,
-        Brotherhood brotherhood,
-        bytes calldata encodedCompressed,
-        uint80 decompressedLength,
-        uint16 imageCount
-    ) external override onlyDescriptor {
-        _addPage(traits[traitType][brotherhood], encodedCompressed, decompressedLength, imageCount);
-
-        emit BackgroundsAdded(imageCount);
-    }
-
     /**
-     * @notice Update a single color palette. This function can be used to
+     * @notice Update a single color palette address. This function can be used to
      * add a new color palette or update an existing palette. This function does not check for data length validity
-     * (len <= 768, len % 3 == 0).
      * @param paletteIndex the identifier of this palette
-     * @param pointer the address of the contract holding the palette bytes. every 3 bytes represent an RGB color.
-     * max length: 256 * 3 = 768.
+     * @param pointer the address of the contract holding the palette bytes.
      * @dev This function can only be called by the descriptor.
      */
     function setPalettePointer(uint8 paletteIndex, address pointer) external override onlyDescriptor {
@@ -107,6 +105,34 @@ contract SmolJoeArt is ISmolJoeArt {
         emit PaletteSet(paletteIndex);
     }
 
+    /**
+     * @notice Add a new page of RLE encoded images to a trait.
+     * @dev This function can only be called by the descriptor.
+     * @param traitType The trait type
+     * @param brotherhood The brotherhood
+     * @param encodedCompressed The RLE encoded compressed data
+     * @param decompressedLength The length of the data once decompressed
+     * @param imageCount The number of images in the page
+     */
+    function addTraits(
+        TraitType traitType,
+        Brotherhood brotherhood,
+        bytes calldata encodedCompressed,
+        uint80 decompressedLength,
+        uint16 imageCount
+    ) external override onlyDescriptor {
+        _addPage(_traits[traitType][brotherhood], encodedCompressed, decompressedLength, imageCount);
+    }
+
+    /**
+     * @notice Add a new page of RLE encoded images to a trait. The page has already been deployed to a contract.
+     * @dev This function can only be called by the descriptor.
+     * @param traitType The trait type
+     * @param brotherhood The brotherhood
+     * @param pointer The address of the contract holding the RLE encoded compressed data
+     * @param decompressedLength The length of the data once decompressed
+     * @param imageCount The number of images in the page
+     */
     function addTraitsFromPointer(
         TraitType traitType,
         Brotherhood brotherhood,
@@ -114,22 +140,29 @@ contract SmolJoeArt is ISmolJoeArt {
         uint80 decompressedLength,
         uint16 imageCount
     ) external override onlyDescriptor {
-        _addPage(traits[traitType][brotherhood], pointer, decompressedLength, imageCount);
-
-        emit BackgroundsAdded(imageCount);
+        _addPage(_traits[traitType][brotherhood], pointer, decompressedLength, imageCount);
     }
 
+    /**
+     * @notice Get the image for a given trait type, brotherhood, and index.
+     * @param traitType The trait type
+     * @param brotherhood The brotherhood
+     * @param index The index of the image
+     * @return The image bytes and the image name
+     */
     function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
         external
         view
         override
         returns (bytes memory, string memory)
     {
-        return _imageByIndex(traits[traitType][brotherhood], index);
+        return _imageByIndex(_traits[traitType][brotherhood], index);
     }
 
     /**
      * @notice Get a color palette bytes.
+     * @param paletteIndex the identifier of this palette
+     * @return The palette bytes
      */
     function palettes(uint8 paletteIndex) external view override returns (bytes memory) {
         address pointer = palettesPointers[paletteIndex];
@@ -139,6 +172,13 @@ contract SmolJoeArt is ISmolJoeArt {
         return SSTORE2.read(palettesPointers[paletteIndex]);
     }
 
+    /**
+     * @dev Add a new page of RLE encoded images to a trait by deploying a new contract to hold the data.
+     * @param trait The trait to add the page to
+     * @param encodedCompressed The RLE encoded compressed data
+     * @param decompressedLength The length of the data once decompressed
+     * @param imageCount The number of images in the page
+     */
     function _addPage(
         Trait storage trait,
         bytes calldata encodedCompressed,
@@ -152,6 +192,13 @@ contract SmolJoeArt is ISmolJoeArt {
         _addPage(trait, pointer, decompressedLength, imageCount);
     }
 
+    /**
+     * @dev Add a new page of RLE encoded images to a trait by using an existing contract to hold the data.
+     * @param trait The trait to add the page to
+     * @param pointer The address of the contract holding the RLE encoded compressed data
+     * @param decompressedLength The length of the data once decompressed
+     * @param imageCount The number of images in the page
+     */
     function _addPage(Trait storage trait, address pointer, uint80 decompressedLength, uint16 imageCount) internal {
         if (decompressedLength == 0) {
             revert BadDecompressedLength();
@@ -165,6 +212,15 @@ contract SmolJoeArt is ISmolJoeArt {
         trait.storedImagesCount += imageCount;
     }
 
+    /**
+     * @dev Given an image index, this function finds the storage page the image is in, and the relative index
+     * inside the page, so the image can be read from storage.
+     * Example: if you have 2 pages with 100 images each, and you want to get image 150, this function would return
+     * the 2nd page, and the 50th index.
+     * @param trait The trait to get the image from
+     * @param index The index of the image
+     * @return The decompressed image bytes and the image name
+     */
     function _imageByIndex(ISmolJoeArt.Trait storage trait, uint256 index)
         internal
         view
@@ -181,8 +237,9 @@ contract SmolJoeArt is ISmolJoeArt {
      * inside the page, so the image can be read from storage.
      * Example: if you have 2 pages with 100 images each, and you want to get image 150, this function would return
      * the 2nd page, and the 50th index.
-     * @return ISmolJoeArt.SmolJoeArtStoragePage the page containing the image at index
-     * @return uint256 the index of the image in the page
+     * @param pages The pages to get the image from
+     * @param index The index of the image
+     * @return The storage page and the relative index inside the page
      */
     function _getPage(ISmolJoeArt.SmolJoeArtStoragePage[] storage pages, uint256 index)
         internal
@@ -204,6 +261,11 @@ contract SmolJoeArt is ISmolJoeArt {
         revert ImageNotFound();
     }
 
+    /**
+     * @dev Decompress and decode the data in a storage page.
+     * @param page The storage page
+     * @return The decompressed images and the images names
+     */
     function _decompressAndDecode(ISmolJoeArt.SmolJoeArtStoragePage storage page)
         internal
         view
@@ -212,5 +274,33 @@ contract SmolJoeArt is ISmolJoeArt {
         bytes memory compressedData = SSTORE2.read(page.pointer);
         (, bytes memory decompressedData) = inflator.puff(compressedData, page.decompressedLength);
         return abi.decode(decompressedData, (bytes[], string[]));
+    }
+
+    /**
+     * @dev Set the descriptor address.
+     * @param _descriptor New descriptor address
+     */
+    function _setDescriptor(address _descriptor) internal {
+        if (_descriptor == address(0)) {
+            revert InvalidAddress();
+        }
+
+        descriptor = _descriptor;
+
+        emit DescriptorUpdated(descriptor);
+    }
+
+    /**
+     * @dev Set the inflator address.
+     * @param _inflator New inflator address
+     */
+    function _setInflator(IInflator _inflator) internal {
+        if (address(_inflator) == address(0)) {
+            revert InvalidAddress();
+        }
+
+        inflator = _inflator;
+
+        emit InflatorUpdated(address(_inflator));
     }
 }

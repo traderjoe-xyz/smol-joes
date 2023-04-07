@@ -3,11 +3,12 @@ pragma solidity ^0.8.6;
 
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
-import {ISmolJoeWorkshop} from "./ISmolJoeWorkshop.sol";
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 
-/// @title Interface for SmolJoes
+/**
+ * @title Interface for SmolJoes
+ */
 interface ISmolJoes is IERC721 {
     event DescriptorUpdated(ISmolJoeDescriptorMinimal descriptor);
 

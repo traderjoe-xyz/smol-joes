@@ -17,8 +17,8 @@ enum Brotherhood {
 }
 
 enum TraitType {
-  Special,
-  Unique,
+  Original,
+  Luminary,
   Background,
   Body,
   Pants,
@@ -69,8 +69,8 @@ task(
     hair_cap_head,
     eye_accessory,
     accessories,
-    uniques,
-    specials,
+    luminaries,
+    originals,
   } = images;
 
   const emptyData: AddMultipleTraitsData = {
@@ -85,12 +85,12 @@ task(
   // Create a list of all bodyparts
   const bodyparts = [
     {
-      object: specials,
-      name: "specials",
+      object: originals,
+      name: "originals",
     },
     {
-      object: uniques,
-      name: "uniques",
+      object: luminaries,
+      name: "luminaries",
     },
     {
       object: background,
@@ -143,7 +143,7 @@ task(
       );
 
       if (brotherhoodBodyparts.length > 0) {
-        if (bodypart.name === "specials") {
+        if (bodypart.name === "originals") {
           const bodypartsPage = dataToDescriptorInput(
             brotherhoodBodyparts
               .filter((_, index) => index < 50)
@@ -219,16 +219,16 @@ task(
       .map((_, i) => i + 1),
   ];
 
-  const txMapping = await seeder.updateSpecialsArtMapping(mappings);
+  const txMapping = await seeder.updateOriginalsArtMapping(mappings);
   await txMapping.wait();
 
   console.log(
     "Specials added: ",
-    await descriptor.traitCount(TraitType.Special, Brotherhood.None)
+    await descriptor.traitCount(TraitType.Original, Brotherhood.None)
   );
   console.log(
     "Uniques added: ",
-    await descriptor.traitCount(TraitType.Unique, Brotherhood.Outlaws)
+    await descriptor.traitCount(TraitType.Luminary, Brotherhood.Outlaws)
   );
   console.log(
     "Backgrounds added: ",
@@ -269,7 +269,7 @@ task(
 
   console.log(
     "Art mapping for Smol Joe 5",
-    await seeder.getSpecialsArtMapping(5)
+    await seeder.getOriginalsArtMapping(5)
   );
 
   const gasPaid = balanceBefore.sub(await ethers.provider.getBalance(deployer));

@@ -35,7 +35,7 @@ contract TestHelper is Test {
         renderer = new SVGRenderer();
         seeder = new SmolJoeSeeder();
 
-        descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(0)), renderer);
+        descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer);
         art = new SmolJoeArt(address(descriptor), inflator);
         descriptor.setArt(art);
 
@@ -43,7 +43,7 @@ contract TestHelper is Test {
         for (uint8 i = 0; i < artMapping.length; i++) {
             artMapping[i] = i;
         }
-        seeder.updateSpecialsArtMapping(artMapping);
+        seeder.updateOriginalsArtMapping(artMapping);
 
         token = new SmolJoes(descriptor, seeder);
     }
@@ -51,8 +51,8 @@ contract TestHelper is Test {
     // created with `yarn hardhat make-descriptor-art`
     function _populateDescriptor() internal {
         string[11] memory traitTypes = [
-            "specials",
-            "uniques",
+            "originals",
+            "luminaries",
             "backgrounds",
             "bodies",
             "shoes",
@@ -115,12 +115,12 @@ contract TestHelper is Test {
 
         (bytes memory extraSpecialsTraits, uint80 extraSpecialsTraitsLength, uint16 extraSpecialsTraitsCount) = abi
             .decode(
-            vm.parseBytes(vm.readFile(string(abi.encodePacked("./test/files/encoded-assets/specialsNonePage_2.abi")))),
+            vm.parseBytes(vm.readFile(string(abi.encodePacked("./test/files/encoded-assets/originalsNonePage_2.abi")))),
             (bytes, uint80, uint16)
         );
 
         descriptor.addTraits(
-            ISmolJoeArt.TraitType.Special,
+            ISmolJoeArt.TraitType.Original,
             ISmolJoeArt.Brotherhood.None,
             extraSpecialsTraits,
             extraSpecialsTraitsLength,

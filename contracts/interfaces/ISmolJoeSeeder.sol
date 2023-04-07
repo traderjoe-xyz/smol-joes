@@ -4,20 +4,27 @@ pragma solidity ^0.8.6;
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeArt} from "./ISmolJoeArt.sol";
 
-/// @title Interface for SmolJoeSeeder
+/**
+ * @title Interface for SmolJoeSeeder
+ */
 interface ISmolJoeSeeder {
+    /**
+     * @dev Struct describing all parts of a Smol Joe
+     * Originals and Specials are described by their ID
+     * Commons are described by all their body parts
+     */
     struct Seed {
         ISmolJoeArt.Brotherhood brotherhood;
-        uint8 specialId;
-        uint8 uniqueId;
+        uint8 originalId;
+        uint8 luminaryId;
         uint16 background;
         uint16 body;
-        uint16 pant;
-        uint16 shoe;
+        uint16 shoes;
+        uint16 pants;
         uint16 shirt;
         uint16 beard;
-        uint16 head;
-        uint16 eye;
+        uint16 hairCapHead;
+        uint16 eyeAccessory;
         uint16 accessory;
     }
 

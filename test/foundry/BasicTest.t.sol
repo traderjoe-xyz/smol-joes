@@ -15,10 +15,10 @@ contract BasicTest is TestHelper {
             artMapping[i] = i + 5;
         }
 
-        seeder.updateSpecialsArtMapping(artMapping);
+        seeder.updateOriginalsArtMapping(artMapping);
 
         for (uint256 i = 0; i < artMapping.length; i++) {
-            assertEq(seeder.getSpecialsArtMapping(i), i + 5);
+            assertEq(seeder.getOriginalsArtMapping(i), i + 5);
         }
     }
 }

@@ -4,15 +4,17 @@ pragma solidity ^0.8.6;
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoeDescriptorMinimal, ISmolJoeArt} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 
-/// @title The SmolJoes pseudo-random seed generator
-/// @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
+/**
+ * @title The SmolJoes pseudo-random seed generator
+ * @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
+ */
 contract SmolJoeSeeder is ISmolJoeSeeder {
     uint256 private constant MASK_UINT8 = 0xff;
     uint256 private constant UINT8_IN_UINT256 = 32;
     uint256 private constant RANDOM_SEED_SHIFT = 16;
 
     // forgefmt: disable-next-item
-    uint8[] private _uniquesAvailable = 
+    uint8[] private _luminariesAvailable = 
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
         20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
         38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
@@ -20,54 +22,70 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
         92, 93, 94, 95, 96, 97, 98, 99];
 
-    uint256[4] private _specialsArt;
+    uint256[4] private _originalsArt;
 
-    function getSpecialsArtMapping(uint256 tokenId) external view returns (uint8) {
-        return _getSpecialsArtMapping(tokenId);
+    uint256 private _randomnessNonce;
+
+    /**
+     * @notice Get the art mapping for the original Smol Joes
+     * @param tokenId The token ID of the Smol Joe
+     * @return The art index corresponding to the token ID
+     */
+    function getOriginalsArtMapping(uint256 tokenId) external view returns (uint8) {
+        return _getOriginalsArtMapping(tokenId);
     }
 
-    function updateSpecialsArtMapping(uint8[100] calldata artMapping) external {
+    /**
+     * @notice Updates the mapping connecting the Originals to their corresponding art
+     * @param artMapping The new art mapping
+     */
+    function updateOriginalsArtMapping(uint8[100] calldata artMapping) external {
         uint256 packedMapping;
         for (uint256 i = 0; i < artMapping.length; i++) {
             packedMapping += uint256(artMapping[i]) << (i % UINT8_IN_UINT256) * 8;
 
             if ((i + 1) % UINT8_IN_UINT256 == 0) {
-                _specialsArt[i / UINT8_IN_UINT256] = packedMapping;
+                _originalsArt[i / UINT8_IN_UINT256] = packedMapping;
                 packedMapping = 0;
             }
         }
 
-        _specialsArt[3] = packedMapping;
+        _originalsArt[3] = packedMapping;
     }
 
     /**
-     * @notice Generate a pseudo-random Smol Joe seed using the previous blockhash and smol joe ID.
+     * @notice Generate a pseudo-random Smol Joe seed.
+     * @param tokenId The token ID of the Smol Joe
+     * @param descriptor The Smol Joe descriptor
+     * @return The seed for the Smol Joe
      */
     function generateSeed(uint256 tokenId, ISmolJoeDescriptorMinimal descriptor)
         external
         override
         returns (Seed memory)
     {
-        uint256 randomNumber = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), tokenId)));
+        uint256 randomNumber = uint256(
+            keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp, tokenId, _randomnessNonce++))
+        );
 
         // Need to store the seed into memory to prevent stack too deep errors
         Seed memory seed;
 
         if (tokenId < 100) {
-            seed.specialId = _getSpecialsArtMapping(tokenId) + 1;
+            seed.originalId = _getOriginalsArtMapping(tokenId) + 1;
         } else if (tokenId < 200) {
-            uint256 uniquesAvailableLength = _uniquesAvailable.length;
+            uint256 luminariesAvailableLength = _luminariesAvailable.length;
 
-            uint256 randomIndex = randomNumber % uniquesAvailableLength;
-            uint256 randomUnique = _uniquesAvailable[randomIndex];
+            uint256 randomIndex = randomNumber % luminariesAvailableLength;
+            uint256 randomUnique = _luminariesAvailable[randomIndex];
 
-            seed.uniqueId = uint8(randomUnique % 10) + 1;
+            seed.luminaryId = uint8(randomUnique % 10) + 1;
             // Pick the corresponding brotherhood (1-10)
             seed.brotherhood = ISmolJoeArt.Brotherhood(randomUnique / 10 + 1);
 
-            // Remove the unique from the available list
-            _uniquesAvailable[randomIndex] = _uniquesAvailable[uniquesAvailableLength - 1];
-            _uniquesAvailable.pop();
+            // Remove the luminary from the available list
+            _luminariesAvailable[randomIndex] = _luminariesAvailable[luminariesAvailableLength - 1];
+            _luminariesAvailable.pop();
         } else {
             // Get the brotherhood first
             ISmolJoeArt.Brotherhood brotherhood = ISmolJoeArt.Brotherhood(uint8(randomNumber % 10));
@@ -86,11 +104,11 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 pantCount = descriptor.traitCount(ISmolJoeArt.TraitType.Pants, ISmolJoeArt.Brotherhood.None);
-            seed.pant = uint16(randomNumber % pantCount);
+            seed.pants = uint16(randomNumber % pantCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 shoeCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shoes, ISmolJoeArt.Brotherhood.None);
-            seed.shoe = uint16(randomNumber % shoeCount);
+            seed.shoes = uint16(randomNumber % shoeCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 shirtCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shirt, ISmolJoeArt.Brotherhood.None);
@@ -102,11 +120,11 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 headCount = descriptor.traitCount(ISmolJoeArt.TraitType.HairCapHead, ISmolJoeArt.Brotherhood.None);
-            seed.head = uint16(randomNumber % headCount);
+            seed.hairCapHead = uint16(randomNumber % headCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 eyeCount = descriptor.traitCount(ISmolJoeArt.TraitType.EyeAccessory, ISmolJoeArt.Brotherhood.None);
-            seed.eye = uint16(randomNumber % eyeCount);
+            seed.eyeAccessory = uint16(randomNumber % eyeCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 accessoryCount =
@@ -118,7 +136,12 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         return seed;
     }
 
-    function _getSpecialsArtMapping(uint256 tokenId) internal view returns (uint8) {
-        return uint8((_specialsArt[tokenId / UINT8_IN_UINT256] >> (tokenId % UINT8_IN_UINT256) * 8) & MASK_UINT8);
+    /**
+     * @notice Get the art mapping for the original Smol Joes
+     * @param tokenId The token ID of the Smol Joe
+     * @return The art index corresponding to the token ID
+     */
+    function _getOriginalsArtMapping(uint256 tokenId) internal view returns (uint8) {
+        return uint8((_originalsArt[tokenId / UINT8_IN_UINT256] >> (tokenId % UINT8_IN_UINT256) * 8) & MASK_UINT8);
     }
 }

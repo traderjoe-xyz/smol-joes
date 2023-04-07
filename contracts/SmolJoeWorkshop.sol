@@ -9,7 +9,9 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 
-/// @title The Smol Joe workshop contract, to buy and upgrade Smol Joes
+/**
+ * @title The Smol Joe workshop contract, to buy and upgrade Smol Joes
+ */
 contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
     struct MintPhase {
         uint256 id;
@@ -22,8 +24,8 @@ contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
 
     address private constant BURN_ADDRESS = address(0xdead);
 
-    uint256 public specialUpgradePrice;
-    uint256 public uniqueUpgradePrice;
+    uint256 public originalsUpgradePrice;
+    uint256 public luminaryUpgradePrice;
     uint256 public commonUpgradePrice;
 
     uint256 public mintPrice;
@@ -57,41 +59,41 @@ contract SmolJoeWorkshop is ISmolJoeWorkshop, Ownable2Step, Pausable {
     function upgradeSmolJoe(uint256 tokenId) external whenNotPaused {
         smolJoes.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         newSmolJoes.mint(msg.sender, tokenId);
-        _refundIfOver(specialUpgradePrice);
+        _refundIfOver(originalsUpgradePrice);
     }
 
     function upgradeUniqueSmolCreepWithPumpkin(uint256 tokenId, uint256 pumpkinTokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         beegPumpkins.transferFrom(msg.sender, BURN_ADDRESS, pumpkinTokenId);
         newSmolJoes.mint(msg.sender, tokenId);
-        _refundIfOver(specialUpgradePrice);
+        _refundIfOver(originalsUpgradePrice);
     }
 
     function upgradeUniqueSmolCreep(uint256 tokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         newSmolJoes.mint(msg.sender, tokenId);
-        _refundIfOver(specialUpgradePrice);
+        _refundIfOver(originalsUpgradePrice);
     }
 
     function upgradeSmolCreepWithPumpkin(uint256 tokenId, uint256 pumpkinTokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         smolPumpkins.transferFrom(msg.sender, BURN_ADDRESS, pumpkinTokenId);
         newSmolJoes.mint(msg.sender, tokenId);
-        _refundIfOver(uniqueUpgradePrice);
+        _refundIfOver(luminaryUpgradePrice);
     }
 
     function upgradeSmolCreep(uint256 tokenId) external whenNotPaused {
         smolCreeps.transferFrom(msg.sender, BURN_ADDRESS, tokenId);
         newSmolJoes.mint(msg.sender, tokenId);
-        _refundIfOver(uniqueUpgradePrice);
+        _refundIfOver(luminaryUpgradePrice);
     }
 
     function setPrices(uint256 newSpecialUpgradePrice, uint256 newUniqueUpgradePrice, uint256 newCommonUpgradePrice)
         external
         onlyOwner
     {
-        specialUpgradePrice = newSpecialUpgradePrice;
-        uniqueUpgradePrice = newUniqueUpgradePrice;
+        originalsUpgradePrice = newSpecialUpgradePrice;
+        luminaryUpgradePrice = newUniqueUpgradePrice;
         commonUpgradePrice = newCommonUpgradePrice;
     }
 

@@ -3,8 +3,10 @@ pragma solidity ^0.8.6;
 
 import {ISVGRenderer} from "./interfaces/ISVGRenderer.sol";
 
-/// @title A contract used to convert multi-part RLE compressed images to SVG
-/// @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
+/**
+ * @title A contract used to convert multi-part RLE compressed images to SVG
+ * @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo and adjusted to work with Smol Joes
+ */
 contract SVGRenderer is ISVGRenderer {
     bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
     uint256 private constant _INDEX_TO_BYTES3_FACTOR = 3;
@@ -32,6 +34,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a single SVG image.
+     * @param params The parameters used to construct the SVG image.
+     * @return svg The constructed SVG image.
      */
     function generateSVG(SVGParams calldata params) external pure override returns (string memory svg) {
         return string(abi.encodePacked(_SVG_START_TAG, _generateSVGRects(params), _SVG_END_TAG));
@@ -39,6 +43,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Given RLE image data and a color palette pointer, merge to generate a partial SVG image.
+     * @param part The part used to construct the SVG image.
+     * @return partialSVG The constructed SVG image.
      */
     function generateSVGPart(Part calldata part) external pure override returns (string memory partialSVG) {
         Part[] memory parts = new Part[](1);
@@ -49,6 +55,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a partial SVG image.
+     * @param parts The parts used to construct the SVG image.
+     * @return partialSVG The constructed SVG image.
      */
     function generateSVGParts(Part[] calldata parts) external pure override returns (string memory partialSVG) {
         return _generateSVGRects(SVGParams({parts: parts}));
@@ -56,6 +64,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Given RLE image parts and color palettes, generate SVG rects.
+     * @param params The parameters used to construct the SVG image.
+     * @return svg The constructed SVG image.
      */
     function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
         // forgefmt: disable-next-item
@@ -124,6 +134,10 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Given an x-coordinate, draw length, and right bound, return the draw
      * length for a single SVG rectangle.
+     * @param currentX The current x-coordinate.
+     * @param drawLength The length of the draw.
+     * @param rightBound The right bound of the image.
+     * @return length The length of the SVG rectangle.
      */
     function _getRectLength(uint256 currentX, uint8 drawLength, uint8 rightBound) private pure returns (uint8) {
         uint8 remainingPixelsInLine = rightBound - uint8(currentX);
@@ -132,8 +146,10 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Return a string that consists of all rects in the provided `buffer`.
+     * @param cursor The number of rects in the buffer.
+     * @param buffer The buffer of rects.
+     * @return chunk The string of rects.
      */
-    // prettier-ignore
     function _getChunk(uint256 cursor, string[16] memory buffer) private pure returns (string memory) {
         string memory chunk;
         for (uint256 i = 0; i < cursor; i += 4) {
@@ -157,6 +173,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Decode a single RLE compressed image into a `DecodedImage`.
+     * @param image The RLE compressed image.
+     * @return decodedImage The decoded image.
      */
     function _decodeRLEImage(bytes memory image) private pure returns (DecodedImage memory) {
         ContentBounds memory bounds = ContentBounds({
@@ -182,6 +200,10 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Get the target hex color code from the cache. Populate the cache if
      * the color code does not yet exist.
+     * @param palette The palette of the image.
+     * @param index The index of the color in the palette.
+     * @param cache The cache of color codes.
+     * @return  The color code.
      */
     function _getColor(bytes memory palette, uint256 index, string[] memory cache)
         private
@@ -197,6 +219,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @dev Convert `bytes` to a 6 character ASCII `string` hexadecimal representation.
+     * @param b The `bytes` to convert.
+     * @return The `string` hexadecimal representation.
      */
     function _toHexString(bytes memory b) private pure returns (string memory) {
         uint24 value = uint24(bytes3(b));

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.6;
 
-import {Inflate} from "../libs/Inflate.sol";
 import {IInflator} from "./IInflator.sol";
 
-/// @title Interface for SmolJoeArt
+/**
+ * @title Interface for SmolJoeArt
+ */
 interface ISmolJoeArt {
     error SenderIsNotDescriptor();
     error EmptyPalette();
@@ -14,17 +15,15 @@ interface ISmolJoeArt {
     error BadImageCount();
     error ImageNotFound();
     error PaletteNotFound();
+    error InvalidAddress();
 
-    event DescriptorUpdated(address oldDescriptor, address newDescriptor);
-    event InflatorUpdated(address oldInflator, address newInflator);
-    event BackgroundsAdded(uint256 count);
+    event DescriptorUpdated(address newDescriptor);
+    event InflatorUpdated(address newInflator);
     event PaletteSet(uint8 paletteIndex);
-    event BodiesAdded(uint16 count);
-    event HeadsAdded(uint16 count);
 
     enum TraitType {
-        Special,
-        Unique,
+        Original,
+        Luminary,
         Background,
         Body,
         Pants,
@@ -50,12 +49,23 @@ interface ISmolJoeArt {
         Superheros
     }
 
+    /**
+     * @dev Struct describing a page of RLE encoded images
+     * @param imageCount Number of images
+     * @param decompressedLength Length of the data once decompressed
+     * @param pointer Address of the page
+     */
     struct SmolJoeArtStoragePage {
         uint16 imageCount;
         uint80 decompressedLength;
         address pointer;
     }
 
+    /**
+     * @dev Struct describing a trait
+     * @param storagePages Array of pages
+     * @param storedImagesCount Total number of images
+     */
     struct Trait {
         SmolJoeArtStoragePage[] storagePages;
         uint256 storedImagesCount;
@@ -64,6 +74,8 @@ interface ISmolJoeArt {
     function descriptor() external view returns (address);
 
     function inflator() external view returns (IInflator);
+
+    function palettesPointers(uint8 paletteIndex) external view returns (address);
 
     function setDescriptor(address descriptor) external;
 
