@@ -116,17 +116,4 @@ contract DescriptorTest is TestHelper {
 
         assertEq(descriptor.tokenURI(1, seed), "https://smoljoe.com/1", "test_TokenURIWhenDataURIDisabled::1");
     }
-
-    function test_UpdateUniquesArtMapping() public {
-        uint8[100] memory artMapping;
-        for (uint8 i = 0; i < artMapping.length; i++) {
-            artMapping[i] = i + 5;
-        }
-
-        seeder.updateOriginalsArtMapping(artMapping);
-
-        for (uint256 i = 0; i < artMapping.length; i++) {
-            assertEq(seeder.getOriginalsArtMapping(i), i + 5);
-        }
-    }
 }

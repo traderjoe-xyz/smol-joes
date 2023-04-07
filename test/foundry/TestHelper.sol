@@ -36,7 +36,6 @@ contract TestHelper is Test {
 
         descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer);
         art = new SmolJoeArt(address(descriptor), inflator);
-        descriptor.setArt(art);
 
         uint8[100] memory artMapping;
         for (uint8 i = 0; i < artMapping.length; i++) {
@@ -45,6 +44,9 @@ contract TestHelper is Test {
         seeder.updateOriginalsArtMapping(artMapping);
 
         token = new SmolJoes(descriptor, seeder);
+
+        descriptor.setArt(art);
+        seeder.setSmolJoesAddress(address(token));
     }
 
     // created with `yarn hardhat make-descriptor-art`

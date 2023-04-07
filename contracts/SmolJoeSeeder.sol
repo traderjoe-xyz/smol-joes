@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.6;
 
+import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
+
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
 import {ISmolJoeDescriptorMinimal, ISmolJoeArt} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 
@@ -8,7 +10,7 @@ import {ISmolJoeDescriptorMinimal, ISmolJoeArt} from "./interfaces/ISmolJoeDescr
  * @title The SmolJoes pseudo-random seed generator
  * @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo
  */
-contract SmolJoeSeeder is ISmolJoeSeeder {
+contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
     uint256 private constant MASK_UINT8 = 0xff;
     uint256 private constant UINT8_IN_UINT256 = 32;
     uint256 private constant RANDOM_SEED_SHIFT = 16;
@@ -26,12 +28,14 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
 
     uint256 private _randomnessNonce;
 
+    address public override smolJoes;
+
     /**
      * @notice Get the art mapping for the original Smol Joes
      * @param tokenId The token ID of the Smol Joe
      * @return The art index corresponding to the token ID
      */
-    function getOriginalsArtMapping(uint256 tokenId) external view returns (uint8) {
+    function getOriginalsArtMapping(uint256 tokenId) external view override returns (uint8) {
         return _getOriginalsArtMapping(tokenId);
     }
 
@@ -39,7 +43,7 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
      * @notice Updates the mapping connecting the Originals to their corresponding art
      * @param artMapping The new art mapping
      */
-    function updateOriginalsArtMapping(uint8[100] calldata artMapping) external {
+    function updateOriginalsArtMapping(uint8[100] calldata artMapping) external override onlyOwner {
         uint256 packedMapping;
         for (uint256 i = 0; i < artMapping.length; i++) {
             packedMapping += uint256(artMapping[i]) << (i % UINT8_IN_UINT256) * 8;
@@ -51,6 +55,22 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         }
 
         _originalsArt[3] = packedMapping;
+
+        emit OriginalsArtMappingUpdated(artMapping);
+    }
+
+    /**
+     * @notice Updates the address of the Smol Joes contract
+     * @param _smolJoes The new address of the Smol Joes contract
+     */
+    function setSmolJoesAddress(address _smolJoes) external override onlyOwner {
+        if (_smolJoes == address(0) || _smolJoes == smolJoes) {
+            revert SmolJoeSeeder__InvalidAddress();
+        }
+
+        smolJoes = _smolJoes;
+
+        emit SmolJoesAddressSet(_smolJoes);
     }
 
     /**
@@ -64,6 +84,10 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
         override
         returns (Seed memory)
     {
+        if (msg.sender != smolJoes) {
+            revert SmolJoeSeeder__OnlySmolJoes();
+        }
+
         uint256 randomNumber = uint256(
             keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp, tokenId, _randomnessNonce++))
         );
@@ -77,18 +101,18 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
             uint256 luminariesAvailableLength = _luminariesAvailable.length;
 
             uint256 randomIndex = randomNumber % luminariesAvailableLength;
-            uint256 randomUnique = _luminariesAvailable[randomIndex];
+            uint256 randomLuminary = _luminariesAvailable[randomIndex];
 
-            seed.luminaryId = uint8(randomUnique % 10) + 1;
+            seed.luminaryId = uint8(randomLuminary % 10 + 1);
             // Pick the corresponding brotherhood (1-10)
-            seed.brotherhood = ISmolJoeArt.Brotherhood(randomUnique / 10 + 1);
+            seed.brotherhood = ISmolJoeArt.Brotherhood(randomLuminary / 10 + 1);
 
             // Remove the luminary from the available list
             _luminariesAvailable[randomIndex] = _luminariesAvailable[luminariesAvailableLength - 1];
             _luminariesAvailable.pop();
         } else {
             // Get the brotherhood first
-            ISmolJoeArt.Brotherhood brotherhood = ISmolJoeArt.Brotherhood(uint8(randomNumber % 10));
+            ISmolJoeArt.Brotherhood brotherhood = ISmolJoeArt.Brotherhood(uint8(randomNumber % 10 + 1));
             seed.brotherhood = brotherhood;
             randomNumber >>= 4;
 
@@ -130,7 +154,6 @@ contract SmolJoeSeeder is ISmolJoeSeeder {
             uint256 accessoryCount =
                 descriptor.traitCount(ISmolJoeArt.TraitType.Accessories, ISmolJoeArt.Brotherhood.None);
             seed.accessory = uint16(randomNumber % accessoryCount);
-            randomNumber >>= RANDOM_SEED_SHIFT;
         }
 
         return seed;
