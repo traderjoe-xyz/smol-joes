@@ -7,15 +7,15 @@ import {IInflator} from "./IInflator.sol";
  * @title Interface for SmolJoeArt
  */
 interface ISmolJoeArt {
-    error SenderIsNotDescriptor();
-    error EmptyPalette();
-    error BadPaletteLength();
-    error EmptyBytes();
-    error BadDecompressedLength();
-    error BadImageCount();
-    error ImageNotFound();
-    error PaletteNotFound();
-    error InvalidAddress();
+    error SmolJoeArt__SenderIsNotDescriptor();
+    error SmolJoeArt__EmptyPalette();
+    error SmolJoeArt__BadPaletteLength();
+    error SmolJoeArt__EmptyBytes();
+    error SmolJoeArt__BadDecompressedLength();
+    error SmolJoeArt__BadImageCount();
+    error SmolJoeArt__PaletteNotFound();
+    error SmolJoeArt__ImageNotFound();
+    error SmolJoeArt__InvalidAddress();
 
     event DescriptorUpdated(address newDescriptor);
     event InflatorUpdated(address newInflator);

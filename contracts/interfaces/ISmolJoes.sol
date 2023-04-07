@@ -11,7 +11,6 @@ import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
  */
 interface ISmolJoes is IERC721 {
     event DescriptorUpdated(ISmolJoeDescriptorMinimal descriptor);
-
     event SeederUpdated(ISmolJoeSeeder seeder);
 
     function dataURI(uint256 tokenId) external returns (string memory);

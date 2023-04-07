@@ -30,7 +30,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     /**
      * @notice Whether or not `tokenURI` should be returned as a data URI (Default: true)
      */
-    bool public override isDataURIEnabled = true;
+    bool public override isDataURIEnabled;
 
     /**
      * @notice Base URI, used when isDataURIEnabled is false
@@ -40,6 +40,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     constructor(ISmolJoeArt _art, ISVGRenderer _renderer) {
         _setArt(_art);
         _setRenderer(_renderer);
+        _setDataURIEnabled(true);
     }
 
     /**
@@ -80,13 +81,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @param isEnabled whether or not to enable data URIs.
      */
     function setDataURIEnabled(bool isEnabled) external override onlyOwner {
-        if (isDataURIEnabled == isEnabled) {
-            revert UpdateToSameState();
-        }
-
-        isDataURIEnabled = isEnabled;
-
-        emit DataURIToggled(isEnabled);
+        _setDataURIEnabled(isEnabled);
     }
 
     /**
@@ -401,12 +396,28 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     }
 
     /**
+     * @dev Toggle a boolean value which determines if `tokenURI` returns a data URI
+     * or an HTTP URL.
+     * @param isEnabled Whether the data URI is enabled.
+     *
+     */
+    function _setDataURIEnabled(bool isEnabled) internal {
+        if (isDataURIEnabled == isEnabled) {
+            revert SmolJoeDescriptor__UpdateToSameState();
+        }
+
+        isDataURIEnabled = isEnabled;
+
+        emit DataURIToggled(isEnabled);
+    }
+
+    /**
      * @dev Set the SmolJoe's art contract.
      * @param _art the address of the art contract.
      */
     function _setArt(ISmolJoeArt _art) internal {
         if (address(_art) == address(0)) {
-            revert InvalidAddress();
+            revert SmolJoeDescriptor__InvalidAddress();
         }
 
         art = _art;
@@ -420,7 +431,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      */
     function _setRenderer(ISVGRenderer _renderer) internal {
         if (address(_renderer) == address(0)) {
-            revert InvalidAddress();
+            revert SmolJoeDescriptor__InvalidAddress();
         }
 
         renderer = _renderer;

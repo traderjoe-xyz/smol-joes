@@ -35,7 +35,7 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     modifier onlyDescriptor() {
         if (msg.sender != descriptor) {
-            revert SenderIsNotDescriptor();
+            revert SmolJoeArt__SenderIsNotDescriptor();
         }
         _;
     }
@@ -81,11 +81,11 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     function setPalette(uint8 paletteIndex, bytes calldata palette) external override onlyDescriptor {
         if (palette.length == 0) {
-            revert EmptyPalette();
+            revert SmolJoeArt__EmptyPalette();
         }
 
         if (palette.length % 3 != 0 || palette.length > 196_608) {
-            revert BadPaletteLength();
+            revert SmolJoeArt__BadPaletteLength();
         }
         palettesPointers[paletteIndex] = SSTORE2.write(palette);
 
@@ -167,7 +167,7 @@ contract SmolJoeArt is ISmolJoeArt {
     function palettes(uint8 paletteIndex) external view override returns (bytes memory) {
         address pointer = palettesPointers[paletteIndex];
         if (pointer == address(0)) {
-            revert PaletteNotFound();
+            revert SmolJoeArt__PaletteNotFound();
         }
         return SSTORE2.read(palettesPointers[paletteIndex]);
     }
@@ -186,7 +186,7 @@ contract SmolJoeArt is ISmolJoeArt {
         uint16 imageCount
     ) internal {
         if (encodedCompressed.length == 0) {
-            revert EmptyBytes();
+            revert SmolJoeArt__EmptyBytes();
         }
         address pointer = SSTORE2.write(encodedCompressed);
         _addPage(trait, pointer, decompressedLength, imageCount);
@@ -201,10 +201,10 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     function _addPage(Trait storage trait, address pointer, uint80 decompressedLength, uint16 imageCount) internal {
         if (decompressedLength == 0) {
-            revert BadDecompressedLength();
+            revert SmolJoeArt__BadDecompressedLength();
         }
         if (imageCount == 0) {
-            revert BadImageCount();
+            revert SmolJoeArt__BadImageCount();
         }
         trait.storagePages.push(
             SmolJoeArtStoragePage({pointer: pointer, decompressedLength: decompressedLength, imageCount: imageCount})
@@ -258,7 +258,7 @@ contract SmolJoeArt is ISmolJoeArt {
             pageFirstImageIndex += page.imageCount;
         }
 
-        revert ImageNotFound();
+        revert SmolJoeArt__ImageNotFound();
     }
 
     /**
@@ -282,7 +282,7 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     function _setDescriptor(address _descriptor) internal {
         if (_descriptor == address(0)) {
-            revert InvalidAddress();
+            revert SmolJoeArt__InvalidAddress();
         }
 
         descriptor = _descriptor;
@@ -296,7 +296,7 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     function _setInflator(IInflator _inflator) internal {
         if (address(_inflator) == address(0)) {
-            revert InvalidAddress();
+            revert SmolJoeArt__InvalidAddress();
         }
 
         inflator = _inflator;

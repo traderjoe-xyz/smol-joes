@@ -11,8 +11,8 @@ import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
  * @title Interface for SmolJoeDescriptor
  */
 interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
-    error InvalidAddress();
-    error UpdateToSameState();
+    error SmolJoeDescriptor__InvalidAddress();
+    error SmolJoeDescriptor__UpdateToSameState();
 
     event DataURIToggled(bool enabled);
     event BaseURIUpdated(string baseURI);
