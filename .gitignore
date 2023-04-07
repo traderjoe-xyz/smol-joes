@@ -25,4 +25,7 @@ deployments/localhost
 # Temporarly ignore testnet deployments
 deployments/fuji
 files/assets-data
-test/files
+test/files/encoded-assets
+test/files/images-sample
+test/files/metadatas-sample
+test/files/raw-uris-sample

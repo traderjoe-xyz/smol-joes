@@ -6,12 +6,11 @@ import "forge-std/Test.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 import {SmolJoes} from "contracts/SmolJoes.sol";
-import {ISmolJoeDescriptor, SmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
-import {SmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
-import {SVGRenderer} from "contracts/SVGRenderer.sol";
-import {ISmolJoeArt, SmolJoeArt} from "contracts/SmolJoeArt.sol";
-import {ISmolJoeSeeder} from "contracts/interfaces/ISmolJoeSeeder.sol";
-import {Inflator} from "contracts/Inflator.sol";
+import {SmolJoeDescriptor, ISmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
+import {SmolJoeSeeder, ISmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
+import {SVGRenderer, ISVGRenderer} from "contracts/SVGRenderer.sol";
+import {SmolJoeArt, ISmolJoeArt} from "contracts/SmolJoeArt.sol";
+import {Inflator, IInflator} from "contracts/Inflator.sol";
 
 contract TestHelper is Test {
     SmolJoes token;
@@ -49,7 +48,7 @@ contract TestHelper is Test {
     }
 
     // created with `yarn hardhat make-descriptor-art`
-    function _populateDescriptor() internal {
+    function _populateDescriptor(string memory assetsLocation, bool splitLargeTraits) internal {
         string[11] memory traitTypes = [
             "originals",
             "luminaries",
@@ -79,14 +78,13 @@ contract TestHelper is Test {
         ];
 
         (bytes memory palette) =
-            abi.decode(vm.parseBytes(vm.readFile("./test/files/encoded-assets/palette.abi")), (bytes));
+            abi.decode(vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "palette.abi")))), (bytes));
         descriptor.setPalette(0, palette);
 
         for (uint256 i = 0; i < traitTypes.length; i++) {
             for (uint256 j = 0; j < brotherhoods.length; j++) {
-                try vm.readFile(
-                    string(abi.encodePacked("./test/files/encoded-assets/", traitTypes[i], brotherhoods[j], "Page.abi"))
-                ) returns (string memory result) {
+                try vm.readFile(string(abi.encodePacked(assetsLocation, traitTypes[i], brotherhoods[j], "Page.abi")))
+                returns (string memory result) {
                     (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
                         abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
 
@@ -113,18 +111,20 @@ contract TestHelper is Test {
             traitsCountList = new uint16[](0);
         }
 
-        (bytes memory extraSpecialsTraits, uint80 extraSpecialsTraitsLength, uint16 extraSpecialsTraitsCount) = abi
-            .decode(
-            vm.parseBytes(vm.readFile(string(abi.encodePacked("./test/files/encoded-assets/originalsNonePage_2.abi")))),
-            (bytes, uint80, uint16)
-        );
+        if (splitLargeTraits) {
+            (bytes memory extraSpecialsTraits, uint80 extraSpecialsTraitsLength, uint16 extraSpecialsTraitsCount) = abi
+                .decode(
+                vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "originalsNonePage_2.abi")))),
+                (bytes, uint80, uint16)
+            );
 
-        descriptor.addTraits(
-            ISmolJoeArt.TraitType.Original,
-            ISmolJoeArt.Brotherhood.None,
-            extraSpecialsTraits,
-            extraSpecialsTraitsLength,
-            extraSpecialsTraitsCount
-        );
+            descriptor.addTraits(
+                ISmolJoeArt.TraitType.Original,
+                ISmolJoeArt.Brotherhood.None,
+                extraSpecialsTraits,
+                extraSpecialsTraitsLength,
+                extraSpecialsTraitsCount
+            );
+        }
     }
 }
