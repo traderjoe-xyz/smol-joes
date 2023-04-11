@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.13;
 
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {
+    OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable
+} from "@traderjoe-xyz/nft-base-contracts/src/OZNFTBaseUpgradeable.sol";
 
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
@@ -12,7 +13,7 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 /**
  * @title The Smol Joe ERC-721 token
  */
-contract SmolJoes is ISmolJoes, Ownable, ERC721 {
+contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     // The Smol Joe token URI descriptor
     ISmolJoeDescriptorMinimal public descriptor;
 
@@ -22,9 +23,11 @@ contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     // The smol joe seeds
     mapping(uint256 => ISmolJoeSeeder.Seed) public seeds;
 
-    constructor(ISmolJoeDescriptorMinimal _descriptor, ISmolJoeSeeder _seeder) ERC721("On-chain Thing", "SJT") {
+    constructor(ISmolJoeDescriptorMinimal _descriptor, ISmolJoeSeeder _seeder) initializer {
         descriptor = _descriptor;
         seeder = _seeder;
+
+        __OZNFTBase_init("On-chain Thing", "SJT", address(1), 0, address(1), address(1));
     }
 
     function mint(address to, uint256 tokenID) public {
@@ -68,5 +71,14 @@ contract SmolJoes is ISmolJoes, Ownable, ERC721 {
         seeder = _seeder;
 
         emit SeederUpdated(_seeder);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(IOZNFTBaseUpgradeable, OZNFTBaseUpgradeable)
+        returns (bool)
+    {
+        return interfaceId == type(ISmolJoes).interfaceId || OZNFTBaseUpgradeable.supportsInterface(interfaceId);
     }
 }
