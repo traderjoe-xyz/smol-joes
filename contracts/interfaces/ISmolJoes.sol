@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.13;
 
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {IOZNFTBaseUpgradeable} from "@traderjoe-xyz/nft-base-contracts/src/OZNFTBaseUpgradeable.sol";
+
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
@@ -9,7 +10,7 @@ import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 /**
  * @title Interface for SmolJoes
  */
-interface ISmolJoes is IERC721 {
+interface ISmolJoes is IOZNFTBaseUpgradeable {
     event DescriptorUpdated(ISmolJoeDescriptorMinimal descriptor);
     event SeederUpdated(ISmolJoeSeeder seeder);
 
