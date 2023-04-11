@@ -219,7 +219,7 @@ task(
       .map((_, i) => i + 1),
   ];
 
-  const txMapping = await seeder.updateOriginalsArtMapping(mappings);
+  const txMapping = await seeder.updateSpecialsArtMapping(mappings);
   await txMapping.wait();
 
   console.log(
@@ -269,7 +269,7 @@ task(
 
   console.log(
     "Art mapping for Smol Joe 5",
-    await seeder.getOriginalsArtMapping(5)
+    await seeder.getSpecialsArtMapping(5)
   );
 
   const gasPaid = balanceBefore.sub(await ethers.provider.getBalance(deployer));
