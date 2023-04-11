@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.6;
+pragma solidity 0.8.13;
 
 import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {SSTORE2} from "solady/src/utils/SSTORE2.sol";

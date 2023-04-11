@@ -18,7 +18,7 @@
  *
  */
 
-pragma solidity ^0.8.6;
+pragma solidity 0.8.13;
 
 import {IInflator} from "./interfaces/IInflator.sol";
 import {Inflate} from "./libs/Inflate.sol";
