@@ -6,7 +6,6 @@ import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
-import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 
 /**
