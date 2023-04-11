@@ -36,6 +36,11 @@ To reconstruct the final image, different contracts will be used, following this
 **SVG Renderer**: This contract will take every part of the token `seed` and convert the corresponding RLE encoded images into SVG `rectangles`.\
 **NFT Descriptor**: This contract will take the SVG image, encode it into a `base64` string, add the rest of the metadata and then encode again to `base64`. This is what will be returned by `tokenURI()`.
 
+There is three different types of Smol Joes that can be built:
+- Originals: Ugraded Smol Joe V1. Each V1 token will have it's corresponding Original, described by the `_getOriginalsArtMapping` function (set by the owner). There is only one corresponding `Trait` that contains the full image.
+- Luminaries: Upgraded unique Smol Creep. Each token will be randomly assigned when the V1 is burned. Each Luminary can be assigned once of course, so the `_luminariesAvailable` array have been introduced. There is only one corresponding `Trait` that contains the full image. Each Luminary also belong to one of the 10 Brotherhood (see the `Brotherhood` enum in `ISmolJoeArt`).
+- Smol: Rest of the collection. Can be generated infinitely. Each Smol image is the superposition of the following traits: Background, Body, Shoes, Pants, Shirt, Beard, Hair/Cap/Head, Eye accessory, Accessory. First, a random Brotherhood will be assigned to the token. Then, one asset of each trait type will be picked ***within this brotherhood***. The final image will be the superposition of all the assets.
+
 ## Testing
 
 This project uses both `Hardhat` and `Foundry`. Tests are using Foundry.
