@@ -5,7 +5,7 @@ libs = ['node_modules', 'lib']
 test = 'test/foundry'
 cache_path  = 'forge-cache'
 no_match_test = "test_SVGGeneration"
-solc = '0.8.17'
+solc = '0.8.13'
 
 fs_permissions = [{ access = "read-write", path = "./"}]
 
