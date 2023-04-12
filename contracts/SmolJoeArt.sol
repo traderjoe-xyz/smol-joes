@@ -46,6 +46,45 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
+     * @notice Get the trait for a given trait type and brotherhood.
+     * @param traitType The trait type
+     * @param brotherhood The brotherhood
+     * @return Trait struct
+     */
+    function getTrait(TraitType traitType, Brotherhood brotherhood) external view override returns (Trait memory) {
+        return _traits[traitType][brotherhood];
+    }
+
+    /**
+     * @notice Get the image for a given trait type, brotherhood, and index.
+     * @param traitType The trait type
+     * @param brotherhood The brotherhood
+     * @param index The index of the image
+     * @return The image bytes and the image name
+     */
+    function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
+        external
+        view
+        override
+        returns (bytes memory, string memory)
+    {
+        return _imageByIndex(_traits[traitType][brotherhood], index);
+    }
+
+    /**
+     * @notice Get a color palette bytes.
+     * @param paletteIndex the identifier of this palette
+     * @return The palette bytes
+     */
+    function palettes(uint8 paletteIndex) external view override returns (bytes memory) {
+        address pointer = palettesPointers[paletteIndex];
+        if (pointer == address(0)) {
+            revert SmolJoeArt__PaletteNotFound();
+        }
+        return SSTORE2.read(palettesPointers[paletteIndex]);
+    }
+
+    /**
      * @notice Set the descriptor address.
      * @dev This function can only be called by the current descriptor.
      * @param _descriptor New descriptor address
@@ -60,16 +99,6 @@ contract SmolJoeArt is ISmolJoeArt {
      */
     function setInflator(IInflator _inflator) external override onlyDescriptor {
         _setInflator(_inflator);
-    }
-
-    /**
-     * @notice Get the trait for a given trait type and brotherhood.
-     * @param traitType The trait type
-     * @param brotherhood The brotherhood
-     * @return Trait struct
-     */
-    function getTrait(TraitType traitType, Brotherhood brotherhood) external view override returns (Trait memory) {
-        return _traits[traitType][brotherhood];
     }
 
     /**
@@ -141,35 +170,6 @@ contract SmolJoeArt is ISmolJoeArt {
         uint16 imageCount
     ) external override onlyDescriptor {
         _addPage(_traits[traitType][brotherhood], pointer, decompressedLength, imageCount);
-    }
-
-    /**
-     * @notice Get the image for a given trait type, brotherhood, and index.
-     * @param traitType The trait type
-     * @param brotherhood The brotherhood
-     * @param index The index of the image
-     * @return The image bytes and the image name
-     */
-    function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
-        external
-        view
-        override
-        returns (bytes memory, string memory)
-    {
-        return _imageByIndex(_traits[traitType][brotherhood], index);
-    }
-
-    /**
-     * @notice Get a color palette bytes.
-     * @param paletteIndex the identifier of this palette
-     * @return The palette bytes
-     */
-    function palettes(uint8 paletteIndex) external view override returns (bytes memory) {
-        address pointer = palettesPointers[paletteIndex];
-        if (pointer == address(0)) {
-            revert SmolJoeArt__PaletteNotFound();
-        }
-        return SSTORE2.read(palettesPointers[paletteIndex]);
     }
 
     /**
