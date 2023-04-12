@@ -12,7 +12,7 @@ import {ISmolJoeDescriptorMinimal, ISmolJoeArt} from "./interfaces/ISmolJoeDescr
  */
 contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
     uint256 private constant MASK_UINT8 = 0xff;
-    uint256 private constant UINT8_IN_UINT256 = 32;
+    uint256 private constant NB_UINT8_IN_UINT256 = 32;
     uint256 private constant RANDOM_SEED_SHIFT = 16;
 
     // forgefmt: disable-next-item
@@ -46,10 +46,10 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
     function updateOriginalsArtMapping(uint8[100] calldata artMapping) external override onlyOwner {
         uint256 packedMapping;
         for (uint256 i = 0; i < artMapping.length; i++) {
-            packedMapping += uint256(artMapping[i]) << (i % UINT8_IN_UINT256) * 8;
+            packedMapping += uint256(artMapping[i]) << (i % NB_UINT8_IN_UINT256) * 8;
 
-            if ((i + 1) % UINT8_IN_UINT256 == 0) {
-                _originalsArt[i / UINT8_IN_UINT256] = packedMapping;
+            if ((i + 1) % NB_UINT8_IN_UINT256 == 0) {
+                _originalsArt[i / NB_UINT8_IN_UINT256] = packedMapping;
                 packedMapping = 0;
             }
         }
@@ -165,6 +165,6 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
      * @return The art index corresponding to the token ID
      */
     function _getOriginalsArtMapping(uint256 tokenId) internal view returns (uint8) {
-        return uint8((_originalsArt[tokenId / UINT8_IN_UINT256] >> (tokenId % UINT8_IN_UINT256) * 8) & MASK_UINT8);
+        return uint8((_originalsArt[tokenId / NB_UINT8_IN_UINT256] >> (tokenId % NB_UINT8_IN_UINT256) * 8) & MASK_UINT8);
     }
 }
