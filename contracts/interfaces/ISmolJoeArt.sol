@@ -16,6 +16,7 @@ interface ISmolJoeArt {
     error SmolJoeArt__PaletteNotFound();
     error SmolJoeArt__ImageNotFound();
     error SmolJoeArt__InvalidAddress();
+    error SmolJoeArt__DecompressionError(uint8 errorCode);
 
     event DescriptorUpdated(address newDescriptor);
     event InflatorUpdated(address newInflator);

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.6;
 
-import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
+
+import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {IInflator} from "./interfaces/IInflator.sol";
 
 /**
@@ -274,7 +275,13 @@ contract SmolJoeArt is ISmolJoeArt {
         returns (bytes[] memory, string[] memory)
     {
         bytes memory compressedData = SSTORE2.read(page.pointer);
-        (, bytes memory decompressedData) = inflator.puff(compressedData, page.decompressedLength);
+        (IInflator.ErrorCode err, bytes memory decompressedData) =
+            inflator.puff(compressedData, page.decompressedLength);
+
+        if (err != IInflator.ErrorCode.ERR_NONE) {
+            revert SmolJoeArt__DecompressionError(uint8(err));
+        }
+
         return abi.decode(decompressedData, (bytes[], string[]));
     }
 

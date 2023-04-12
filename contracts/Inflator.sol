@@ -29,10 +29,10 @@ contract Inflator is IInflator {
      * based on Based on https://github.com/adlerjohn/inflate-sol.
      * @param source the bytes to decompress.
      * @param destlen the length of the original decompressed bytes.
-     * @return Inflate.ErrorCode 0 if successful, otherwise an error code specifying the reason for failure.
+     * @return ErrorCode 0 if successful, otherwise an error code specifying the reason for failure.
      * @return bytes the decompressed bytes.
      */
-    function puff(bytes memory source, uint256 destlen) public pure returns (Inflate.ErrorCode, bytes memory) {
+    function puff(bytes memory source, uint256 destlen) public pure returns (ErrorCode, bytes memory) {
         return Inflate.puff(source, destlen);
     }
 }
