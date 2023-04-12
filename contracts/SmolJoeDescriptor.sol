@@ -389,6 +389,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
     /**
      * @notice Get the color palette pointer for the passed part.
+     * @dev The first bytes of the part data are [palette_index, top, right, bottom, left].
      * @param part The part
      */
     function _getPalette(bytes memory part) private view returns (bytes memory) {
