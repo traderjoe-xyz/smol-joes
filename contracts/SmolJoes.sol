@@ -21,7 +21,7 @@ contract SmolJoes is ISmolJoes, Ownable, ERC721 {
     // The smol joe seeds
     mapping(uint256 => ISmolJoeSeeder.Seed) public seeds;
 
-    constructor(ISmolJoeDescriptorMinimal _descriptor, ISmolJoeSeeder _seeder) ERC721("On-chain Thing", "SJT") {
+    constructor(ISmolJoeDescriptorMinimal _descriptor, ISmolJoeSeeder _seeder) ERC721("Smol Joes Season 2", "SJ") {
         descriptor = _descriptor;
         seeder = _seeder;
     }
