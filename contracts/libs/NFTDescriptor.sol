@@ -87,7 +87,7 @@ library NFTDescriptor {
             "Military",  "Musicians",  "Outlaws", "Religious", "Superheros"
         ];
 
-        traitData = string(abi.encodePacked("["));
+        traitData = "[";
 
         traitData = _appendTrait(traitData, "Brotherhood", brotherhoodNames[uint8(brotherhood)]);
         traitData = string(abi.encodePacked(traitData, ","));
