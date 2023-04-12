@@ -34,19 +34,17 @@ library NFTDescriptor {
             abi.encodePacked(
                 "data:application/json;base64,",
                 Base64.encode(
-                    bytes(
-                        abi.encodePacked(
-                            '{"name":"',
-                            params.name,
-                            '", "description":"',
-                            params.description,
-                            '", "attributes":',
-                            _generateTraitData(params.parts, params.brotherhood),
-                            ', "image": "',
-                            "data:image/svg+xml;base64,",
-                            image,
-                            '"}'
-                        )
+                    abi.encodePacked(
+                        '{"name":"',
+                        params.name,
+                        '", "description":"',
+                        params.description,
+                        '", "attributes":',
+                        _generateTraitData(params.parts, params.brotherhood),
+                        ', "image": "',
+                        "data:image/svg+xml;base64,",
+                        image,
+                        '"}'
                     )
                 )
             )
