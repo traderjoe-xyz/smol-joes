@@ -251,11 +251,13 @@ contract SmolJoeArt is ISmolJoeArt {
         for (uint256 i = 0; i < len; i++) {
             ISmolJoeArt.SmolJoeArtStoragePage storage page = pages[i];
 
-            if (index < pageFirstImageIndex + page.imageCount) {
+            uint256 pageImageCount = page.imageCount;
+
+            if (index < pageFirstImageIndex + pageImageCount) {
                 return (page, index - pageFirstImageIndex);
             }
 
-            pageFirstImageIndex += page.imageCount;
+            pageFirstImageIndex += pageImageCount;
         }
 
         revert SmolJoeArt__ImageNotFound();
