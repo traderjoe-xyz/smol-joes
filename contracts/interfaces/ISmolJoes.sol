@@ -3,7 +3,6 @@ pragma solidity 0.8.13;
 
 import {IOZNFTBaseUpgradeable} from "@traderjoe-xyz/nft-base-contracts/src/OZNFTBaseUpgradeable.sol";
 
-import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 import {ISmolJoeDescriptorMinimal} from "./ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
 
@@ -16,8 +15,18 @@ interface ISmolJoes is IOZNFTBaseUpgradeable {
     event WorkshopUpdated(address workshop);
 
     error SmolJoes__Unauthorized();
+    error SmolJoes__InvalidAddress();
+    error SmolJoes__InexistentToken(uint256 tokenId);
 
-    function dataURI(uint256 tokenId) external returns (string memory);
+    function descriptor() external view returns (ISmolJoeDescriptorMinimal);
+
+    function seeder() external view returns (ISmolJoeSeeder);
+
+    function workshop() external view returns (address);
+
+    function getTokenSeed(uint256 tokenId) external view returns (ISmolJoeSeeder.Seed memory);
+
+    function dataURI(uint256 tokenId) external view returns (string memory);
 
     function mint(address to, uint256 tokenId) external;
 
