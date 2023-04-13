@@ -116,7 +116,6 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
             seed.brotherhood = brotherhood;
             randomNumber >>= 4;
 
-            // Get the background. This is the only trait that is not brotherhood specific
             uint256 backgroundCount = descriptor.traitCount(ISmolJoeArt.TraitType.Background, brotherhood);
             seed.background = uint16(randomNumber % backgroundCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
