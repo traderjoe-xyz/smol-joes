@@ -7,7 +7,6 @@ import {
 
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
-import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 
 /**
@@ -20,6 +19,9 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     // The Smol Joe token seeder
     ISmolJoeSeeder public seeder;
 
+    // The Smol Joe Workshop, which can mint tokens
+    address public workshop;
+
     // The smol joe seeds
     mapping(uint256 => ISmolJoeSeeder.Seed) public seeds;
 
@@ -27,10 +29,23 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         descriptor = _descriptor;
         seeder = _seeder;
 
+        // @todo Use LZ endpoint and bridge token seed
         __OZNFTBase_init("On-chain Thing", "SJT", address(1), 0, address(1), address(1));
     }
 
-    function mint(address to, uint256 tokenID) public {
+    /**
+     * @notice Mint a new token.
+     * @dev The mint logic is expected to be handled by the Smol Joe Workshop.
+     * The Workshop needs to correctly account for the available token IDs and mint accordingly.
+     * The Workshop address can be updated by the owner, allowing the implementation of different sale mechanisms in the future.
+     * @param to The address to mint the token to.
+     * @param tokenID The token ID to mint.
+     */
+    function mint(address to, uint256 tokenID) external override {
+        if (msg.sender != address(workshop)) {
+            revert SmolJoes__Unauthorized();
+        }
+
         seeds[tokenID] = seeder.generateSeed(tokenID, descriptor);
         _mint(to, tokenID);
     }
@@ -55,22 +70,32 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
 
     /**
      * @notice Set the token URI descriptor.
-     * @dev Only callable by the owner when not locked.
+     * @param _descriptor The new descriptor address.
      */
     function setDescriptor(ISmolJoeDescriptorMinimal _descriptor) external onlyOwner {
         descriptor = _descriptor;
 
-        emit DescriptorUpdated(_descriptor);
+        emit DescriptorUpdated(address(_descriptor));
     }
 
     /**
      * @notice Set the token seeder.
-     * @dev Only callable by the owner when not locked.
+     * @param _seeder The new seeder address.
      */
     function setSeeder(ISmolJoeSeeder _seeder) external onlyOwner {
         seeder = _seeder;
 
-        emit SeederUpdated(_seeder);
+        emit SeederUpdated(address(_seeder));
+    }
+
+    /**
+     * @notice Set the token workshop.
+     * @param _workshop The new workshop address.
+     */
+    function setWorkshop(address _workshop) external onlyOwner {
+        workshop = _workshop;
+
+        emit WorkshopUpdated(_workshop);
     }
 
     function supportsInterface(bytes4 interfaceId)

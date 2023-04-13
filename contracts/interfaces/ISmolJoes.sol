@@ -11,14 +11,19 @@ import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
  * @title Interface for SmolJoes
  */
 interface ISmolJoes is IOZNFTBaseUpgradeable {
-    event DescriptorUpdated(ISmolJoeDescriptorMinimal descriptor);
-    event SeederUpdated(ISmolJoeSeeder seeder);
+    event DescriptorUpdated(address descriptor);
+    event SeederUpdated(address seeder);
+    event WorkshopUpdated(address workshop);
+
+    error SmolJoes__Unauthorized();
 
     function dataURI(uint256 tokenId) external returns (string memory);
+
+    function mint(address to, uint256 tokenId) external;
 
     function setDescriptor(ISmolJoeDescriptorMinimal descriptor) external;
 
     function setSeeder(ISmolJoeSeeder seeder) external;
 
-    function mint(address to, uint256 amount) external;
+    function setWorkshop(address workshop) external;
 }
