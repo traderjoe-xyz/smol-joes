@@ -1,34 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0
-
-/// @author NounsDAO: https://github.com/nounsDAO/nouns-monorepo
-/// @title A contract used to convert multi-part RLE compressed images to SVG
-
-/**
- *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░█████████░░█████████░░░ *
- * ░░░░░░██░░░████░░██░░░████░░░ *
- * ░░██████░░░████████░░░████░░░ *
- * ░░██░░██░░░████░░██░░░████░░░ *
- * ░░██░░██░░░████░░██░░░████░░░ *
- * ░░░░░░█████████░░█████████░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- * ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ *
- *
- */
-
 pragma solidity ^0.8.6;
 
 import {ISVGRenderer} from "./interfaces/ISVGRenderer.sol";
 
+/**
+ * @title A contract used to convert multi-part RLE compressed images to SVG
+ * @notice Based on NounsDAO: https://github.com/nounsDAO/nouns-monorepo and adjusted to work with Smol Joes
+ */
 contract SVGRenderer is ISVGRenderer {
     bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
     uint256 private constant _INDEX_TO_BYTES3_FACTOR = 3;
 
-    // prettier-ignore
     string private constant _SVG_START_TAG =
-        '<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
+        '<svg width="900" height="900" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">';
     string private constant _SVG_END_TAG = "</svg>";
 
     struct ContentBounds {
@@ -40,7 +24,7 @@ contract SVGRenderer is ISVGRenderer {
 
     struct Draw {
         uint8 length;
-        uint8 colorIndex;
+        uint16 colorIndex;
     }
 
     struct DecodedImage {
@@ -50,87 +34,57 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a single SVG image.
+     * @param params The parameters used to construct the SVG image.
+     * @return svg The constructed SVG image.
      */
     function generateSVG(SVGParams calldata params) external pure override returns (string memory svg) {
-        if (bytes(params.background).length != 0) {
-            // prettier-ignore
-            return string(
-                abi.encodePacked(
-                    _SVG_START_TAG,
-                    '<rect width="100%" height="100%" fill="#',
-                    params.background,
-                    '" />',
-                    _generateSVGRects(params),
-                    _SVG_END_TAG
-                )
-            );
-        }
         return string(abi.encodePacked(_SVG_START_TAG, _generateSVGRects(params), _SVG_END_TAG));
     }
 
     /**
      * @notice Given RLE image data and a color palette pointer, merge to generate a partial SVG image.
+     * @param part The part used to construct the SVG image.
+     * @return partialSVG The constructed SVG image.
      */
     function generateSVGPart(Part calldata part) external pure override returns (string memory partialSVG) {
         Part[] memory parts = new Part[](1);
         parts[0] = part;
 
-        return _generateSVGRects(SVGParams({parts: parts, background: ""}));
+        return _generateSVGRects(SVGParams({parts: parts}));
     }
 
     /**
      * @notice Given RLE image data and color palette pointers, merge to generate a partial SVG image.
+     * @param parts The parts used to construct the SVG image.
+     * @return partialSVG The constructed SVG image.
      */
     function generateSVGParts(Part[] calldata parts) external pure override returns (string memory partialSVG) {
-        return _generateSVGRects(SVGParams({parts: parts, background: ""}));
+        return _generateSVGRects(SVGParams({parts: parts}));
     }
 
     /**
      * @notice Given RLE image parts and color palettes, generate SVG rects.
+     * @param params The parameters used to construct the SVG image.
+     * @return svg The constructed SVG image.
      */
-    // prettier-ignore
     function _generateSVGRects(SVGParams memory params) private pure returns (string memory svg) {
-        string[33] memory lookup = [
-            "0",
-            "10",
-            "20",
-            "30",
-            "40",
-            "50",
-            "60",
-            "70",
-            "80",
-            "90",
-            "100",
-            "110",
-            "120",
-            "130",
-            "140",
-            "150",
-            "160",
-            "170",
-            "180",
-            "190",
-            "200",
-            "210",
-            "220",
-            "230",
-            "240",
-            "250",
-            "260",
-            "270",
-            "280",
-            "290",
-            "300",
-            "310",
-            "320"
+        // forgefmt: disable-next-item
+        string[46] memory lookup = [    
+            "0", "20", "40", "60", "80", "100", "120", "140", "160", "180", "200", 
+            "220", "240", "260", "280", "300", "320", "340", "360", "380", "400", 
+            "420", "440", "460", "480", "500", "520", "540", "560", "580", "600", 
+            "620", "640", "660", "680", "700", "720", "740", "760", "780", "800", 
+            "820", "840", "860", "880", "900"
         ];
+
         string memory rects;
         string[] memory cache;
+
         for (uint8 p = 0; p < params.parts.length; p++) {
-            cache = new string[](256); // Initialize color cache
+            cache = new string[](12_000); // Initialize color cache
 
             DecodedImage memory image = _decodeRLEImage(params.parts[p].image);
+
             bytes memory palette = params.parts[p].palette;
             uint256 currentX = image.bounds.left;
             uint256 currentY = image.bounds.top;
@@ -147,6 +101,7 @@ contract SVGRenderer is ISVGRenderer {
                         buffer[cursor] = lookup[length]; // width
                         buffer[cursor + 1] = lookup[currentX]; // x
                         buffer[cursor + 2] = lookup[currentY]; // y
+
                         buffer[cursor + 3] = _getColor(palette, draw.colorIndex, cache); // color
 
                         cursor += 4;
@@ -179,6 +134,10 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Given an x-coordinate, draw length, and right bound, return the draw
      * length for a single SVG rectangle.
+     * @param currentX The current x-coordinate.
+     * @param drawLength The length of the draw.
+     * @param rightBound The right bound of the image.
+     * @return length The length of the SVG rectangle.
      */
     function _getRectLength(uint256 currentX, uint8 drawLength, uint8 rightBound) private pure returns (uint8) {
         uint8 remainingPixelsInLine = rightBound - uint8(currentX);
@@ -187,8 +146,10 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Return a string that consists of all rects in the provided `buffer`.
+     * @param cursor The number of rects in the buffer.
+     * @param buffer The buffer of rects.
+     * @return chunk The string of rects.
      */
-    // prettier-ignore
     function _getChunk(uint256 cursor, string[16] memory buffer) private pure returns (string memory) {
         string memory chunk;
         for (uint256 i = 0; i < cursor; i += 4) {
@@ -197,7 +158,7 @@ contract SVGRenderer is ISVGRenderer {
                     chunk,
                     '<rect width="',
                     buffer[i],
-                    '" height="10" x="',
+                    '" height="20" x="',
                     buffer[i + 1],
                     '" y="',
                     buffer[i + 2],
@@ -212,6 +173,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @notice Decode a single RLE compressed image into a `DecodedImage`.
+     * @param image The RLE compressed image.
+     * @return decodedImage The decoded image.
      */
     function _decodeRLEImage(bytes memory image) private pure returns (DecodedImage memory) {
         ContentBounds memory bounds = ContentBounds({
@@ -222,9 +185,13 @@ contract SVGRenderer is ISVGRenderer {
         });
 
         uint256 cursor;
-        Draw[] memory draws = new Draw[]((image.length - 5) / 2);
-        for (uint256 i = 5; i < image.length; i += 2) {
-            draws[cursor] = Draw({length: uint8(image[i]), colorIndex: uint8(image[i + 1])});
+        Draw[] memory draws = new Draw[]((image.length - 5) / 3);
+
+        for (uint256 i = 5; i < image.length; i += 3) {
+            draws[cursor] = Draw({
+                length: uint8(image[i]),
+                colorIndex: (uint16(uint8(image[i + 1])) << 8) + uint16(uint8(image[i + 2]))
+            });
             cursor++;
         }
         return DecodedImage({bounds: bounds, draws: draws});
@@ -233,6 +200,10 @@ contract SVGRenderer is ISVGRenderer {
     /**
      * @notice Get the target hex color code from the cache. Populate the cache if
      * the color code does not yet exist.
+     * @param palette The palette of the image.
+     * @param index The index of the color in the palette.
+     * @param cache The cache of color codes.
+     * @return  The color code.
      */
     function _getColor(bytes memory palette, uint256 index, string[] memory cache)
         private
@@ -248,6 +219,8 @@ contract SVGRenderer is ISVGRenderer {
 
     /**
      * @dev Convert `bytes` to a 6 character ASCII `string` hexadecimal representation.
+     * @param b The `bytes` to convert.
+     * @return The `string` hexadecimal representation.
      */
     function _toHexString(bytes memory b) private pure returns (string memory) {
         uint24 value = uint24(bytes3(b));

@@ -1,6 +1,18 @@
 [profile.default]
-src = 'src'
+src = 'contracts'
 out = 'out'
-libs = ['lib']
+libs = ['node_modules', 'lib']
+test = 'test/foundry'
+cache_path  = 'forge-cache'
+no_match_test = "test_SVGGeneration"
+solc = '0.8.17'
+
+fs_permissions = [{ access = "read-write", path = "./"}]
+
+# To test the SVG generation, use "export FOUNDRY_PROFILE=svgtesting"
+[profile.svgtesting]
+match_test = "test_SVGGeneration"
+no_match_test = "Foo"
+ffi = true
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
