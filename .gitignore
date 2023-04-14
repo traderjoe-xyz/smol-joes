@@ -23,7 +23,7 @@ forge-cache/
 deployments/localhost
 
 # Encoded trait data
-test/files/**.abi
+script/files/**/*.abi
 
 # Temporarly ignore testnet deployments
 deployments/fuji
