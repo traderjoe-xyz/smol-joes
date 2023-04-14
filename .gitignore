@@ -22,10 +22,8 @@ forge-cache/
 # Localhost deployment files
 deployments/localhost
 
+# Encoded trait data
+test/files/**.abi
+
 # Temporarly ignore testnet deployments
 deployments/fuji
-files/assets-data
-test/files/encoded-assets
-test/files/images-sample
-test/files/metadatas-sample
-test/files/raw-uris-sample
