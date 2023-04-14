@@ -8,7 +8,7 @@ contract BasicTest is TestHelper {
 
     function test_SVGGeneration() public {
         uint256 gasLeft = gasleft();
-        _populateDescriptor("./test/files/encoded-assets/", true);
+        _populateDescriptor(descriptor);
         console.log("Gas used to populate descriptor: ", gasLeft - gasleft());
 
         string[] memory inputs = new string[](5);

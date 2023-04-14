@@ -44,6 +44,7 @@ task(
       hairs_caps_heads,
       eye_accessories,
       accessories,
+      houses,
     } = images;
 
     // Create a list of all bodyparts
@@ -59,6 +60,7 @@ task(
       { object: hairs_caps_heads, name: "heads" },
       { object: eye_accessories, name: "eyes" },
       { object: accessories, name: "accessories" },
+      { object: houses, name: "houses" },
     ];
 
     Object.keys(Brotherhood).map((brotherhood) => {

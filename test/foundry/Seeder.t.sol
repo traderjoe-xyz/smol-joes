@@ -23,13 +23,16 @@ contract SeederTest is TestHelper {
         seeder.updateOriginalsArtMapping(artMapping);
     }
 
+    /**
+     * @dev Accounting mappings for `test_GenerateSeed`
+     */
     mapping(ISmolJoeArt.Brotherhood => uint256) brotherhoodCount;
     mapping(ISmolJoeArt.Brotherhood => mapping(uint256 => bool)) idsTaken;
     mapping(ISmolJoeArt.TraitType => mapping(uint256 => uint256)) bodyPartsDistribution;
     mapping(ISmolJoeArt.Brotherhood => uint256) brotherhoodDistribution;
 
     function test_GenerateSeed() public {
-        _populateDescriptor("./test/files/encoded-test-assets/", false);
+        _populateDescriptor(descriptor);
 
         seeder.setSmolJoesAddress(address(this));
 

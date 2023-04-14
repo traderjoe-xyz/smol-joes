@@ -27,13 +27,14 @@ interface ISmolJoeArt {
         Luminary,
         Background,
         Body,
-        Pants,
         Shoes,
+        Pants,
         Shirt,
         Beard,
         HairCapHead,
         EyeAccessory,
-        Accessories
+        Accessories,
+        House
     }
 
     enum Brotherhood {
