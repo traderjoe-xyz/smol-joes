@@ -28,6 +28,10 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
 
     uint256 private _randomnessNonce;
 
+    /**
+     * @notice The Smol Joes contract address
+     * @dev Used to check that the caller is the Smol Joes contract when getting a seed
+     */
     address public override smolJoes;
 
     /**
@@ -117,40 +121,43 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
             randomNumber >>= 4;
 
             uint256 backgroundCount = descriptor.traitCount(ISmolJoeArt.TraitType.Background, brotherhood);
-            seed.background = uint16(randomNumber % backgroundCount);
+            seed.bodyParts.background = uint16(randomNumber % backgroundCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
-            // Get the rest of the traits
             uint256 bodyCount = descriptor.traitCount(ISmolJoeArt.TraitType.Body, brotherhood);
-            seed.body = uint16(randomNumber % bodyCount);
+            seed.bodyParts.body = uint16(randomNumber % bodyCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 pantCount = descriptor.traitCount(ISmolJoeArt.TraitType.Pants, brotherhood);
-            seed.pants = uint16(randomNumber % pantCount);
+            seed.bodyParts.pants = uint16(randomNumber % pantCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 shoeCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shoes, brotherhood);
-            seed.shoes = uint16(randomNumber % shoeCount);
+            seed.bodyParts.shoes = uint16(randomNumber % shoeCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 shirtCount = descriptor.traitCount(ISmolJoeArt.TraitType.Shirt, brotherhood);
-            seed.shirt = uint16(randomNumber % shirtCount);
+            seed.bodyParts.shirt = uint16(randomNumber % shirtCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 beardCount = descriptor.traitCount(ISmolJoeArt.TraitType.Beard, brotherhood);
-            seed.beard = uint16(randomNumber % beardCount);
+            seed.bodyParts.beard = uint16(randomNumber % beardCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 headCount = descriptor.traitCount(ISmolJoeArt.TraitType.HairCapHead, brotherhood);
-            seed.hairCapHead = uint16(randomNumber % headCount);
+            seed.bodyParts.hairCapHead = uint16(randomNumber % headCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 eyeCount = descriptor.traitCount(ISmolJoeArt.TraitType.EyeAccessory, brotherhood);
-            seed.eyeAccessory = uint16(randomNumber % eyeCount);
+            seed.bodyParts.eyeAccessory = uint16(randomNumber % eyeCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
             uint256 accessoryCount = descriptor.traitCount(ISmolJoeArt.TraitType.Accessories, brotherhood);
-            seed.accessory = uint16(randomNumber % accessoryCount);
+            seed.bodyParts.accessory = uint16(randomNumber % accessoryCount);
+            randomNumber >>= RANDOM_SEED_SHIFT;
+
+            uint256 houseCount = descriptor.traitCount(ISmolJoeArt.TraitType.House, brotherhood);
+            seed.bodyParts.house = uint16(randomNumber % houseCount);
         }
 
         return seed;

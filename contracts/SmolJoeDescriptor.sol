@@ -347,15 +347,15 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
             parts[0] = ISVGRenderer.Part({name: luminaryTraitName, image: luminary, palette: _getPalette(luminary)});
             return parts;
         } else {
-            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
+            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](10);
 
             {
                 (bytes memory background, string memory backgroundTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Background, seed.brotherhood, seed.background);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Background, seed.brotherhood, seed.bodyParts.background);
                 (bytes memory body, string memory bodyTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Body, seed.brotherhood, seed.body);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Body, seed.brotherhood, seed.bodyParts.body);
                 (bytes memory shoes, string memory shoeTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Shoes, seed.brotherhood, seed.shoes);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Shoes, seed.brotherhood, seed.bodyParts.shoes);
 
                 parts[0] =
                     ISVGRenderer.Part({name: backgroundTraitName, image: background, palette: _getPalette(background)});
@@ -365,11 +365,13 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
             {
                 (bytes memory pants, string memory pantTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Pants, seed.brotherhood, seed.pants);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Pants, seed.brotherhood, seed.bodyParts.pants);
+
                 (bytes memory shirt, string memory shirtTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Shirt, seed.brotherhood, seed.shirt);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Shirt, seed.brotherhood, seed.bodyParts.shirt);
+
                 (bytes memory beard, string memory beardTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Beard, seed.brotherhood, seed.beard);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Beard, seed.brotherhood, seed.bodyParts.beard);
 
                 parts[3] = ISVGRenderer.Part({name: pantTraitName, image: pants, palette: _getPalette(pants)});
                 parts[4] = ISVGRenderer.Part({name: shirtTraitName, image: shirt, palette: _getPalette(shirt)});
@@ -378,11 +380,12 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
             {
                 (bytes memory hairCapHead, string memory hairCapHeadTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.HairCapHead, seed.brotherhood, seed.hairCapHead);
-                (bytes memory eyeAccessory, string memory eyeTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.EyeAccessory, seed.brotherhood, seed.eyeAccessory);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.HairCapHead, seed.brotherhood, seed.bodyParts.hairCapHead);
+                (bytes memory eyeAccessory, string memory eyeTraitName) = art.getImageByIndex(
+                    ISmolJoeArt.TraitType.EyeAccessory, seed.brotherhood, seed.bodyParts.eyeAccessory
+                );
                 (bytes memory accessory, string memory accessoryTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Accessories, seed.brotherhood, seed.accessory);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Accessories, seed.brotherhood, seed.bodyParts.accessory);
 
                 parts[6] = ISVGRenderer.Part({
                     name: hairCapHeadTraitName,
@@ -394,6 +397,11 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
                 parts[8] =
                     ISVGRenderer.Part({name: accessoryTraitName, image: accessory, palette: _getPalette(accessory)});
             }
+
+            (bytes memory house, string memory houseTraitName) =
+                art.getImageByIndex(ISmolJoeArt.TraitType.House, seed.brotherhood, seed.bodyParts.house);
+            parts[9] = ISVGRenderer.Part({name: houseTraitName, image: house, palette: _getPalette(house)});
+
             return parts;
         }
     }

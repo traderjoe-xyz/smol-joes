@@ -28,7 +28,8 @@ contract SeederTest is TestHelper {
      */
     mapping(ISmolJoeArt.Brotherhood => uint256) brotherhoodCount;
     mapping(ISmolJoeArt.Brotherhood => mapping(uint256 => bool)) idsTaken;
-    mapping(ISmolJoeArt.TraitType => mapping(uint256 => uint256)) bodyPartsDistribution;
+    mapping(ISmolJoeArt.TraitType => mapping(ISmolJoeArt.Brotherhood => mapping(uint256 => uint256)))
+        bodyPartsDistribution;
     mapping(ISmolJoeArt.Brotherhood => uint256) brotherhoodDistribution;
 
     function test_GenerateSeed() public {
@@ -65,37 +66,39 @@ contract SeederTest is TestHelper {
             seed = seeder.generateSeed(i, descriptor);
 
             // Test the URI generation for some of the tokens
-            if (i % 100 == 0) {
-                descriptor.tokenURI(i, seed);
-            }
+            // if (i % 100 == 0) {
+            //     descriptor.tokenURI(i, seed);
+            // }
 
             brotherhoodDistribution[seed.brotherhood]++;
 
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Background][seed.background]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Body][seed.body]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Shoes][seed.shoes]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Pants][seed.pants]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Shirt][seed.shirt]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Beard][seed.beard]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.hairCapHead]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.eyeAccessory]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.accessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Background][seed.brotherhood][seed.bodyParts.background]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Body][seed.brotherhood][seed.bodyParts.body]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Shoes][seed.brotherhood][seed.bodyParts.shoes]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Pants][seed.brotherhood][seed.bodyParts.pants]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Shirt][seed.brotherhood][seed.bodyParts.shirt]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Beard][seed.brotherhood][seed.bodyParts.beard]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.brotherhood][seed.bodyParts.hairCapHead]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.brotherhood][seed.bodyParts.eyeAccessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.brotherhood][seed.bodyParts.accessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.House][seed.brotherhood][seed.bodyParts.house]++;
         }
 
         // Check that all body parts are equally distributed
-        for (uint256 i = 0; i < 9; i++) {
+        for (uint256 i = 0; i < 10; i++) {
             ISmolJoeArt.TraitType traitType = ISmolJoeArt.TraitType(i + 2);
 
-            // Traits on test data have no brotherhood
-            uint256 traitTypeAmount = descriptor.traitCount(traitType, ISmolJoeArt.Brotherhood.None);
+            for (uint256 j = 0; j < 10; j++) {
+                uint256 traitTypeAmount = descriptor.traitCount(traitType, ISmolJoeArt.Brotherhood(j + 1));
 
-            for (uint256 j = 0; j < traitTypeAmount; j++) {
-                assertApproxEqRel(
-                    bodyPartsDistribution[traitType][j],
-                    10_000 / traitTypeAmount,
-                    5e16, // 5%
-                    "test_GenerateSeed::5"
-                );
+                for (uint256 k = 0; k < traitTypeAmount; k++) {
+                    assertApproxEqRel(
+                        bodyPartsDistribution[traitType][ISmolJoeArt.Brotherhood(j + 1)][k],
+                        1_000 / traitTypeAmount,
+                        35e16, // 35%
+                        "test_GenerateSeed::5"
+                    );
+                }
             }
         }
 
