@@ -66,9 +66,9 @@ contract SeederTest is TestHelper {
             seed = seeder.generateSeed(i, descriptor);
 
             // Test the URI generation for some of the tokens
-            // if (i % 100 == 0) {
-            //     descriptor.tokenURI(i, seed);
-            // }
+            if (i % 100 == 0) {
+                descriptor.tokenURI(i, seed);
+            }
 
             brotherhoodDistribution[seed.brotherhood]++;
 

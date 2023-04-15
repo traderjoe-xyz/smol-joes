@@ -76,8 +76,18 @@ library NFTDescriptor {
         pure
         returns (string memory traitData)
     {
-        string[9] memory traitNames =
-            ["Background", "Body", "Shoes", "Pants", "Shirt", "Beard", "HairCapHead", "EyeAccessory", "Accesory"];
+        string[10] memory traitNames = [
+            "Background",
+            "Body",
+            "Shoes",
+            "Pants",
+            "Shirt",
+            "Beard",
+            "HairCapHead",
+            "EyeAccessory",
+            "Accesory",
+            "House"
+        ];
 
         // forgefmt: disable-next-item
         string[11] memory brotherhoodNames = [
