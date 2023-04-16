@@ -33,8 +33,7 @@ interface ISmolJoeArt {
         Beard,
         HairCapHead,
         EyeAccessory,
-        Accessories,
-        House
+        Accessories
     }
 
     enum Brotherhood {

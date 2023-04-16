@@ -347,7 +347,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
             parts[0] = ISVGRenderer.Part({name: luminaryTraitName, image: luminary, palette: _getPalette(luminary)});
             return parts;
         } else {
-            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](10);
+            ISVGRenderer.Part[] memory parts = new ISVGRenderer.Part[](9);
 
             {
                 (bytes memory background, string memory backgroundTraitName) =
@@ -397,10 +397,6 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
                 parts[8] =
                     ISVGRenderer.Part({name: accessoryTraitName, image: accessory, palette: _getPalette(accessory)});
             }
-
-            (bytes memory house, string memory houseTraitName) =
-                art.getImageByIndex(ISmolJoeArt.TraitType.House, seed.brotherhood, seed.bodyParts.house);
-            parts[9] = ISVGRenderer.Part({name: houseTraitName, image: house, palette: _getPalette(house)});
 
             return parts;
         }

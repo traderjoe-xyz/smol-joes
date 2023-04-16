@@ -81,7 +81,6 @@ contract SeederTest is TestHelper {
             bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.brotherhood][seed.bodyParts.hairCapHead]++;
             bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.brotherhood][seed.bodyParts.eyeAccessory]++;
             bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.brotherhood][seed.bodyParts.accessory]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.House][seed.brotherhood][seed.bodyParts.house]++;
         }
 
         // Check that all body parts are equally distributed

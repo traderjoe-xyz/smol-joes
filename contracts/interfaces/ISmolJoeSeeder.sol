@@ -40,7 +40,6 @@ interface ISmolJoeSeeder {
         uint16 hairCapHead;
         uint16 eyeAccessory;
         uint16 accessory;
-        uint16 house;
     }
 
     function smolJoes() external view returns (address);

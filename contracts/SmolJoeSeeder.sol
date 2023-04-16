@@ -154,10 +154,6 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
 
             uint256 accessoryCount = descriptor.traitCount(ISmolJoeArt.TraitType.Accessories, brotherhood);
             seed.bodyParts.accessory = uint16(randomNumber % accessoryCount);
-            randomNumber >>= RANDOM_SEED_SHIFT;
-
-            uint256 houseCount = descriptor.traitCount(ISmolJoeArt.TraitType.House, brotherhood);
-            seed.bodyParts.house = uint16(randomNumber % houseCount);
         }
 
         return seed;
