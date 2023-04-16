@@ -84,7 +84,7 @@ contract SeederTest is TestHelper {
         }
 
         // Check that all body parts are equally distributed
-        for (uint256 i = 0; i < 10; i++) {
+        for (uint256 i = 0; i < 9; i++) {
             ISmolJoeArt.TraitType traitType = ISmolJoeArt.TraitType(i + 2);
 
             for (uint256 j = 0; j < 10; j++) {

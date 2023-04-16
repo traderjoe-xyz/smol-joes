@@ -65,12 +65,12 @@ contract PopulateDescriptor is Script {
                     (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
                         abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
 
-                    console.log(
-                        "Adding %s traits for trait: %s, brotherhood: %s", traitsCount, traitTypes[i], brotherhoods[j]
-                    );
+                    // console.log(
+                    //     "Adding %s traits for trait: %s, brotherhood: %s", traitsCount, traitTypes[i], brotherhoods[j]
+                    // );
 
-                    traitTypeList.push(ISmolJoeArt.TraitType(i));
-                    brotherhoodList.push(ISmolJoeArt.Brotherhood(j));
+                    traitTypeList.push(ISmolJoeArt.TraitType(i + 1));
+                    brotherhoodList.push(ISmolJoeArt.Brotherhood(j + 1));
                     traitsList.push(traits);
                     traitsLengthList.push(traitsLength);
                     traitsCountList.push(traitsCount);
@@ -79,7 +79,7 @@ contract PopulateDescriptor is Script {
                 }
             }
 
-            console.log("Adding %s brotherhoods for trait: ", brotherhoodList.length, traitTypes[i]);
+            // console.log("Adding %s brotherhoods for trait: ", brotherhoodList.length, traitTypes[i]);
 
             descriptor.addMultipleTraits(traitTypeList, brotherhoodList, traitsList, traitsLengthList, traitsCountList);
 
@@ -92,14 +92,13 @@ contract PopulateDescriptor is Script {
 
         // Images for the Hundreds are split into 5 pages
         for (uint256 i = 0; i < 5; i++) {
-            try vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_None_page_", i.toString(), ".abi")))
-            returns (string memory result) {
+            try vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_page_", i.toString(), ".abi"))) returns (
+                string memory result
+            ) {
                 (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
                     abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
 
-                // console.log(
-                //     "Adding %s traits for trait: %s, brotherhood: %s", traitsCount, traitTypes[i], brotherhoods[j]
-                // );
+                // console.log("Adding %s traits for the Hundreds", traitsCount);
 
                 traitTypeList.push(ISmolJoeArt.TraitType.Original);
                 brotherhoodList.push(ISmolJoeArt.Brotherhood.None);

@@ -82,18 +82,15 @@ task(
             for (let i = 0; i < 5; i++) {
               let bodypartsPageSplit = dataToDescriptorInput(
                 brotherhoodBodyparts
-                  .filter((_, index) => i <= index && index < (i + 1) * 20)
+                  .filter((_, index) => i * 20 <= index && index < (i + 1) * 20)
                   .map(({ data }) => data),
                 brotherhoodBodyparts
-                  .filter((_, index) => i <= index && index < (i + 1) * 20)
+                  .filter((_, index) => i * 20 <= index && index < (i + 1) * 20)
                   .map(({ filename }) => filename)
               );
 
               saveToFileAbiEncoded(
-                path.join(
-                  exportPath,
-                  `${bodypart.name}_${brotherhood}_page_${i}.abi`
-                ),
+                path.join(exportPath, `${bodypart.name}_page_${i}.abi`),
                 bodypartsPageSplit
               );
             }
