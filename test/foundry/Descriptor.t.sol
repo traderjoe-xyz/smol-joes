@@ -13,7 +13,6 @@ contract DescriptorTest is TestHelper {
     uint256[10] private _hairsCapsHeadsByBrotherhood = [9, 9, 10, 8, 9, 10, 8, 10, 8, 10];
     uint256[10] private _eyeAccessoriesByBrotherhood = [3, 3, 3, 5, 2, 2, 5, 2, 1, 3];
     uint256[10] private _accessoriesByBrotherhood = [7, 10, 8, 7, 8, 8, 5, 7, 6, 8];
-    uint256[10] private _housesByBrotherhood = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
     function test_Populate() public {
         _populateDescriptor(descriptor);
@@ -65,22 +64,16 @@ contract DescriptorTest is TestHelper {
             );
 
             assertEq(
-                descriptor.traitCount(ISmolJoeArt.TraitType.House, ISmolJoeArt.Brotherhood(i + 1)),
-                _housesByBrotherhood[i],
-                "test_Populate::9"
-            );
-
-            assertEq(
                 descriptor.traitCount(ISmolJoeArt.TraitType.Luminary, ISmolJoeArt.Brotherhood.Academics),
                 10,
-                "test_Populate::10"
+                "test_Populate::9"
             );
         }
 
         assertEq(
             descriptor.traitCount(ISmolJoeArt.TraitType.Original, ISmolJoeArt.Brotherhood.None),
             100,
-            "test_Populate::11"
+            "test_Populate::10"
         );
     }
 

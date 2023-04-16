@@ -44,7 +44,6 @@ task(
       hairs_caps_heads,
       eye_accessories,
       accessories,
-      houses,
     } = images;
 
     // Create a list of all bodyparts
@@ -60,7 +59,6 @@ task(
       { object: hairs_caps_heads, name: "heads" },
       { object: eye_accessories, name: "eyes" },
       { object: accessories, name: "accessories" },
-      { object: houses, name: "houses" },
     ];
 
     Object.keys(Brotherhood).map((brotherhood) => {
@@ -75,10 +73,36 @@ task(
             brotherhoodBodyparts.map(({ filename }) => filename)
           );
 
-          saveToFileAbiEncoded(
-            path.join(exportPath, `${bodypart.name}_${brotherhood}_page.abi`),
-            bodypartsPage
-          );
+          // Split the Hundreds images into 5 pages. Contract bytecode limit is ~24_000 bytes.
+          if (bodypartsPage.encodedCompressed.length / 2 > 24_000) {
+            console.log(
+              `${bodypart.name} for ${brotherhood} is too long to be saved in a single contract bytecode, splitting into 5`
+            );
+
+            for (let i = 0; i < 5; i++) {
+              let bodypartsPageSplit = dataToDescriptorInput(
+                brotherhoodBodyparts
+                  .filter((_, index) => i <= index && index < (i + 1) * 20)
+                  .map(({ data }) => data),
+                brotherhoodBodyparts
+                  .filter((_, index) => i <= index && index < (i + 1) * 20)
+                  .map(({ filename }) => filename)
+              );
+
+              saveToFileAbiEncoded(
+                path.join(
+                  exportPath,
+                  `${bodypart.name}_${brotherhood}_page_${i}.abi`
+                ),
+                bodypartsPageSplit
+              );
+            }
+          } else {
+            saveToFileAbiEncoded(
+              path.join(exportPath, `${bodypart.name}_${brotherhood}_page.abi`),
+              bodypartsPage
+            );
+          }
         }
       });
     });

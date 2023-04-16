@@ -24,6 +24,9 @@ deployments/localhost
 
 # Encoded trait data
 script/files/**/*.abi
+script/files/**/*.json
+script/files/**/*.txt
+script/files/**/*.png
 
 # Temporarly ignore testnet deployments
 deployments/fuji
