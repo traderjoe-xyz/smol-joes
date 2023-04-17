@@ -34,7 +34,7 @@ contract SmolJoeArt is ISmolJoeArt {
 
     /**
      * @notice Brotherhoods House Emblems
-     * @dev Emblems have a smaller resolution than the other traits
+     * @dev Emblems have a higher resolution than the other traits
      * That is why they are stored sepparately, directly as a SVG string (in Base64)
      */
     mapping(Brotherhood => address) private _houseEmblemsPointers;
@@ -174,7 +174,7 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
-     * @notice Sets the house emblem pointer address to zero.
+     * @notice Sets the house emblem pointer address.
      * @dev This function can only be called by the descriptor.
      * Can be set to address(0) to remove the house emblem from the image.
      * @param brotherhood The brotherhood
