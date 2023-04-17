@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.6;
 
+import {Base64} from "base64-sol/base64.sol";
 import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
 
 import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
@@ -30,6 +31,13 @@ contract SmolJoeArt is ISmolJoeArt {
      * @dev Smol Joe Art Traits
      */
     mapping(TraitType => mapping(Brotherhood => Trait)) private _traits;
+
+    /**
+     * @notice Brotherhoods House Emblems
+     * @dev Emblems have a smaller resolution than the other traits
+     * That is why they are stored sepparately, directly as a SVG string (in Base64)
+     */
+    mapping(Brotherhood => address) private _houseEmblemsPointers;
 
     /**
      * @notice Require that the sender is the descriptor.
@@ -70,6 +78,22 @@ contract SmolJoeArt is ISmolJoeArt {
         returns (bytes memory, string memory)
     {
         return _imageByIndex(_traits[traitType][brotherhood], index);
+    }
+
+    /**
+     * @notice Get the Base 64 encoded SVG string describing the emblem for a given brotherhood.
+     * @dev This is not a valid SVG as it needs to be appended to the rest of the image built by the SVG renderer
+     * @param brotherhood The brotherhood
+     * @return The SVG string
+     */
+    function getHouseEmblem(Brotherhood brotherhood) external view override returns (string memory) {
+        address pointer = _houseEmblemsPointers[brotherhood];
+
+        if (pointer == address(0)) {
+            return "";
+        } else {
+            return string(Base64.decode(string(SSTORE2.read(pointer))));
+        }
     }
 
     /**
@@ -125,14 +149,28 @@ contract SmolJoeArt is ISmolJoeArt {
     /**
      * @notice Update a single color palette address. This function can be used to
      * add a new color palette or update an existing palette. This function does not check for data length validity
+     * @dev This function can only be called by the descriptor.
      * @param paletteIndex the identifier of this palette
      * @param pointer the address of the contract holding the palette bytes.
-     * @dev This function can only be called by the descriptor.
      */
     function setPalettePointer(uint8 paletteIndex, address pointer) external override onlyDescriptor {
         palettesPointers[paletteIndex] = pointer;
 
         emit PaletteSet(paletteIndex);
+    }
+
+    /**
+     * @notice Set the house emblem for a given brotherhood.
+     * @dev This function can only be called by the descriptor.
+     * @param brotherhood The brotherhood
+     * @param svgString The Base 64 encoded SVG string
+     */
+    function setHouseEmblem(Brotherhood brotherhood, string calldata svgString) external override onlyDescriptor {
+        address pointer = SSTORE2.write(bytes(svgString));
+
+        _houseEmblemsPointers[brotherhood] = pointer;
+
+        emit HouseEmblemSet(brotherhood, pointer);
     }
 
     /**

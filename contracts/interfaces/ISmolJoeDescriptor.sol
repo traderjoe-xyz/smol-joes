@@ -65,6 +65,8 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
+    function setHouseEmblem(ISmolJoeArt.Brotherhood brotherhood, string calldata svgString) external;
+
     function addTraits(
         ISmolJoeArt.TraitType traitType,
         ISmolJoeArt.Brotherhood brotherhood,

@@ -141,7 +141,8 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
     function generateSVGImage(ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
-        ISVGRenderer.SVGParams memory params = ISVGRenderer.SVGParams({parts: _getPartsForSeed(seed)});
+        ISVGRenderer.SVGParams memory params =
+            ISVGRenderer.SVGParams({parts: _getPartsForSeed(seed), emblem: art.getHouseEmblem(seed.brotherhood)});
         return NFTDescriptor.generateSVGImage(renderer, params);
     }
 
@@ -191,6 +192,20 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      */
     function setPalettePointer(uint8 paletteIndex, address pointer) external override onlyOwner {
         art.setPalettePointer(paletteIndex, pointer);
+    }
+
+    /**
+     * @notice Set the house emblem for a given brotherhood.
+     * @dev This function can only be called by the descriptor.
+     * @param brotherhood The brotherhood
+     * @param svgString The Base 64 encoded SVG string
+     */
+    function setHouseEmblem(ISmolJoeArt.Brotherhood brotherhood, string calldata svgString)
+        external
+        override
+        onlyOwner
+    {
+        art.setHouseEmblem(brotherhood, svgString);
     }
 
     /**
@@ -314,8 +329,9 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
             name: name,
             description: description,
-            parts: _getPartsForSeed(seed),
-            brotherhood: seed.brotherhood
+            brotherhood: seed.brotherhood,
+            emblem: art.getHouseEmblem(seed.brotherhood),
+            parts: _getPartsForSeed(seed)
         });
 
         // The Uniques and the Luminaries are named after the name of their attribute.
