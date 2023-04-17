@@ -174,6 +174,18 @@ contract SmolJoeArt is ISmolJoeArt {
     }
 
     /**
+     * @notice Sets the house emblem pointer address to zero.
+     * @dev This function can only be called by the descriptor.
+     * Can be set to address(0) to remove the house emblem from the image.
+     * @param brotherhood The brotherhood
+     */
+    function setHouseEmblemPointer(Brotherhood brotherhood, address pointer) external override onlyDescriptor {
+        _houseEmblemsPointers[brotherhood] = pointer;
+
+        emit HouseEmblemSet(brotherhood, pointer);
+    }
+
+    /**
      * @notice Add a new page of RLE encoded images to a trait.
      * @dev This function can only be called by the descriptor.
      * @param traitType The trait type

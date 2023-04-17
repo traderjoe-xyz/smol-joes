@@ -100,6 +100,8 @@ interface ISmolJoeArt {
 
     function setHouseEmblem(Brotherhood brotherhood, string calldata svgString) external;
 
+    function setHouseEmblemPointer(Brotherhood brotherhood, address pointer) external;
+
     function addTraits(
         TraitType traitType,
         Brotherhood brotherhood,

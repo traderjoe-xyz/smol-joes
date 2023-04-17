@@ -209,6 +209,16 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     }
 
     /**
+     * @notice Set the house emblem for a given brotherhood.
+     * @dev This function can only be called by the descriptor.
+     * @param brotherhood The brotherhood
+     * @param pointer The address of the contract holding the Base 64 encoded SVG string
+     */
+    function setHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer) external override onlyOwner {
+        art.setHouseEmblemPointer(brotherhood, pointer);
+    }
+
+    /**
      * @notice Add a new page of RLE encoded images to a trait.
      * @param traitType The trait type
      * @param brotherhood The brotherhood
