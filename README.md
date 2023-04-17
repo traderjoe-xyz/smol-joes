@@ -56,7 +56,7 @@ yarn test:svg
 RLE images are stored individually in `files/assets-data/image-data.json`. The `make-descriptor-art` task is in charge of gathering every assets of the same couple {trait type, brotherhood}, pack the data and then compress it. This data is then stored in individual `abi` files that will be uploaded on-chain. Files are stored in `script/files/encoded-assets/`.
 
 ```
-yh make-descriptor-art --clean-directory true
+yarn hardhat make-descriptor-art --clean-directory true
 ```
 
 The `_populateDescriptor` function in `PopulateDescriptor.s.sol` will loop over all these files and call `addMultipleTraits` to upload it.

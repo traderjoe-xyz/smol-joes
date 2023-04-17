@@ -1,5 +1,5 @@
 export enum Brotherhood {
-  None,
+  none,
   academics,
   athletes,
   creatives,
