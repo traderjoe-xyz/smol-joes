@@ -351,11 +351,11 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
             {
                 (bytes memory background, string memory backgroundTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Background, seed.brotherhood, seed.bodyParts.background);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Background, seed.brotherhood, seed.background);
                 (bytes memory body, string memory bodyTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Body, seed.brotherhood, seed.bodyParts.body);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Body, seed.brotherhood, seed.body);
                 (bytes memory shoes, string memory shoeTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Shoes, seed.brotherhood, seed.bodyParts.shoes);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Shoes, seed.brotherhood, seed.shoes);
 
                 parts[0] =
                     ISVGRenderer.Part({name: backgroundTraitName, image: background, palette: _getPalette(background)});
@@ -365,13 +365,13 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
             {
                 (bytes memory pants, string memory pantTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Pants, seed.brotherhood, seed.bodyParts.pants);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Pants, seed.brotherhood, seed.pants);
 
                 (bytes memory shirt, string memory shirtTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Shirt, seed.brotherhood, seed.bodyParts.shirt);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Shirt, seed.brotherhood, seed.shirt);
 
                 (bytes memory beard, string memory beardTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Beard, seed.brotherhood, seed.bodyParts.beard);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Beard, seed.brotherhood, seed.beard);
 
                 parts[3] = ISVGRenderer.Part({name: pantTraitName, image: pants, palette: _getPalette(pants)});
                 parts[4] = ISVGRenderer.Part({name: shirtTraitName, image: shirt, palette: _getPalette(shirt)});
@@ -380,12 +380,11 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
             {
                 (bytes memory hairCapHead, string memory hairCapHeadTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.HairCapHead, seed.brotherhood, seed.bodyParts.hairCapHead);
-                (bytes memory eyeAccessory, string memory eyeTraitName) = art.getImageByIndex(
-                    ISmolJoeArt.TraitType.EyeAccessory, seed.brotherhood, seed.bodyParts.eyeAccessory
-                );
+                    art.getImageByIndex(ISmolJoeArt.TraitType.HairCapHead, seed.brotherhood, seed.hairCapHead);
+                (bytes memory eyeAccessory, string memory eyeTraitName) =
+                    art.getImageByIndex(ISmolJoeArt.TraitType.EyeAccessory, seed.brotherhood, seed.eyeAccessory);
                 (bytes memory accessory, string memory accessoryTraitName) =
-                    art.getImageByIndex(ISmolJoeArt.TraitType.Accessories, seed.brotherhood, seed.bodyParts.accessory);
+                    art.getImageByIndex(ISmolJoeArt.TraitType.Accessories, seed.brotherhood, seed.accessory);
 
                 parts[6] = ISVGRenderer.Part({
                     name: hairCapHeadTraitName,

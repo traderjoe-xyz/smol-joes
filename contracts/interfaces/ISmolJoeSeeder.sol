@@ -23,14 +23,6 @@ interface ISmolJoeSeeder {
         ISmolJoeArt.Brotherhood brotherhood;
         uint8 originalId;
         uint8 luminaryId;
-        BodyParts bodyParts;
-    }
-
-    /**
-     * @dev Struct describing all body parts of a Smol Joe
-     * Separated from the Seed struct to avoid stack too deep errors
-     */
-    struct BodyParts {
         uint16 background;
         uint16 body;
         uint16 shoes;

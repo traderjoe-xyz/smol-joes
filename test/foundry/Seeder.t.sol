@@ -72,15 +72,15 @@ contract SeederTest is TestHelper {
 
             brotherhoodDistribution[seed.brotherhood]++;
 
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Background][seed.brotherhood][seed.bodyParts.background]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Body][seed.brotherhood][seed.bodyParts.body]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Shoes][seed.brotherhood][seed.bodyParts.shoes]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Pants][seed.brotherhood][seed.bodyParts.pants]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Shirt][seed.brotherhood][seed.bodyParts.shirt]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Beard][seed.brotherhood][seed.bodyParts.beard]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.brotherhood][seed.bodyParts.hairCapHead]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.brotherhood][seed.bodyParts.eyeAccessory]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.brotherhood][seed.bodyParts.accessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Background][seed.brotherhood][seed.background]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Body][seed.brotherhood][seed.body]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Shoes][seed.brotherhood][seed.shoes]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Pants][seed.brotherhood][seed.pants]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Shirt][seed.brotherhood][seed.shirt]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Beard][seed.brotherhood][seed.beard]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.brotherhood][seed.hairCapHead]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.brotherhood][seed.eyeAccessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.brotherhood][seed.accessory]++;
         }
 
         // Check that all body parts are equally distributed
