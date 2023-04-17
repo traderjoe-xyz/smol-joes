@@ -48,5 +48,17 @@ This project uses both `Hardhat` and `Foundry`. Tests are using Foundry.
 `GenerateSVG.t.sol` can be used to test the SVG generation during development. To run the test in this contract, set the `FOUNDRY_PROFILE` env variable to `svgtesting`:
 
 ```
-export FOUNDRY_PROFILE=svgtesting
+yarn test:svg
 ```
+
+## Uploading the assets
+
+RLE images are stored individually in `files/assets-data/image-data.json`. The `make-descriptor-art` task is in charge of gathering every assets of the same couple {trait type, brotherhood}, pack the data and then compress it. This data is then stored in individual `abi` files that will be uploaded on-chain. Files are stored in `script/files/encoded-assets/`.
+
+```
+yh make-descriptor-art --clean-directory true
+```
+
+The `_populateDescriptor` function in `PopulateDescriptor.s.sol` will loop over all these files and call `addMultipleTraits` to upload it.
+
+`SSTORE2` storage is limited by the size a contract bytecode can have, that is why Originals assets are split into 5 pages.
