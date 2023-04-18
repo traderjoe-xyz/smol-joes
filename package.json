@@ -21,7 +21,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.1.6",
     "@openzeppelin/contracts": "^4.8.1",
     "@openzeppelin/contracts-upgradeable": "^4.8.2",
-    "@traderjoe-xyz/nft-base-contracts": "^0.2.0",
+    "@traderjoe-xyz/nft-base-contracts": "^0.2.1",
     "@typechain/ethers-v5": "^10.2.0",
     "@typechain/hardhat": "^6.1.5",
     "@types/node": "^18.14.1",
