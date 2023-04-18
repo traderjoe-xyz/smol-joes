@@ -40,7 +40,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
 
     constructor(ISmolJoeDescriptorMinimal _descriptor, ISmolJoeSeeder _seeder) initializer {
         // @todo Use LZ endpoint and bridge token seed
-        __OZNFTBase_init("On-chain Thing", "SJT", address(1), 0, address(1), address(1));
+        __OZNFTBase_init("Smol Joes Season 2", "SJ", address(1), 0, address(1), address(1));
 
         _setDescriptor(_descriptor);
         _setSeeder(_seeder);
@@ -159,7 +159,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
 
         descriptor = _descriptor;
 
-        emit DescriptorUpdated(_descriptor);
+        emit DescriptorUpdated(address(_descriptor));
     }
 
     /**
