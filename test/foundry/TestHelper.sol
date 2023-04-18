@@ -4,6 +4,7 @@ pragma solidity 0.8.13;
 import "forge-std/Test.sol";
 
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {LZEndpointMock} from "solidity-examples/contracts/mocks/LZEndpointMock.sol";
 
 import {PopulateDescriptor} from "script/PopulateDescriptor.s.sol";
 
@@ -22,10 +23,14 @@ contract TestHelper is PopulateDescriptor, Test {
     SVGRenderer renderer;
     Inflator inflator;
 
+    LZEndpointMock lzEndpointMock;
+
     function setUp() public virtual {
         inflator = new Inflator();
         renderer = new SVGRenderer();
         seeder = new SmolJoeSeeder();
+
+        lzEndpointMock = new LZEndpointMock(1);
 
         descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer);
         art = new SmolJoeArt(address(descriptor), inflator);
@@ -36,7 +41,7 @@ contract TestHelper is PopulateDescriptor, Test {
         }
         seeder.updateOriginalsArtMapping(artMapping);
 
-        token = new SmolJoes(descriptor, seeder);
+        token = new SmolJoes(descriptor, seeder, address(lzEndpointMock), msg.sender);
 
         descriptor.setArt(art);
         seeder.setSmolJoesAddress(address(token));
