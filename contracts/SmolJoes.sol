@@ -122,6 +122,24 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     }
 
     /**
+     * @notice Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
+     * to learn more about how these IDs are created.
+     * This function call must use less than 30 000 gas.
+     * @param interfaceId InterfaceId to consider. Comes from type(InterfaceContract).interfaceId
+     * @return True if the considered interface is supported
+     */
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(IOZNFTBaseUpgradeable, OZNFTBaseUpgradeable)
+        returns (bool)
+    {
+        return interfaceId == type(ISmolJoes).interfaceId || OZNFTBaseUpgradeable.supportsInterface(interfaceId);
+    }
+
+    /**
      * @notice Mint a new token.
      * @dev The mint logic is expected to be handled by the Smol Joe Workshop.
      * The Workshop needs to correctly account for the available token IDs and mint accordingly.
@@ -162,24 +180,6 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
      */
     function setWorkshop(address _workshop) external onlyOwner {
         _setWorkshop(_workshop);
-    }
-
-    /**
-     * @notice Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
-     * to learn more about how these IDs are created.
-     * This function call must use less than 30 000 gas.
-     * @param interfaceId InterfaceId to consider. Comes from type(InterfaceContract).interfaceId
-     * @return True if the considered interface is supported
-     */
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(IOZNFTBaseUpgradeable, OZNFTBaseUpgradeable)
-        returns (bool)
-    {
-        return interfaceId == type(ISmolJoes).interfaceId || OZNFTBaseUpgradeable.supportsInterface(interfaceId);
     }
 
     /**
