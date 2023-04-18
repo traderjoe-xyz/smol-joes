@@ -185,6 +185,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     /**
      * @dev Gets the seed struct as it is stored in storage.
      * To reduce data sent through the bridge and save gas, we directly use the packed value.
+     * This only works is the struct fits in one storage slot.
      * @param tokenId The token ID to get the seed for.
      * @return packedSeed The packed seed.
      */
@@ -231,6 +232,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         _debitFrom(from, destinationChainId, to, tokenId);
 
         bytes memory payload = abi.encode(to, tokenId, _getPackedSeed(tokenId));
+
         if (useCustomAdapterParams) {
             _checkGasLimit(destinationChainId, FUNCTION_TYPE_SEND, adapterParams, NO_EXTRA_GAS);
         } else {
@@ -243,7 +245,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     }
 
     /**
-     * @dev Overwriting the `_receive` function of the OZ NFT base contract to get the packed seed from the payload.
+     * @dev Overwriting the `_nonblockingLzReceive` function of the OZ NFT base contract to get the packed seed from the payload.
      * @param sourceChainId The source chain ID.
      * @param sourceAddress The source address.
      * @param nonce The nonce of the transaction.
@@ -256,6 +258,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     {
         (bytes memory toAddressBytes, uint256 tokenId, uint256 packedSeed) =
             abi.decode(payload, (bytes, uint256, uint256));
+
         address toAddress;
         assembly {
             toAddress := mload(add(toAddressBytes, 20))
