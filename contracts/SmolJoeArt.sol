@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.6;
+pragma solidity 0.8.13;
 
 import {Base64} from "base64-sol/base64.sol";
 import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
