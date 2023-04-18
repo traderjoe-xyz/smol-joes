@@ -46,4 +46,8 @@ contract TestHelper is PopulateDescriptor, Test {
         descriptor.setArt(art);
         seeder.setSmolJoesAddress(address(token));
     }
+
+    function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
+        return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+    }
 }

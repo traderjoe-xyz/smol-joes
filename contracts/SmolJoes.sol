@@ -4,6 +4,10 @@ pragma solidity 0.8.13;
 import {
     OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable
 } from "@traderjoe-xyz/nft-base-contracts/src/OZNFTBaseUpgradeable.sol";
+import {
+    ONFT721CoreUpgradeable,
+    IONFT721CoreUpgradeable
+} from "@traderjoe-xyz/nft-base-contracts/src/layerZero/ONFT721CoreUpgradeable.sol";
 
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
@@ -44,7 +48,6 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         address _lzEndpoint,
         address _royaltyReceiver
     ) initializer {
-        // @todo Use LZ endpoint and bridge token seed
         __OZNFTBase_init("Smol Joes Season 2", "SJ", _lzEndpoint, 0, _royaltyReceiver, _royaltyReceiver);
 
         _setDescriptor(_descriptor);
@@ -94,6 +97,31 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     }
 
     /**
+     * @notice Estimate the fee for sending a token to another chain.
+     * @dev Overwritten from `ONFT721CoreUpgradeable` to take into account the packed seed added to the payload.
+     * @param destinationChainId The chain ID of the destination chain.
+     * @param to The address to send the token to.
+     * @param tokenId The token ID to send.
+     * @param useZro Whether to use ZRO or not to pay for the bridging fees.
+     * @param adapterParams The adapter parameters.
+     */
+    function estimateSendFee(
+        uint16 destinationChainId,
+        bytes memory to,
+        uint256 tokenId,
+        bool useZro,
+        bytes memory adapterParams
+    )
+        public
+        view
+        override(ONFT721CoreUpgradeable, IONFT721CoreUpgradeable)
+        returns (uint256 nativeFee, uint256 zroFee)
+    {
+        bytes memory payload = abi.encode(to, tokenId, _getPackedSeed(tokenId));
+        return lzEndpoint.estimateFees(destinationChainId, address(this), payload, useZro, adapterParams);
+    }
+
+    /**
      * @notice Mint a new token.
      * @dev The mint logic is expected to be handled by the Smol Joe Workshop.
      * The Workshop needs to correctly account for the available token IDs and mint accordingly.
@@ -107,6 +135,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         }
 
         _seeds[tokenID] = seeder.generateSeed(tokenID, descriptor);
+
         _mint(to, tokenID);
     }
 
@@ -151,6 +180,91 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         returns (bool)
     {
         return interfaceId == type(ISmolJoes).interfaceId || OZNFTBaseUpgradeable.supportsInterface(interfaceId);
+    }
+
+    /**
+     * @dev Gets the seed struct as it is stored in storage.
+     * To reduce data sent through the bridge and save gas, we directly use the packed value.
+     * @param tokenId The token ID to get the seed for.
+     * @return packedSeed The packed seed.
+     */
+    function _getPackedSeed(uint256 tokenId) internal view returns (uint256 packedSeed) {
+        ISmolJoeSeeder.Seed storage seed = _seeds[tokenId];
+
+        assembly {
+            packedSeed := sload(seed.slot)
+        }
+    }
+
+    /**
+     * @dev Stores the packed seed directly in the token seed storage slot.
+     * @param tokenId The token ID to store the seed for.
+     * @param packedSeed The seed to store. Needs to come from `_getPackedSeed`.
+     */
+    function _setPackedSeed(uint256 tokenId, uint256 packedSeed) internal {
+        ISmolJoeSeeder.Seed storage seed = _seeds[tokenId];
+
+        assembly {
+            sstore(seed.slot, packedSeed)
+        }
+    }
+
+    /**
+     * @dev Overwriting the `_send` function of the OZ NFT base contract to add the packed seed to the payload.
+     * @param from The address to debit the token from.
+     * @param destinationChainId The destination chain ID.
+     * @param to The destination address.
+     * @param tokenId The token ID to send.
+     * @param refundAddress The address to refund the gas fee to.
+     * @param zroPaymentAddress The address to pay the Layer Zero fee to.
+     * @param adapterParams The adapter parameters.
+     */
+    function _send(
+        address from,
+        uint16 destinationChainId,
+        bytes memory to,
+        uint256 tokenId,
+        address payable refundAddress,
+        address zroPaymentAddress,
+        bytes memory adapterParams
+    ) internal virtual override {
+        _debitFrom(from, destinationChainId, to, tokenId);
+
+        bytes memory payload = abi.encode(to, tokenId, _getPackedSeed(tokenId));
+        if (useCustomAdapterParams) {
+            _checkGasLimit(destinationChainId, FUNCTION_TYPE_SEND, adapterParams, NO_EXTRA_GAS);
+        } else {
+            require(adapterParams.length == 0, "LzApp: adapterParams must be empty.");
+        }
+        _lzSend(destinationChainId, payload, refundAddress, zroPaymentAddress, adapterParams);
+
+        uint64 nonce = lzEndpoint.getOutboundNonce(destinationChainId, address(this));
+        emit SendToChain(from, destinationChainId, to, tokenId, nonce);
+    }
+
+    /**
+     * @dev Overwriting the `_receive` function of the OZ NFT base contract to get the packed seed from the payload.
+     * @param sourceChainId The source chain ID.
+     * @param sourceAddress The source address.
+     * @param nonce The nonce of the transaction.
+     * @param payload The payload of the transaction.
+     */
+    function _nonblockingLzReceive(uint16 sourceChainId, bytes memory sourceAddress, uint64 nonce, bytes memory payload)
+        internal
+        virtual
+        override
+    {
+        (bytes memory toAddressBytes, uint256 tokenId, uint256 packedSeed) =
+            abi.decode(payload, (bytes, uint256, uint256));
+        address toAddress;
+        assembly {
+            toAddress := mload(add(toAddressBytes, 20))
+        }
+
+        _creditTo(sourceChainId, toAddress, tokenId);
+        _setPackedSeed(tokenId, packedSeed);
+
+        emit ReceiveFromChain(sourceChainId, sourceAddress, toAddress, tokenId, nonce);
     }
 
     /**
