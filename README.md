@@ -41,6 +41,8 @@ There is three different types of Smol Joes that can be built:
 - Luminaries: Upgraded unique Smol Creep. Each token will be randomly assigned when the V1 is burned. Each Luminary can be assigned once of course, so the `_luminariesAvailable` array have been introduced. There is only one corresponding `Trait` that contains the full image. Each Luminary also belong to one of the 10 Brotherhood (see the `Brotherhood` enum in `ISmolJoeArt`).
 - Smol: Rest of the collection. Can be generated infinitely. Each Smol image is the superposition of the following traits: Background, Body, Shoes, Pants, Shirt, Beard, Hair/Cap/Head, Eye accessory, Accessory. First, a random Brotherhood will be assigned to the token. Then, one asset of each trait type will be picked ***within this brotherhood***. The final image will be the superposition of all the assets.
 
+House Emblems: Luminaries and Smols have their house emblem displayed below them. Due to the higher resolution of the images, they can't be RLE encoded like the other traits and are directly uploaded as SVGs.
+
 ## Testing
 
 This project uses both `Hardhat` and `Foundry`. Tests are using Foundry.
@@ -48,5 +50,17 @@ This project uses both `Hardhat` and `Foundry`. Tests are using Foundry.
 `GenerateSVG.t.sol` can be used to test the SVG generation during development. To run the test in this contract, set the `FOUNDRY_PROFILE` env variable to `svgtesting`:
 
 ```
-export FOUNDRY_PROFILE=svgtesting
+yarn test:svg
 ```
+
+## Uploading the assets
+
+RLE images are stored individually in `files/assets-data/image-data.json`. The `make-descriptor-art` task is in charge of gathering every assets of the same couple {trait type, brotherhood}, pack the data and then compress it. This data is then stored in individual `abi` files that will be uploaded on-chain. Files are stored in `script/files/encoded-assets/`.
+
+```
+yarn hardhat make-descriptor-art --clean-directory true
+```
+
+The `_populateDescriptor` function in `PopulateDescriptor.s.sol` will loop over all these files and call `addMultipleTraits` to upload it.
+
+`SSTORE2` storage is limited by the size a contract bytecode can have, that is why Originals assets are split into 5 pages.

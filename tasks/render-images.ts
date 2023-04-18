@@ -11,19 +11,19 @@ task(
   .addOptionalParam(
     "uriPath",
     "Location of the raw URI to render",
-    "../test/files/raw-uris-sample/",
+    "../script/files/raw-uris-sample/",
     types.string
   )
   .addOptionalParam(
     "metadataPath",
     "Location of generated token metadatas",
-    "../test/files/metadatas-sample/",
+    "../script/files/metadatas-sample/",
     types.string
   )
   .addOptionalParam(
     "imagePath",
     "Location of generated PNGs",
-    "../test/files/images-sample/",
+    "../script/files/images-sample/",
     types.string
   )
   .setAction(async ({ tokenId, uriPath, metadataPath, imagePath }, {}) => {

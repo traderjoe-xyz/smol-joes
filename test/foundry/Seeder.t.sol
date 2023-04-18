@@ -23,13 +23,17 @@ contract SeederTest is TestHelper {
         seeder.updateOriginalsArtMapping(artMapping);
     }
 
+    /**
+     * @dev Accounting mappings for `test_GenerateSeed`
+     */
     mapping(ISmolJoeArt.Brotherhood => uint256) brotherhoodCount;
     mapping(ISmolJoeArt.Brotherhood => mapping(uint256 => bool)) idsTaken;
-    mapping(ISmolJoeArt.TraitType => mapping(uint256 => uint256)) bodyPartsDistribution;
+    mapping(ISmolJoeArt.TraitType => mapping(ISmolJoeArt.Brotherhood => mapping(uint256 => uint256)))
+        bodyPartsDistribution;
     mapping(ISmolJoeArt.Brotherhood => uint256) brotherhoodDistribution;
 
     function test_GenerateSeed() public {
-        _populateDescriptor("./test/files/encoded-test-assets/", false);
+        _populateDescriptor(descriptor);
 
         seeder.setSmolJoesAddress(address(this));
 
@@ -68,31 +72,32 @@ contract SeederTest is TestHelper {
 
             brotherhoodDistribution[seed.brotherhood]++;
 
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Background][seed.background]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Body][seed.body]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Shoes][seed.shoes]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Pants][seed.pants]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Shirt][seed.shirt]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Beard][seed.beard]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.hairCapHead]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.eyeAccessory]++;
-            bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.accessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Background][seed.brotherhood][seed.background]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Body][seed.brotherhood][seed.body]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Shoes][seed.brotherhood][seed.shoes]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Pants][seed.brotherhood][seed.pants]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Shirt][seed.brotherhood][seed.shirt]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Beard][seed.brotherhood][seed.beard]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.HairCapHead][seed.brotherhood][seed.hairCapHead]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.EyeAccessory][seed.brotherhood][seed.eyeAccessory]++;
+            bodyPartsDistribution[ISmolJoeArt.TraitType.Accessories][seed.brotherhood][seed.accessory]++;
         }
 
         // Check that all body parts are equally distributed
         for (uint256 i = 0; i < 9; i++) {
             ISmolJoeArt.TraitType traitType = ISmolJoeArt.TraitType(i + 2);
 
-            // Traits on test data have no brotherhood
-            uint256 traitTypeAmount = descriptor.traitCount(traitType, ISmolJoeArt.Brotherhood.None);
+            for (uint256 j = 0; j < 10; j++) {
+                uint256 traitTypeAmount = descriptor.traitCount(traitType, ISmolJoeArt.Brotherhood(j + 1));
 
-            for (uint256 j = 0; j < traitTypeAmount; j++) {
-                assertApproxEqRel(
-                    bodyPartsDistribution[traitType][j],
-                    10_000 / traitTypeAmount,
-                    5e16, // 5%
-                    "test_GenerateSeed::5"
-                );
+                for (uint256 k = 0; k < traitTypeAmount; k++) {
+                    assertApproxEqRel(
+                        bodyPartsDistribution[traitType][ISmolJoeArt.Brotherhood(j + 1)][k],
+                        1_000 / traitTypeAmount,
+                        35e16, // 35%
+                        "test_GenerateSeed::5"
+                    );
+                }
             }
         }
 

@@ -8,7 +8,7 @@ contract BasicTest is TestHelper {
 
     function test_SVGGeneration() public {
         uint256 gasLeft = gasleft();
-        _populateDescriptor("./test/files/encoded-assets/", true);
+        _populateDescriptor(descriptor);
         console.log("Gas used to populate descriptor: ", gasLeft - gasleft());
 
         string[] memory inputs = new string[](5);
@@ -17,13 +17,15 @@ contract BasicTest is TestHelper {
         inputs[2] = "render-images";
         inputs[3] = "--token-id";
 
-        uint256 amountToGenerate = 1;
+        uint256 amountToGenerate = 5;
 
         for (uint256 i = 0; i < amountToGenerate; i++) {
             token.mint(address(1), i);
 
+            console.log("Fetching tokenURI for token ID: ", i);
+
             vm.writeFile(
-                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+                string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
             inputs[4] = i.toString();
@@ -33,8 +35,10 @@ contract BasicTest is TestHelper {
         for (uint256 i = 50; i < 50 + amountToGenerate; i++) {
             token.mint(address(1), i);
 
+            console.log("Fetching tokenURI for token ID: ", i);
+
             vm.writeFile(
-                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+                string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
             inputs[4] = i.toString();
@@ -43,8 +47,11 @@ contract BasicTest is TestHelper {
 
         for (uint256 i = 100; i < 100 + amountToGenerate; i++) {
             token.mint(address(1), i);
+
+            console.log("Fetching tokenURI for token ID: ", i);
+
             vm.writeFile(
-                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+                string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
             inputs[4] = i.toString();
@@ -54,7 +61,7 @@ contract BasicTest is TestHelper {
         for (uint256 i = 200; i < 200 + amountToGenerate; i++) {
             token.mint(address(1), i);
             vm.writeFile(
-                string(abi.encodePacked("./test/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
+                string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
             inputs[4] = i.toString();

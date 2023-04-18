@@ -13,12 +13,12 @@ interface ISmolJoeSeeder {
 
     event OriginalsArtMappingUpdated(uint8[100] originalsArtMapping);
     event SmolJoesAddressSet(address smolJoesAddress);
+
     /**
      * @dev Struct describing all parts of a Smol Joe
      * Originals and Specials are described by their ID
-     * Commons are described by all their body parts
+     * Smols are described by all their body parts
      */
-
     struct Seed {
         ISmolJoeArt.Brotherhood brotherhood;
         uint8 originalId;

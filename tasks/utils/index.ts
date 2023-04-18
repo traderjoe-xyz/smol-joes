@@ -1,5 +1,8 @@
 import { ethers } from "ethers";
 import { deflateRawSync } from "zlib";
+import { Brotherhood } from "./types";
+
+export { Brotherhood };
 
 export function dataToDescriptorInput(
   data: string[],

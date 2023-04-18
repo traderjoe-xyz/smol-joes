@@ -4,6 +4,12 @@
   "repository": "https://github.com/traderjoe-xyz/smol-joes.git",
   "author": "Patate <patate@joepegs.com>",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "yarn hardhat make-descriptor-art --clean-directory false",
+    "build": "forge build",
+    "test": "forge test",
+    "test:svg": "export FOUNDRY_PROFILE=svgtesting && forge test"
+  },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",

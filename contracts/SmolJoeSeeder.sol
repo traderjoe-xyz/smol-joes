@@ -28,6 +28,10 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
 
     uint256 private _randomnessNonce;
 
+    /**
+     * @notice The Smol Joes contract address
+     * @dev Used to check that the caller is the Smol Joes contract when getting a seed
+     */
     address public override smolJoes;
 
     /**
@@ -120,7 +124,6 @@ contract SmolJoeSeeder is Ownable2Step, ISmolJoeSeeder {
             seed.background = uint16(randomNumber % backgroundCount);
             randomNumber >>= RANDOM_SEED_SHIFT;
 
-            // Get the rest of the traits
             uint256 bodyCount = descriptor.traitCount(ISmolJoeArt.TraitType.Body, brotherhood);
             seed.body = uint16(randomNumber % bodyCount);
             randomNumber >>= RANDOM_SEED_SHIFT;

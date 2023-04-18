@@ -21,14 +21,15 @@ interface ISmolJoeArt {
     event DescriptorUpdated(address newDescriptor);
     event InflatorUpdated(address newInflator);
     event PaletteSet(uint8 paletteIndex);
+    event HouseEmblemSet(Brotherhood brotherhood, address pointer);
 
     enum TraitType {
         Original,
         Luminary,
         Background,
         Body,
-        Pants,
         Shoes,
+        Pants,
         Shirt,
         Beard,
         HairCapHead,
@@ -78,6 +79,17 @@ interface ISmolJoeArt {
 
     function palettesPointers(uint8 paletteIndex) external view returns (address);
 
+    function getTrait(TraitType traitType, Brotherhood brotherhood) external view returns (Trait memory);
+
+    function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
+        external
+        view
+        returns (bytes memory rle, string memory name);
+
+    function getHouseEmblem(Brotherhood brotherhood) external view returns (string memory svg);
+
+    function palettes(uint8 paletteIndex) external view returns (bytes memory);
+
     function setDescriptor(address descriptor) external;
 
     function setInflator(IInflator inflator) external;
@@ -86,7 +98,9 @@ interface ISmolJoeArt {
 
     function setPalettePointer(uint8 paletteIndex, address pointer) external;
 
-    function palettes(uint8 paletteIndex) external view returns (bytes memory);
+    function setHouseEmblem(Brotherhood brotherhood, string calldata svgString) external;
+
+    function setHouseEmblemPointer(Brotherhood brotherhood, address pointer) external;
 
     function addTraits(
         TraitType traitType,
@@ -103,11 +117,4 @@ interface ISmolJoeArt {
         uint80 decompressedLength,
         uint16 imageCount
     ) external;
-
-    function getTrait(TraitType traitType, Brotherhood brotherhood) external view returns (Trait memory);
-
-    function getImageByIndex(TraitType traitType, Brotherhood brotherhood, uint256 index)
-        external
-        view
-        returns (bytes memory rle, string memory name);
 }
