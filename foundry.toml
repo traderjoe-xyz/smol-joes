@@ -5,14 +5,15 @@ libs = ['node_modules', 'lib']
 test = 'test/foundry'
 cache_path  = 'forge-cache'
 no_match_test = "test_SVGGeneration"
-solc = '0.8.17'
+solc = '0.8.13'
 
-fs_permissions = [{ access = "read-write", path = "./"}]
+fs_permissions = [{ access = "read", path = "./"}]
 
 # To test the SVG generation, use "export FOUNDRY_PROFILE=svgtesting"
 [profile.svgtesting]
 match_test = "test_SVGGeneration"
-no_match_test = "Foo"
+no_match_test = "Foo" # Placeholder no overwrite the default no_match_test
 ffi = true
+fs_permissions = [{ access = "read-write", path = "./"}]
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
