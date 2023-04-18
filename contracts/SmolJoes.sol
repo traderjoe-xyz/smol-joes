@@ -228,7 +228,7 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         address payable refundAddress,
         address zroPaymentAddress,
         bytes memory adapterParams
-    ) internal virtual override {
+    ) internal override {
         _debitFrom(from, destinationChainId, to, tokenId);
 
         bytes memory payload = abi.encode(to, tokenId, _getPackedSeed(tokenId));
@@ -253,7 +253,6 @@ contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
      */
     function _nonblockingLzReceive(uint16 sourceChainId, bytes memory sourceAddress, uint64 nonce, bytes memory payload)
         internal
-        virtual
         override
     {
         (bytes memory toAddressBytes, uint256 tokenId, uint256 packedSeed) =
