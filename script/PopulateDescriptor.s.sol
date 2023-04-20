@@ -53,10 +53,47 @@ contract PopulateDescriptor is Script {
             "worship"
         ];
 
-        (bytes memory palette) =
-            abi.decode(vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "palette.abi")))), (bytes));
+        // Hundreds palette 1
+        bytes memory palette = abi.decode(
+            vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_palette_1.abi")))), (bytes)
+        );
         descriptor.setPalette(0, palette);
 
+        // Hundreds palette 2
+        palette = abi.decode(
+            vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_palette_2.abi")))), (bytes)
+        );
+        descriptor.setPalette(1, palette);
+
+        // Palette for the rest of the assets
+        palette = abi.decode(
+            vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "luminaries_palette.abi")))), (bytes)
+        );
+        descriptor.setPalette(2, palette);
+
+        // Images for the Hundreds are split into 6 pages
+        for (uint256 i = 0; i < 6; i++) {
+            try vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_page_", i.toString(), ".abi"))) returns (
+                string memory result
+            ) {
+                (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
+                    abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
+
+                // console.log("Adding %s traits for the Hundreds", traitsCount);
+
+                traitTypeList.push(ISmolJoeArt.TraitType.Original);
+                brotherhoodList.push(ISmolJoeArt.Brotherhood.None);
+                traitsList.push(traits);
+                traitsLengthList.push(traitsLength);
+                traitsCountList.push(traitsCount);
+            } catch {
+                console.log("Missing page %s for the Hundreds", i);
+            }
+        }
+
+        descriptor.addMultipleTraits(traitTypeList, brotherhoodList, traitsList, traitsLengthList, traitsCountList);
+
+        // Add traits for the Luminaries and the Smols
         for (uint256 i = 0; i < traitTypes.length; i++) {
             for (uint256 j = 0; j < brotherhoods.length; j++) {
                 try vm.readFile(
@@ -90,26 +127,12 @@ contract PopulateDescriptor is Script {
             traitsCountList = new uint16[](0);
         }
 
-        // Images for the Hundreds are split into 5 pages
-        for (uint256 i = 0; i < 5; i++) {
-            try vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_page_", i.toString(), ".abi"))) returns (
-                string memory result
-            ) {
-                (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
-                    abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
+        // Add emblems
+        for (uint256 i = 0; i < brotherhoods.length; i++) {
+            string memory emblem =
+                vm.readFile(string(abi.encodePacked(assetsLocation, "emblem_", brotherhoods[i], ".abi")));
 
-                // console.log("Adding %s traits for the Hundreds", traitsCount);
-
-                traitTypeList.push(ISmolJoeArt.TraitType.Original);
-                brotherhoodList.push(ISmolJoeArt.Brotherhood.None);
-                traitsList.push(traits);
-                traitsLengthList.push(traitsLength);
-                traitsCountList.push(traitsCount);
-            } catch {
-                console.log("Missing page %s for the Hundreds", i);
-            }
+            descriptor.setHouseEmblem(ISmolJoeArt.Brotherhood(i + 1), emblem);
         }
-
-        descriptor.addMultipleTraits(traitTypeList, brotherhoodList, traitsList, traitsLengthList, traitsCountList);
     }
 }

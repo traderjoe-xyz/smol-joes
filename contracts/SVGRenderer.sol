@@ -81,7 +81,8 @@ contract SVGRenderer is ISVGRenderer {
         string[] memory cache;
 
         for (uint8 p = 0; p < params.parts.length; p++) {
-            cache = new string[](14_000); // Initialize color cache
+            // Contract bytecode cannot exceed 24576 bytes so the palette will contain at most 24576 / 3 = 8192 colors
+            cache = new string[](8192);
 
             DecodedImage memory image = _decodeRLEImage(params.parts[p].image);
 
