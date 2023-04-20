@@ -54,19 +54,19 @@ contract PopulateDescriptor is Script {
         ];
 
         // Hundreds palette 1
-        (bytes memory palette) = abi.decode(
+        bytes memory palette = abi.decode(
             vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_palette_1.abi")))), (bytes)
         );
         descriptor.setPalette(0, palette);
 
         // Hundreds palette 2
-        (palette) = abi.decode(
+        palette = abi.decode(
             vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "hundreds_palette_2.abi")))), (bytes)
         );
         descriptor.setPalette(1, palette);
 
         // Palette for the rest of the assets
-        (palette) = abi.decode(
+        palette = abi.decode(
             vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "luminaries_palette.abi")))), (bytes)
         );
         descriptor.setPalette(2, palette);
@@ -129,7 +129,7 @@ contract PopulateDescriptor is Script {
 
         // Add emblems
         for (uint256 i = 0; i < brotherhoods.length; i++) {
-            (string memory emblem) =
+            string memory emblem =
                 vm.readFile(string(abi.encodePacked(assetsLocation, "emblem_", brotherhoods[i], ".abi")));
 
             descriptor.setHouseEmblem(ISmolJoeArt.Brotherhood(i + 1), emblem);
