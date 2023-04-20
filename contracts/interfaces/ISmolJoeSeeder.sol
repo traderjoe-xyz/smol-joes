@@ -15,9 +15,10 @@ interface ISmolJoeSeeder {
     event SmolJoesAddressSet(address smolJoesAddress);
 
     /**
-     * @dev Struct describing all parts of a Smol Joe
-     * Originals and Specials are described by their ID
-     * Smols are described by all their body parts
+     * @dev Struct describing all parts of a Smol Joe.
+     * Originals and Luminaries are described by their ID.
+     * Smols are described by all their body parts.
+     * Modify with caution. The struct is assumed to fit in a single storage slot when bridged.
      */
     struct Seed {
         ISmolJoeArt.Brotherhood brotherhood;
