@@ -22,7 +22,7 @@ contract DeployContract is BaseScript {
             SmolJoeDescriptor descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer);
             SmolJoeArt art = new SmolJoeArt(address(descriptor), inflator);
 
-            SmolJoes smolJoes = new SmolJoes(descriptor, seeder, address(config.lzEndpoint), deployer);
+            SmolJoes smolJoes = new SmolJoes(descriptor, seeder, config.lzEndpoint, deployer);
 
             descriptor.setArt(art);
             seeder.setSmolJoesAddress(address(smolJoes));
