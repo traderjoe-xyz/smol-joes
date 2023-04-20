@@ -6,7 +6,7 @@ import "forge-std/Test.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {LZEndpointMock} from "solidity-examples/contracts/mocks/LZEndpointMock.sol";
 
-import {PopulateDescriptor} from "script/PopulateDescriptor.s.sol";
+import {PopulateDescriptor} from "script/02_PopulateDescriptor.s.sol";
 
 import {SmolJoes} from "contracts/SmolJoes.sol";
 import {SmolJoeDescriptor, ISmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
@@ -25,7 +25,7 @@ contract TestHelper is PopulateDescriptor, Test {
 
     LZEndpointMock lzEndpointMock;
 
-    function setUp() public virtual {
+    function setUp() public virtual override {
         inflator = new Inflator();
         renderer = new SVGRenderer();
         seeder = new SmolJoeSeeder();
@@ -45,6 +45,8 @@ contract TestHelper is PopulateDescriptor, Test {
 
         descriptor.setArt(art);
         seeder.setSmolJoesAddress(address(token));
+
+        token.setWorkshop(address(this));
     }
 
     function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
