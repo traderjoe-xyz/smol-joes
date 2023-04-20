@@ -112,7 +112,7 @@ task(
     console.log("\n========== LUMINARIES =========");
 
     let luminariesPagesAmount = 0;
-    const { palette, images } = LuminariesData;
+    const { palette, images, emblems } = LuminariesData;
 
     let {
       luminaries,
@@ -170,11 +170,21 @@ task(
       ethers.utils.defaultAbiCoder.encode(["bytes"], [paletteValue])
     );
 
+    emblems.forEach((emblem) => {
+      writeFileSync(
+        path.join(exportPath, `emblem_${emblem.brotherhood}.abi`),
+        emblem.data
+      );
+    });
+
     console.log("\n=== PALETTE ===");
     console.log(`palette luminaries: ${palette.length}`);
 
     console.log("\n=== BODY PARTS ===");
     console.log(`${luminariesPagesAmount} pages`);
+
+    console.log("\n=== EMBLEMS ===");
+    console.log(`emblems length: ${emblems.length}`);
   });
 
 const saveToFileAbiEncoded = (
