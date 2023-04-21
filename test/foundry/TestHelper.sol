@@ -4,6 +4,7 @@ pragma solidity 0.8.13;
 import "forge-std/Test.sol";
 
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {LZEndpointMock} from "solidity-examples/contracts/mocks/LZEndpointMock.sol";
 
 import {PopulateDescriptor} from "script/02_PopulateDescriptor.s.sol";
@@ -14,6 +15,7 @@ import {SmolJoeSeeder, ISmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
 import {SVGRenderer, ISVGRenderer} from "contracts/SVGRenderer.sol";
 import {SmolJoeArt, ISmolJoeArt} from "contracts/SmolJoeArt.sol";
 import {Inflator, IInflator} from "contracts/Inflator.sol";
+import {SmolJoesWorkshop} from "contracts/SmolJoesWorkshop.sol";
 
 contract TestHelper is PopulateDescriptor, Test {
     SmolJoes token;
