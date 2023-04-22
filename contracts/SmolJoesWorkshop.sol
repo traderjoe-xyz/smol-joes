@@ -150,8 +150,8 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         address _smolJoesV1,
         address _smolJoesV2,
         address _smolCreeps,
-        address _beegPumpkins,
-        address _smolPumpkins
+        address _smolPumpkins,
+        address _beegPumpkins
     ) {
         require(
             keccak256(abi.encodePacked(IERC721Metadata(_smolJoesV1).name())) == keccak256("Smol Joes"),
@@ -169,20 +169,20 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         );
 
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_beegPumpkins).name())) == keccak256("Beeg Pumpkins"),
-            "Invalid Beeg Pumpkins address"
+            keccak256(abi.encodePacked(IERC721Metadata(_smolPumpkins).name())) == keccak256("Smol Pumpkins"),
+            "Invalid Smol Pumpkins address"
         );
 
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_smolPumpkins).name())) == keccak256("Smol Pumpkins"),
-            "Invalid Smol Pumpkins address"
+            keccak256(abi.encodePacked(IERC721Metadata(_beegPumpkins).name())) == keccak256("Beeg Pumpkins"),
+            "Invalid Beeg Pumpkins address"
         );
 
         smolJoesV1 = IERC721(_smolJoesV1);
         smolJoesV2 = ISmolJoes(_smolJoesV2);
         smolCreeps = IERC721(_smolCreeps);
-        beegPumpkins = IERC721(_beegPumpkins);
         smolPumpkins = IERC721(_smolPumpkins);
+        beegPumpkins = IERC721(_beegPumpkins);
 
         _upgradePriceByCategory[Prices.SmolJoe] = 5 ether;
         _upgradePriceByCategory[Prices.Bone] = 1 ether;
