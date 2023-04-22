@@ -18,9 +18,12 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
  * 4. Smol Creeps can be upgraded without a Pumpkin much later (same prices and same yields as before)
  *
  * Each upgrade will burn the token used.
- * The price of the upgrade will vary depending on the NFT category (Smol Joe, Smol Creep unique, Smol Creep diamond, etc).
- * The different Creep categories will also yield different amounts of new Smol Joes,
- * also depending on the depending on the NFT category (Smol Joe, Smol Creep unique, Smol Creep diamond, etc).
+ * The price of the upgrade will vary depending on the NFT category:
+ * Smol Joe => 5 AVAX to get the corresponding Smol Joe V2, Unique Creep => 5 AVAX to get a random Luminary,
+ * Generative Creep => 1 to 3 AVAX to get 1 to 3 new Smol Joes depending on the rarity of the Creep (Bone, Zombie, Gold, Diamond).
+ *
+ * The different Creep categories will yield different amounts of new Smol Joes:
+ * Bone Creep => 1 new Smol Joe, Zombie Creep => 2 new Smol Joes, Gold Creep => 2 new Smol Joes, Diamond Creep => 3 new Smol Joes
  */
 contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     ISmolJoes immutable smolJoesV2;
