@@ -89,6 +89,23 @@ contract WorkshopTest is TestHelper {
         assertEq(address(workshop.beegPumpkins()), beegPumpkins, "test_Initialization::15");
     }
 
+    function test_WithdrawAVAX() public {
+        _takeOwnership(smolJoesV1, 0);
+
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.SmolJoe);
+
+        skip(1 days);
+        workshop.upgradeSmolJoe{value: price}(0);
+
+        uint256 balanceBefore = address(this).balance;
+
+        workshop.withdrawAvax(address(this), 0);
+
+        uint256 balanceAfter = address(this).balance;
+
+        assertEq(balanceAfter - balanceBefore, price, "test_WithdrawAVAX::1");
+    }
+
     function test_UpgradeSmolJoe() public {
         _takeOwnership(smolJoesV1, 0);
 
@@ -378,4 +395,6 @@ contract WorkshopTest is TestHelper {
 
         IERC721(collection).approve(address(workshop), tokenId);
     }
+
+    receive() external payable {}
 }

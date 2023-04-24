@@ -311,7 +311,7 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     }
 
     function withdrawAvax(address to, uint256 amount) external onlyOwner {
-        if (amount == 0 || amount > address(this).balance) {
+        if (amount == 0) {
             amount = address(this).balance;
         }
 
