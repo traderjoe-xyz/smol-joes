@@ -1,0 +1,20 @@
+{
+  "anvil": {
+    "art": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+    "chainIdLZ": 1,
+    "descriptor": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    "lzEndpoint": "0x0000000000000000000000000000000000000000",
+    "multisig": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "seeder": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    "smolJoes": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+  },
+  "avalanche_fuji": {
+    "art": "0x7E22dD6ABa018CbFF948557C5e6f8b6d5eF3f660",
+    "chainIdLZ": 10106,
+    "descriptor": "0xA0C8D1eAF7741Fb5D35E5b9c703324587f6C20FF",
+    "lzEndpoint": "0x93f54D755A063cE7bB9e6Ac47Eccc8e33411d706",
+    "multisig": "0x1119fbb02F38764CD90F2d9fB35FeDcd8378ac2A",
+    "seeder": "0x64907E3e1CcA9F5112E06B7AF07cd8d20dd7800c",
+    "smolJoes": "0xE190209360b2225D552EF11403Cb3D2cb61F43af"
+  }
+}

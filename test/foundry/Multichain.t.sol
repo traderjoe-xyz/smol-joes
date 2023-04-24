@@ -22,7 +22,6 @@ contract MultichainTest is TestHelper {
         token.setTrustedRemote(chainId_B, abi.encodePacked(address(token_B), address(token)));
         token_B.setTrustedRemote(chainId_A, abi.encodePacked(address(token), address(token_B)));
 
-        token.setWorkshop(address(this));
         token_B.setWorkshop(address(this));
 
         vm.deal(address(lzEndpointMock), 10 ether);
