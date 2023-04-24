@@ -19,12 +19,17 @@ contract DeployContract is BaseScript {
             SVGRenderer renderer = new SVGRenderer();
             SmolJoeSeeder seeder = new SmolJoeSeeder();
 
-            SmolJoeDescriptor descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer);
+
+            uint256 deployerNonce = vm.getNonce(deployer);
+            address artAddressPrediction = computeCreateAddress(deployer, deployerNonce + 1);
+
+            SmolJoeDescriptor descriptor = new SmolJoeDescriptor(ISmolJoeArt(artAddressPrediction), renderer);
             SmolJoeArt art = new SmolJoeArt(address(descriptor), inflator);
+
+            require(address(art) == artAddressPrediction, "Art address prediction failed");
 
             SmolJoes smolJoes = new SmolJoes(descriptor, seeder, config.lzEndpoint, deployer);
 
-            descriptor.setArt(art);
             seeder.setSmolJoesAddress(address(smolJoes));
 
             vm.stopBroadcast();
