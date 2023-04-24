@@ -21,7 +21,7 @@ contract WorkshopTest is TestHelper {
         _populateDescriptor(descriptor);
 
         workshop = new SmolJoesWorkshop(
-           smolJoesV1,address(token),smolCreeps, beegPumpkins,smolPumpkins
+           smolJoesV1,address(token),smolCreeps,smolPumpkins, beegPumpkins
         );
 
         token.setWorkshop(address(workshop));
@@ -35,10 +35,64 @@ contract WorkshopTest is TestHelper {
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.NoPumpkins, currentBlockTimestamp + 42 days);
     }
 
+    function test_Initialization() public {
+        vm.createSelectFork(StdChains.getChain("avalanche").rpcUrl, 29039560);
+
+        setUp();
+
+        workshop = new SmolJoesWorkshop(
+           smolJoesV1,address(token),smolCreeps,smolPumpkins, beegPumpkins
+        );
+
+        token.setWorkshop(address(workshop));
+
+        uint256 currentBlockTimestamp = block.timestamp;
+
+        workshop.setGlobalEndTime(currentBlockTimestamp + 8 * 7 days);
+        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe, currentBlockTimestamp + 1 days);
+        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.UniqueCreep, currentBlockTimestamp + 3 days);
+        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.GenerativeCreep, currentBlockTimestamp + 7 days);
+        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.NoPumpkins, currentBlockTimestamp + 42 days);
+
+        assertEq(workshop.globalEndTime(), currentBlockTimestamp + 8 * 7 days, "test_Initialization::1");
+        assertEq(
+            workshop.getUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe),
+            currentBlockTimestamp + 1 days,
+            "test_Initialization::2"
+        );
+        assertEq(
+            workshop.getUpgradeStartTime(SmolJoesWorkshop.StartTimes.UniqueCreep),
+            currentBlockTimestamp + 3 days,
+            "test_Initialization::3"
+        );
+        assertEq(
+            workshop.getUpgradeStartTime(SmolJoesWorkshop.StartTimes.GenerativeCreep),
+            currentBlockTimestamp + 7 days,
+            "test_Initialization::4"
+        );
+        assertEq(
+            workshop.getUpgradeStartTime(SmolJoesWorkshop.StartTimes.NoPumpkins),
+            currentBlockTimestamp + 42 days,
+            "test_Initialization::5"
+        );
+
+        assertEq(workshop.getUpgradePrice(SmolJoesWorkshop.Type.SmolJoe), 5 ether, "test_Initialization::6");
+        assertEq(workshop.getUpgradePrice(SmolJoesWorkshop.Type.Unique), 5 ether, "test_Initialization::7");
+        assertEq(workshop.getUpgradePrice(SmolJoesWorkshop.Type.Bone), 1 ether, "test_Initialization::8");
+        assertEq(workshop.getUpgradePrice(SmolJoesWorkshop.Type.Zombie), 2 ether, "test_Initialization::9");
+        assertEq(workshop.getUpgradePrice(SmolJoesWorkshop.Type.Gold), 2 ether, "test_Initialization::10");
+        assertEq(workshop.getUpgradePrice(SmolJoesWorkshop.Type.Diamond), 3 ether, "test_Initialization::11");
+
+        assertEq(address(workshop.smolJoesV1()), smolJoesV1, "test_Initialization::12");
+        assertEq(address(workshop.smolCreeps()), smolCreeps, "test_Initialization::13");
+        assertEq(address(workshop.smolPumpkins()), smolPumpkins, "test_Initialization::14");
+        assertEq(address(workshop.beegPumpkins()), beegPumpkins, "test_Initialization::15");
+    }
+
     function test_UpgradeSmolJoe() public {
         _takeOwnership(smolJoesV1, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.SmolJoe);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.SmolJoe);
 
         skip(1 days);
         workshop.upgradeSmolJoe{value: price}(0);
@@ -54,7 +108,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolJoesV1, smolJoeIds[0]);
         _takeOwnership(smolJoesV1, smolJoeIds[1]);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.SmolJoe);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.SmolJoe);
 
         skip(1 days);
         workshop.batchUpgradeSmolJoe{value: smolJoeIds.length * price}(smolJoeIds);
@@ -69,7 +123,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolCreeps, uniqueCreepId);
         _takeOwnership(beegPumpkins, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Unique);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Unique);
 
         skip(3 days);
         workshop.upgradeCreepWithBeegPumpkin{value: price}(uniqueCreepId, 0);
@@ -91,7 +145,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(beegPumpkins, beegPumpkinIds[0]);
         _takeOwnership(beegPumpkins, beegPumpkinIds[1]);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Unique);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Unique);
 
         skip(3 days);
         workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
@@ -105,7 +159,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolCreeps, boneCreepId);
         _takeOwnership(smolPumpkins, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Bone);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Bone);
 
         skip(7 days);
         workshop.upgradeCreepWithSmolPumpkin{value: price}(boneCreepId, 0);
@@ -120,7 +174,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolCreeps, zombieCreepId);
         _takeOwnership(smolPumpkins, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Zombie);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Zombie);
 
         skip(7 days);
         workshop.upgradeCreepWithSmolPumpkin{value: price}(zombieCreepId, 0);
@@ -136,7 +190,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolCreeps, goldCreepId);
         _takeOwnership(smolPumpkins, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Gold);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Gold);
 
         skip(7 days);
         workshop.upgradeCreepWithSmolPumpkin{value: price}(goldCreepId, 0);
@@ -152,7 +206,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolCreeps, diamondCreepId);
         _takeOwnership(smolPumpkins, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Diamond);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Diamond);
 
         skip(7 days);
         workshop.upgradeCreepWithSmolPumpkin{value: price}(diamondCreepId, 0);
@@ -184,7 +238,7 @@ contract WorkshopTest is TestHelper {
 
         uint256 totalPrice;
         for (uint256 i = 0; i < tokenIds.length; i++) {
-            uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices(uint8(workshop.getCreepType(tokenIds[i]))));
+            uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type(uint8(workshop.getCreepType(tokenIds[i]))));
             totalPrice += price;
         }
 
@@ -205,7 +259,7 @@ contract WorkshopTest is TestHelper {
 
         _takeOwnership(smolCreeps, uniqueCreepId);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Unique);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Unique);
 
         skip(42 days);
         workshop.upgradeCreep{value: price}(uniqueCreepId);
@@ -219,7 +273,7 @@ contract WorkshopTest is TestHelper {
 
         _takeOwnership(smolCreeps, boneCreepId);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Bone);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Bone);
 
         skip(42 days);
         workshop.upgradeCreep{value: price}(boneCreepId);
@@ -233,7 +287,7 @@ contract WorkshopTest is TestHelper {
 
         _takeOwnership(smolCreeps, zombieCreepId);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Zombie);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Zombie);
 
         skip(42 days);
         workshop.upgradeCreep{value: price}(zombieCreepId);
@@ -248,7 +302,7 @@ contract WorkshopTest is TestHelper {
 
         _takeOwnership(smolCreeps, goldCreepId);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Gold);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Gold);
 
         skip(42 days);
         workshop.upgradeCreep{value: price}(goldCreepId);
@@ -263,7 +317,7 @@ contract WorkshopTest is TestHelper {
 
         _takeOwnership(smolCreeps, diamondCreepId);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Diamond);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Diamond);
 
         skip(42 days);
         workshop.upgradeCreep{value: price}(diamondCreepId);
@@ -286,7 +340,7 @@ contract WorkshopTest is TestHelper {
 
         uint256 totalPrice;
         for (uint256 i = 0; i < tokenIds.length; i++) {
-            uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices(uint8(workshop.getCreepType(tokenIds[i]))));
+            uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type(uint8(workshop.getCreepType(tokenIds[i]))));
             totalPrice += price;
         }
 
@@ -308,7 +362,7 @@ contract WorkshopTest is TestHelper {
         _takeOwnership(smolCreeps, uniqueCreepId);
         _takeOwnership(smolPumpkins, 0);
 
-        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Prices.Unique);
+        uint256 price = workshop.getUpgradePrice(SmolJoesWorkshop.Type.Unique);
 
         skip(7 days);
 

@@ -26,26 +26,18 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
  * Bone Creep => 1 new Smol Joe, Zombie Creep => 2 new Smol Joes, Gold Creep => 2 new Smol Joes, Diamond Creep => 3 new Smol Joes
  */
 contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
-    ISmolJoes immutable smolJoesV2;
-
-    IERC721 immutable smolJoesV1;
-    IERC721 immutable smolCreeps;
-    IERC721 immutable beegPumpkins;
-    IERC721 immutable smolPumpkins;
-
-    uint256 globalEndTime;
-
     /**
-     * @dev Smol Creeps belong to one of the following categories
-     * Each category will yield a different amount of new Smol Joes
-     * - Bone Creep: 1
-     * - Zombie Creep: 2
-     * - Gold Creep: 2
-     * - Diamond Creep: 3
-     * - Unique Creep: 1 Luminary
+     * @dev Type of the NFT to upgrade. Can be a Smol Joe V1, or a Smol Creep
+     * Smol Creeps are divided into categories that will have different upgrade prices
+     * and will yield a different amount of new Smol Joes:
+     * - Bone Creep: 1 for 1 AVAX
+     * - Zombie Creep: 2 for 2 AVAX
+     * - Gold Creep: 2 for 2 AVAX
+     * - Diamond Creep: 3 for 3 AVAX
+     * - Unique Creep: 1 Luminary for 5 AVAX
      */
-    enum CreepType {
-        Unknown,
+    enum Type {
+        SmolJoe,
         Bone,
         Zombie,
         Gold,
@@ -67,30 +59,18 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         NoPumpkins
     }
 
-    /**
-     * @dev The different NFT categories will have different upgrade prices
-     * Initial prices will be:
-     * - Smol Joe: 5 AVAX
-     * - Bone Creep: 1 AVAX
-     * - Zombie Creep: 2 AVAX
-     * - Gold Creep: 2 AVAX
-     * - Diamond Creep: 3 AVAX
-     * - Unique Creep: 5 AVAX
-     */
-    enum Prices {
-        SmolJoe,
-        Bone,
-        Zombie,
-        Gold,
-        Diamond,
-        Unique
-    }
+    ISmolJoes public immutable smolJoesV2;
 
-    mapping(CreepType => uint256) private _creepTypeYield;
+    IERC721 public immutable smolJoesV1;
+    IERC721 public immutable smolCreeps;
+    IERC721 public immutable beegPumpkins;
+    IERC721 public immutable smolPumpkins;
+
+    uint256 public globalEndTime;
+
+    mapping(Type => uint256) private _creepTypeYield;
+    mapping(Type => uint256) private _upgradePriceByCategory;
     mapping(StartTimes => uint256) private _startTimeByCategory;
-    mapping(Prices => uint256) private _upgradePriceByCategory;
-
-    address private _creepTypesMappingPointer;
 
     // Luminaries have Ids 100 to 199
     uint256 _lastLuminaryMinted = 99;
@@ -100,7 +80,7 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
 
     address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
 
-    // This list maps each Creep token ID to its CreepType
+    // This list maps each Creep token ID to its Type
     // Creep types have been fetched using the `get-creep-types` task
     // @todo Find a nicer solution ?
     // forgefmt: disable-next-item
@@ -157,27 +137,27 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         address _beegPumpkins
     ) {
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_smolJoesV1).name())) == keccak256("Smol Joes"),
+            keccak256(bytes(IERC721Metadata(_smolJoesV1).name())) == keccak256("Smol Joes"),
             "Invalid Smol Joes V1 address"
         );
 
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_smolJoesV2).name())) == keccak256("Smol Joes Season 2"),
+            keccak256(bytes(IERC721Metadata(_smolJoesV2).name())) == keccak256("Smol Joes Season 2"),
             "Invalid Smol Joes V2 address"
         );
 
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_smolCreeps).name())) == keccak256("Smol Creeps"),
+            keccak256(bytes(IERC721Metadata(_smolCreeps).name())) == keccak256("Smol Creeps"),
             "Invalid Smol Creeps address"
         );
 
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_smolPumpkins).name())) == keccak256("Smol Pumpkins"),
+            keccak256(bytes(IERC721Metadata(_smolPumpkins).name())) == keccak256("Smol Pumpkins"),
             "Invalid Smol Pumpkins address"
         );
 
         require(
-            keccak256(abi.encodePacked(IERC721Metadata(_beegPumpkins).name())) == keccak256("Beeg Pumpkins"),
+            keccak256(bytes(IERC721Metadata(_beegPumpkins).name())) == keccak256("Beeg Pumpkins"),
             "Invalid Beeg Pumpkins address"
         );
 
@@ -187,33 +167,33 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         smolPumpkins = IERC721(_smolPumpkins);
         beegPumpkins = IERC721(_beegPumpkins);
 
-        _upgradePriceByCategory[Prices.SmolJoe] = 5 ether;
-        _upgradePriceByCategory[Prices.Bone] = 1 ether;
-        _upgradePriceByCategory[Prices.Zombie] = 2 ether;
-        _upgradePriceByCategory[Prices.Gold] = 2 ether;
-        _upgradePriceByCategory[Prices.Diamond] = 3 ether;
-        _upgradePriceByCategory[Prices.Unique] = 5 ether;
+        _upgradePriceByCategory[Type.SmolJoe] = 5 ether;
+        _upgradePriceByCategory[Type.Bone] = 1 ether;
+        _upgradePriceByCategory[Type.Zombie] = 2 ether;
+        _upgradePriceByCategory[Type.Gold] = 2 ether;
+        _upgradePriceByCategory[Type.Diamond] = 3 ether;
+        _upgradePriceByCategory[Type.Unique] = 5 ether;
 
-        _creepTypeYield[CreepType.Bone] = 1;
-        _creepTypeYield[CreepType.Zombie] = 2;
-        _creepTypeYield[CreepType.Gold] = 2;
-        _creepTypeYield[CreepType.Diamond] = 3;
+        _creepTypeYield[Type.Bone] = 1;
+        _creepTypeYield[Type.Zombie] = 2;
+        _creepTypeYield[Type.Gold] = 2;
+        _creepTypeYield[Type.Diamond] = 3;
     }
 
-    function getCreepType(uint256 tokenId) external view returns (CreepType) {
+    function getCreepType(uint256 tokenId) external view returns (Type) {
         return _getCreepType(tokenId);
     }
 
-    function getUpgradePrice(Prices category) external view returns (uint256) {
+    function getUpgradePrice(Type category) external view returns (uint256) {
         return _getUpgradePrice(category);
+    }
+
+    function getSmolsYielded(Type category) external view returns (uint256) {
+        return _getSmolsYielded(category);
     }
 
     function getUpgradeStartTime(StartTimes category) external view returns (uint256) {
         return _getUpgradeStartTime(category);
-    }
-
-    function getSmolsYielded(CreepType creepType) external view returns (uint256) {
-        return _getSmolsYielded(creepType);
     }
 
     function upgradeSmolJoe(uint256 tokenId)
@@ -320,8 +300,8 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         _startTimeByCategory[upgradeType] = timestamp;
     }
 
-    function setUpgradePrice(Prices price, uint256 amount) external onlyOwner {
-        _upgradePriceByCategory[price] = amount;
+    function setUpgradePrice(Type category, uint256 amount) external onlyOwner {
+        _upgradePriceByCategory[category] = amount;
     }
 
     function setGlobalEndTime(uint256 timestamp) external onlyOwner {
@@ -346,58 +326,48 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     }
 
     function _upgradeSmolJoe(uint256 tokenId) internal {
-        IERC721 _smolJoesV1 = smolJoesV1;
+        _verifyOwnership(smolJoesV1, tokenId);
 
-        _verifyOwnership(_smolJoesV1, tokenId);
-
-        uint256 upgradePrice = _getUpgradePrice(Prices.SmolJoe);
+        uint256 upgradePrice = _getUpgradePrice(Type.SmolJoe);
         _decrementTxBalance(upgradePrice);
 
-        _burn(_smolJoesV1, tokenId);
+        _burn(smolJoesV1, tokenId);
 
         _mint(msg.sender, tokenId);
     }
 
     function _upgradeCreepWithBeegPumpkin(uint256 tokenId, uint256 pumpkinId) internal {
-        IERC721 _smolCreeps = smolCreeps;
-        IERC721 _beegPumpkins = beegPumpkins;
+        _verifyOwnership(smolCreeps, tokenId);
+        _verifyOwnership(beegPumpkins, pumpkinId);
 
-        _verifyOwnership(_smolCreeps, tokenId);
-        _verifyOwnership(_beegPumpkins, pumpkinId);
+        Type creepType = _getCreepType(tokenId);
+        require(creepType == Type.Unique, "Creep is not unique");
 
-        CreepType creepType = _getCreepType(tokenId);
-        require(creepType == CreepType.Unique, "Creep is not unique");
-
-        uint256 upgradePrice = _getUpgradePrice(Prices.Unique);
+        uint256 upgradePrice = _getUpgradePrice(Type.Unique);
         _decrementTxBalance(upgradePrice);
 
-        _burn(_smolCreeps, tokenId);
-        _burn(_beegPumpkins, pumpkinId);
+        _burn(smolCreeps, tokenId);
+        _burn(beegPumpkins, pumpkinId);
 
         _mint(msg.sender, ++_lastLuminaryMinted);
     }
 
     function _upgradeCreepWithSmolPumpkin(uint256 tokenId, uint256 pumpkinId) internal {
-        IERC721 _smolCreeps = smolCreeps;
-        IERC721 _smolPumpkins = smolPumpkins;
+        _verifyOwnership(smolCreeps, tokenId);
+        _verifyOwnership(smolPumpkins, pumpkinId);
 
-        _verifyOwnership(_smolCreeps, tokenId);
-        _verifyOwnership(_smolPumpkins, pumpkinId);
-
-        CreepType creepType = _getCreepType(tokenId);
+        Type creepType = _getCreepType(tokenId);
 
         require(
-            creepType == CreepType.Bone || creepType == CreepType.Zombie || creepType == CreepType.Gold
-                || creepType == CreepType.Diamond,
+            creepType == Type.Bone || creepType == Type.Zombie || creepType == Type.Gold || creepType == Type.Diamond,
             "Invalid creep type"
         );
 
-        // @todo Find a cleaner way to do this (rn if the enum order changes, this breaks) ? Want to avoid doing a giant if/else
-        uint256 upgradePrice = _getUpgradePrice(Prices(uint8(creepType)));
+        uint256 upgradePrice = _getUpgradePrice(creepType);
         _decrementTxBalance(upgradePrice);
 
-        _burn(_smolCreeps, tokenId);
-        _burn(_smolPumpkins, pumpkinId);
+        _burn(smolCreeps, tokenId);
+        _burn(smolPumpkins, pumpkinId);
 
         uint256 amountMinted = _getSmolsYielded(creepType);
 
@@ -408,19 +378,16 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     }
 
     function _upgradeCreep(uint256 tokenId) internal {
-        IERC721 _smolCreeps = smolCreeps;
+        _verifyOwnership(smolCreeps, tokenId);
 
-        _verifyOwnership(_smolCreeps, tokenId);
+        Type creepType = _getCreepType(tokenId);
 
-        CreepType creepType = _getCreepType(tokenId);
-
-        // @todo Find a cleaner way to do this (rn if the enum order changes, this breaks) ? Want to avoid doing a giant if/else
-        uint256 upgradePrice = _getUpgradePrice(Prices(uint8(creepType)));
+        uint256 upgradePrice = _getUpgradePrice(creepType);
         _decrementTxBalance(upgradePrice);
 
-        _burn(_smolCreeps, tokenId);
+        _burn(smolCreeps, tokenId);
 
-        if (creepType == CreepType.Unique) {
+        if (creepType == Type.Unique) {
             _mint(msg.sender, ++_lastLuminaryMinted);
         } else {
             uint256 amountMinted = _getSmolsYielded(creepType);
@@ -441,20 +408,20 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         require(collection.ownerOf(tokenId) == msg.sender, "Not owner of token");
     }
 
-    function _getCreepType(uint256 tokenId) internal view returns (CreepType) {
-        return CreepType(_creepTypes[tokenId]);
+    function _getCreepType(uint256 tokenId) internal view returns (Type) {
+        return Type(_creepTypes[tokenId]);
     }
 
-    function _getUpgradePrice(Prices price) internal view returns (uint256) {
-        return _upgradePriceByCategory[price];
+    function _getUpgradePrice(Type category) internal view returns (uint256) {
+        return _upgradePriceByCategory[category];
+    }
+
+    function _getSmolsYielded(Type creepType) internal view returns (uint256) {
+        return _creepTypeYield[creepType];
     }
 
     function _getUpgradeStartTime(StartTimes upgradeType) internal view returns (uint256) {
         return _startTimeByCategory[upgradeType];
-    }
-
-    function _getSmolsYielded(CreepType creepType) internal view returns (uint256) {
-        return _creepTypeYield[creepType];
     }
 
     function _mint(address to, uint256 tokenId) internal {
