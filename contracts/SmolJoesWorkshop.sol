@@ -110,10 +110,6 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         5, 3, 1, 1, 1, 1, 1, 1
     ];
 
-    // Temporary storage variable to account for the AVAX paid to the contract during a transaction
-    // Will be gradually consumed by each upgrade in the batch and is required to be 0 at the end of the transaction
-    uint256 private _txBalance;
-
     modifier isUpgradeEnabled(StartTimes category) {
         uint256 startTime = _startTimeByCategory[category];
 
@@ -121,12 +117,6 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
             startTime > 0 && block.timestamp >= startTime && block.timestamp < globalEndTime, "Upgrade is not enabled"
         );
         _;
-    }
-
-    modifier handleBalance() {
-        _txBalance = msg.value;
-        _;
-        require(_txBalance == 0, "Balance not consumed entirely");
     }
 
     constructor(
@@ -202,8 +192,8 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.SmolJoe)
-        handleBalance
     {
+        _checkPricePaid(Type.SmolJoe);
         _upgradeSmolJoe(tokenId);
     }
 
@@ -213,8 +203,9 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.SmolJoe)
-        handleBalance
     {
+        _checkPricePaid(Type.SmolJoe, tokenIds.length);
+
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeSmolJoe(tokenIds[i]);
         }
@@ -226,8 +217,8 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.UniqueCreep)
-        handleBalance
     {
+        _checkPricePaid(Type.Unique);
         _upgradeCreepWithBeegPumpkin(tokenId, pumpkinId);
     }
 
@@ -237,9 +228,10 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.UniqueCreep)
-        handleBalance
     {
         require(tokenIds.length == pumpkinIds.length, "Invalid input");
+
+        _checkPricePaid(Type.Unique, tokenIds.length);
 
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeCreepWithBeegPumpkin(tokenIds[i], pumpkinIds[i]);
@@ -252,8 +244,8 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.GenerativeCreep)
-        handleBalance
     {
+        _checkPricePaid(_getCreepType(tokenId));
         _upgradeCreepWithSmolPumpkin(tokenId, pumpkinId);
     }
 
@@ -263,9 +255,10 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.GenerativeCreep)
-        handleBalance
     {
         require(tokenIds.length == pumpkinIds.length, "Invalid input");
+
+        _checkPricePaid(tokenIds);
 
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeCreepWithSmolPumpkin(tokenIds[i], pumpkinIds[i]);
@@ -278,8 +271,8 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.NoPumpkins)
-        handleBalance
     {
+        _checkPricePaid(_getCreepType(tokenId));
         _upgradeCreep(tokenId);
     }
 
@@ -289,8 +282,9 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.NoPumpkins)
-        handleBalance
     {
+        _checkPricePaid(tokenIds);
+
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeCreep(tokenIds[i]);
         }
@@ -328,9 +322,6 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function _upgradeSmolJoe(uint256 tokenId) internal {
         _verifyOwnership(smolJoesV1, tokenId);
 
-        uint256 upgradePrice = _getUpgradePrice(Type.SmolJoe);
-        _decrementTxBalance(upgradePrice);
-
         _burn(smolJoesV1, tokenId);
 
         _mint(msg.sender, tokenId);
@@ -342,9 +333,6 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
 
         Type creepType = _getCreepType(tokenId);
         require(creepType == Type.Unique, "Creep is not unique");
-
-        uint256 upgradePrice = _getUpgradePrice(Type.Unique);
-        _decrementTxBalance(upgradePrice);
 
         _burn(smolCreeps, tokenId);
         _burn(beegPumpkins, pumpkinId);
@@ -363,9 +351,6 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
             "Invalid creep type"
         );
 
-        uint256 upgradePrice = _getUpgradePrice(creepType);
-        _decrementTxBalance(upgradePrice);
-
         _burn(smolCreeps, tokenId);
         _burn(smolPumpkins, pumpkinId);
 
@@ -382,9 +367,6 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
 
         Type creepType = _getCreepType(tokenId);
 
-        uint256 upgradePrice = _getUpgradePrice(creepType);
-        _decrementTxBalance(upgradePrice);
-
         _burn(smolCreeps, tokenId);
 
         if (creepType == Type.Unique) {
@@ -399,9 +381,22 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         }
     }
 
-    function _decrementTxBalance(uint256 amount) internal {
-        require(_txBalance >= amount, "Insufficient AVAX sent");
-        _txBalance -= amount;
+    function _checkPricePaid(Type category) internal view {
+        require(msg.value == _getUpgradePrice(category), "Insufficient AVAX paid");
+    }
+
+    function _checkPricePaid(Type category, uint256 amount) internal view {
+        require(msg.value == amount * _getUpgradePrice(category), "Insufficient AVAX paid");
+    }
+
+    function _checkPricePaid(uint256[] calldata tokenIds) internal view {
+        uint256 totalPrice;
+
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            totalPrice += _getUpgradePrice(_getCreepType(tokenIds[i]));
+        }
+
+        require(msg.value == totalPrice, "Insufficient AVAX paid");
     }
 
     function _verifyOwnership(IERC721 collection, uint256 tokenId) internal view {
