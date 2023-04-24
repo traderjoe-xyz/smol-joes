@@ -26,9 +26,9 @@ contract WorkshopTest is TestHelper {
 
         token.setWorkshop(address(workshop));
 
-        uint256 currentBlockTimestamp = block.timestamp;
+        uint64 currentBlockTimestamp = uint64(block.timestamp);
 
-        workshop.setGlobalEndTime(currentBlockTimestamp + 8 * 7 days);
+        workshop.setGlobalEndTime(currentBlockTimestamp + uint64(8 * 7 days));
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe, currentBlockTimestamp + 1 days);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.UniqueCreep, currentBlockTimestamp + 3 days);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.GenerativeCreep, currentBlockTimestamp + 7 days);
@@ -46,15 +46,15 @@ contract WorkshopTest is TestHelper {
 
         token.setWorkshop(address(workshop));
 
-        uint256 currentBlockTimestamp = block.timestamp;
+        uint64 currentBlockTimestamp = uint64(block.timestamp);
 
-        workshop.setGlobalEndTime(currentBlockTimestamp + 8 * 7 days);
+        workshop.setGlobalEndTime(currentBlockTimestamp + uint64(8 * 7 days));
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe, currentBlockTimestamp + 1 days);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.UniqueCreep, currentBlockTimestamp + 3 days);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.GenerativeCreep, currentBlockTimestamp + 7 days);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.NoPumpkins, currentBlockTimestamp + 42 days);
 
-        assertEq(workshop.globalEndTime(), currentBlockTimestamp + 8 * 7 days, "test_Initialization::1");
+        assertEq(workshop.globalEndTime(), currentBlockTimestamp + uint64(8 * 7 days), "test_Initialization::1");
         assertEq(
             workshop.getUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe),
             currentBlockTimestamp + 1 days,

@@ -66,17 +66,17 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     IERC721 public immutable beegPumpkins;
     IERC721 public immutable smolPumpkins;
 
-    uint256 public globalEndTime;
-
     mapping(Type => uint256) private _creepTypeYield;
     mapping(Type => uint256) private _upgradePriceByCategory;
     mapping(StartTimes => uint256) private _startTimeByCategory;
 
+    uint64 public globalEndTime;
+
     // Luminaries have Ids 100 to 199
-    uint256 _lastLuminaryMinted = 99;
+    uint8 _lastLuminaryMinted = 99;
 
     // Smols have Ids from 200
-    uint256 _lastSmolMinted = 199;
+    uint16 _lastSmolMinted = 199;
 
     address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
 
@@ -304,7 +304,7 @@ contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         _upgradePriceByCategory[category] = amount;
     }
 
-    function setGlobalEndTime(uint256 timestamp) external onlyOwner {
+    function setGlobalEndTime(uint64 timestamp) external onlyOwner {
         globalEndTime = timestamp;
     }
 

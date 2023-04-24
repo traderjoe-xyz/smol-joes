@@ -41,7 +41,7 @@ contract DeployWorkshopCollections is BaseScript {
             smolPumpkins
         );
 
-        workshop.setGlobalEndTime(block.timestamp + 100 days);
+        workshop.setGlobalEndTime(uint64(block.timestamp + 100 days));
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe, block.timestamp);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.UniqueCreep, block.timestamp);
         workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.GenerativeCreep, block.timestamp);
