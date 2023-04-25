@@ -468,10 +468,11 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
 
         uint256 amountMinted = _getSmolsYielded(creepType);
 
-        // @todo cache _lastSmolMinted
+        uint16 lastSmolMinted = _lastSmolMinted;
         for (uint256 i = 0; i < amountMinted; i++) {
-            _mint(msg.sender, ++_lastSmolMinted);
+            _mint(msg.sender, ++lastSmolMinted);
         }
+        _lastSmolMinted = lastSmolMinted;
     }
 
     /**
@@ -490,10 +491,11 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         } else {
             uint256 amountMinted = _getSmolsYielded(creepType);
 
-            // @todo cache _lastSmolMinted
+            uint16 lastSmolMinted = _lastSmolMinted;
             for (uint256 i = 0; i < amountMinted; i++) {
                 _mint(msg.sender, ++_lastSmolMinted);
             }
+            _lastSmolMinted = lastSmolMinted;
         }
     }
 
