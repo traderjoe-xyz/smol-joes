@@ -33,7 +33,7 @@ contract DeployWorkshopCollections is BaseScript {
             new WorkshopFakeCollection("Smol Pumpkins",0,700, "ipfs://bafybeiapzmwqondqlzm2mo45kb7zu3w36wthbr6iee2h72bu3kflny3imm/")
         );
 
-        SmolJoesWorkshop workshop = new SmolJoesWorkshop(
+        SmolJoeWorkshop workshop = new SmolJoeWorkshop(
             smolJoesV1,
             address(smolJoes),
             smolCreeps,
@@ -42,10 +42,10 @@ contract DeployWorkshopCollections is BaseScript {
         );
 
         workshop.setGlobalEndTime(uint64(block.timestamp + 100 days));
-        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.SmolJoe, block.timestamp);
-        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.UniqueCreep, block.timestamp);
-        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.GenerativeCreep, block.timestamp);
-        workshop.setUpgradeStartTime(SmolJoesWorkshop.StartTimes.NoPumpkins, block.timestamp);
+        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.SmolJoe, block.timestamp);
+        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.UniqueCreep, block.timestamp);
+        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.GenerativeCreep, block.timestamp);
+        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.NoPumpkins, block.timestamp);
 
         smolJoes.setWorkshop(address(workshop));
 

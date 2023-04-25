@@ -15,7 +15,7 @@ import {SmolJoeSeeder, ISmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
 import {SVGRenderer, ISVGRenderer} from "contracts/SVGRenderer.sol";
 import {SmolJoeArt, ISmolJoeArt} from "contracts/SmolJoeArt.sol";
 import {Inflator, IInflator} from "contracts/Inflator.sol";
-import {SmolJoesWorkshop} from "contracts/SmolJoesWorkshop.sol";
+import {SmolJoeWorkshop} from "contracts/SmolJoeWorkshop.sol";
 
 contract TestHelper is PopulateDescriptor, Test {
     SmolJoes token;

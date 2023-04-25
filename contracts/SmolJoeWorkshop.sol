@@ -25,7 +25,7 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
  * The different Creep categories will yield different amounts of new Smol Joes:
  * Bone Creep => 1 new Smol Joe, Zombie Creep => 2 new Smol Joes, Gold Creep => 2 new Smol Joes, Diamond Creep => 3 new Smol Joes
  */
-contract SmolJoesWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
+contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     /**
      * @dev Type of the NFT to upgrade. Can be a Smol Joe V1, or a Smol Creep
      * Smol Creeps are divided into categories that will have different upgrade prices
