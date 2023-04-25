@@ -58,44 +58,50 @@ task(
   "Fetches the metadata of the smol creeps collection to map their token id to their type (unique, diamond, gold, etc)"
 )
   .addOptionalParam(
-    "skip-ipfs-fetch",
+    "skipIpfsFetch",
     "Skips fetching the metadata on IPFS if it has already been done and the `creepTypesPrefetch` array is defined",
     false,
     types.boolean
   )
-  .setAction(async () => {
-    const creepTypes: CreepType[] = [];
+  .setAction(async ({ skipIpfsFetch }) => {
+    let creepTypes: CreepType[] = [];
 
-    for (let i = 0; i < 800; i++) {
-      const response = await axios.get(getImageURL(i));
+    if (skipIpfsFetch && creepTypesPrefetch) {
+      creepTypes = creepTypesPrefetch.map((t) => t as CreepType);
+    } else {
+      for (let i = 0; i < 800; i++) {
+        const response = await axios.get(getImageURL(i));
 
-      const attributes = response.data.attributes as Trait[];
+        const attributes = response.data.attributes as Trait[];
 
-      if (attributes.find((a) => a.trait_type === "Type").value === "Unique") {
-        creepTypes.push(CreepType.Unique);
-      } else if (
-        attributes.find((a) => a.trait_type === "Body").value === "Diamond"
-      ) {
-        creepTypes.push(CreepType.Diamond);
-      } else if (
-        attributes.find((a) => a.trait_type === "Body").value === "Golden"
-      ) {
-        creepTypes.push(CreepType.Gold);
-      } else if (
-        attributes.find((a) => a.trait_type === "Body").value === "Zombie"
-      ) {
-        creepTypes.push(CreepType.Zombie);
-      } else if (
-        attributes.find((a) => a.trait_type === "Body").value ===
-        "Nothing (Normal)"
-      ) {
-        creepTypes.push(CreepType.Bone);
-      } else {
-        creepTypes.push(CreepType.Unknown);
-      }
+        if (
+          attributes.find((a) => a.trait_type === "Type").value === "Unique"
+        ) {
+          creepTypes.push(CreepType.Unique);
+        } else if (
+          attributes.find((a) => a.trait_type === "Body").value === "Diamond"
+        ) {
+          creepTypes.push(CreepType.Diamond);
+        } else if (
+          attributes.find((a) => a.trait_type === "Body").value === "Golden"
+        ) {
+          creepTypes.push(CreepType.Gold);
+        } else if (
+          attributes.find((a) => a.trait_type === "Body").value === "Zombie"
+        ) {
+          creepTypes.push(CreepType.Zombie);
+        } else if (
+          attributes.find((a) => a.trait_type === "Body").value ===
+          "Nothing (Normal)"
+        ) {
+          creepTypes.push(CreepType.Bone);
+        } else {
+          creepTypes.push(CreepType.Unknown);
+        }
 
-      if (i > 0 && i % 10 === 0) {
-        console.log(`Processed ${i} items`);
+        if (i > 0 && i % 10 === 0) {
+          console.log(`Processed ${i} items`);
+        }
       }
     }
 
@@ -133,7 +139,7 @@ task(
     let creepTypesBytes = "";
     let currentByte = 0;
 
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < creepTypes.length; i++) {
       const type = creepTypes[i];
       const bytePos = i % 2;
 
