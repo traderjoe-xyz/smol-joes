@@ -9,13 +9,13 @@ import {LZEndpointMock} from "solidity-examples/contracts/mocks/LZEndpointMock.s
 
 import {PopulateDescriptor} from "script/02_PopulateDescriptor.s.sol";
 
-import {SmolJoes} from "contracts/SmolJoes.sol";
 import {SmolJoeDescriptor, ISmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
+import {SmolJoeWorkshop, ISmolJoeWorkshop} from "contracts/SmolJoeWorkshop.sol";
 import {SmolJoeSeeder, ISmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
 import {SVGRenderer, ISVGRenderer} from "contracts/SVGRenderer.sol";
 import {SmolJoeArt, ISmolJoeArt} from "contracts/SmolJoeArt.sol";
 import {Inflator, IInflator} from "contracts/Inflator.sol";
-import {SmolJoeWorkshop} from "contracts/SmolJoeWorkshop.sol";
+import {SmolJoes} from "contracts/SmolJoes.sol";
 
 contract TestHelper is PopulateDescriptor, Test {
     SmolJoes token;

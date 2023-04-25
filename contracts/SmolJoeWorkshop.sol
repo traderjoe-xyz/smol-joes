@@ -8,6 +8,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {IERC721Metadata} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
 
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
+import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 
 /**
  * @title The SmolJoes Workshop is used to upgrade the original collection and the Smol Creeps into the new Smol Joes
@@ -25,58 +26,25 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
  * The different Creep categories will yield different amounts of new Smol Joes:
  * Bone Creep => 1 new Smol Joe, Zombie Creep => 2 new Smol Joes, Gold Creep => 2 new Smol Joes, Diamond Creep => 3 new Smol Joes
  */
-contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
-    /**
-     * @dev Type of the NFT to upgrade. Can be a Smol Joe V1, or a Smol Creep
-     * Smol Creeps are divided into categories that will have different upgrade prices
-     * and will yield a different amount of new Smol Joes:
-     * - Bone Creep: 1 for 1 AVAX
-     * - Zombie Creep: 2 for 2 AVAX
-     * - Gold Creep: 2 for 2 AVAX
-     * - Diamond Creep: 3 for 3 AVAX
-     * - Unique Creep: 1 Luminary for 5 AVAX
-     */
-    enum Type {
-        SmolJoe,
-        Bone,
-        Zombie,
-        Gold,
-        Diamond,
-        Unique
-    }
+contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWorkshop {
+    ISmolJoes public immutable override smolJoesV2;
 
-    /**
-     * @dev Sale will be in 4 phases:
-     * 1. The Smol Joes can be upgraded
-     * 2. The unique Smol Creeps can be upgraded with a Beeg Pumpkin
-     * 3. The generative Smol Creeps can be upgraded with a Smol Pumpkin (generative = Bone, Zombie, Gold, Diamond)
-     * 4. The Smol Creeps can be upgraded without a Pumpkin
-     */
-    enum StartTimes {
-        SmolJoe,
-        UniqueCreep,
-        GenerativeCreep,
-        NoPumpkins
-    }
+    IERC721 public immutable override smolJoesV1;
+    IERC721 public immutable override smolCreeps;
+    IERC721 public immutable override beegPumpkins;
+    IERC721 public immutable override smolPumpkins;
 
-    ISmolJoes public immutable smolJoesV2;
-
-    IERC721 public immutable smolJoesV1;
-    IERC721 public immutable smolCreeps;
-    IERC721 public immutable beegPumpkins;
-    IERC721 public immutable smolPumpkins;
+    uint64 public override globalEndTime;
 
     mapping(Type => uint256) private _creepTypeYield;
     mapping(Type => uint256) private _upgradePriceByCategory;
     mapping(StartTimes => uint256) private _startTimeByCategory;
 
-    uint64 public globalEndTime;
-
     // Luminaries have Ids 100 to 199
-    uint8 _lastLuminaryMinted = 99;
+    uint8 private _lastLuminaryMinted = 99;
 
     // Smols have Ids from 200
-    uint16 _lastSmolMinted = 199;
+    uint16 private _lastSmolMinted = 199;
 
     address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
 
@@ -145,25 +113,26 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         _creepTypeYield[Type.Diamond] = 3;
     }
 
-    function getCreepType(uint256 tokenId) external view returns (Type) {
+    function getCreepType(uint256 tokenId) external view override returns (Type) {
         return _getCreepType(tokenId);
     }
 
-    function getUpgradePrice(Type category) external view returns (uint256) {
+    function getUpgradePrice(Type category) external view override returns (uint256) {
         return _getUpgradePrice(category);
     }
 
-    function getSmolsYielded(Type category) external view returns (uint256) {
+    function getSmolsYielded(Type category) external view override returns (uint256) {
         return _getSmolsYielded(category);
     }
 
-    function getUpgradeStartTime(StartTimes category) external view returns (uint256) {
+    function getUpgradeStartTime(StartTimes category) external view override returns (uint256) {
         return _getUpgradeStartTime(category);
     }
 
     function upgradeSmolJoe(uint256 tokenId)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.SmolJoe)
@@ -175,6 +144,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function batchUpgradeSmolJoe(uint256[] calldata tokenIds)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.SmolJoe)
@@ -189,6 +159,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function upgradeCreepWithBeegPumpkin(uint256 tokenId, uint256 pumpkinId)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.UniqueCreep)
@@ -200,6 +171,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function batchUpgradeCreepWithBeegPumpkin(uint256[] calldata tokenIds, uint256[] calldata pumpkinIds)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.UniqueCreep)
@@ -216,6 +188,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function upgradeCreepWithSmolPumpkin(uint256 tokenId, uint256 pumpkinId)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.GenerativeCreep)
@@ -227,6 +200,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function batchUpgradeCreepWithSmolPumpkin(uint256[] calldata tokenIds, uint256[] calldata pumpkinIds)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.GenerativeCreep)
@@ -243,6 +217,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function upgradeCreep(uint256 tokenId)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.NoPumpkins)
@@ -254,6 +229,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     function batchUpgradeCreep(uint256[] calldata tokenIds)
         external
         payable
+        override
         whenNotPaused
         nonReentrant
         isUpgradeEnabled(StartTimes.NoPumpkins)
@@ -265,27 +241,27 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         }
     }
 
-    function setUpgradeStartTime(StartTimes upgradeType, uint256 timestamp) external onlyOwner {
+    function setUpgradeStartTime(StartTimes upgradeType, uint256 timestamp) external override onlyOwner {
         _startTimeByCategory[upgradeType] = timestamp;
     }
 
-    function setUpgradePrice(Type category, uint256 amount) external onlyOwner {
+    function setUpgradePrice(Type category, uint256 amount) external override onlyOwner {
         _upgradePriceByCategory[category] = amount;
     }
 
-    function setGlobalEndTime(uint64 timestamp) external onlyOwner {
+    function setGlobalEndTime(uint64 timestamp) external override onlyOwner {
         globalEndTime = timestamp;
     }
 
-    function pause() external onlyOwner {
+    function pause() external override onlyOwner {
         _pause();
     }
 
-    function unpause() external onlyOwner {
+    function unpause() external override onlyOwner {
         _unpause();
     }
 
-    function withdrawAvax(address to, uint256 amount) external onlyOwner {
+    function withdrawAvax(address to, uint256 amount) external override onlyOwner {
         if (amount == 0) {
             amount = address(this).balance;
         }
@@ -378,7 +354,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         require(collection.ownerOf(tokenId) == msg.sender, "Not owner of token");
     }
 
-    function _getCreepType(uint256 tokenId) internal view returns (Type) {
+    function _getCreepType(uint256 tokenId) internal pure returns (Type) {
         uint256 bytePos = tokenId / 2;
         uint256 bitPos = tokenId % 2;
 

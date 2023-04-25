@@ -42,10 +42,10 @@ contract DeployWorkshopCollections is BaseScript {
         );
 
         workshop.setGlobalEndTime(uint64(block.timestamp + 100 days));
-        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.SmolJoe, block.timestamp);
-        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.UniqueCreep, block.timestamp);
-        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.GenerativeCreep, block.timestamp);
-        workshop.setUpgradeStartTime(SmolJoeWorkshop.StartTimes.NoPumpkins, block.timestamp);
+        workshop.setUpgradeStartTime(ISmolJoeWorkshop.StartTimes.SmolJoe, block.timestamp);
+        workshop.setUpgradeStartTime(ISmolJoeWorkshop.StartTimes.UniqueCreep, block.timestamp);
+        workshop.setUpgradeStartTime(ISmolJoeWorkshop.StartTimes.GenerativeCreep, block.timestamp);
+        workshop.setUpgradeStartTime(ISmolJoeWorkshop.StartTimes.NoPumpkins, block.timestamp);
 
         smolJoes.setWorkshop(address(workshop));
 
