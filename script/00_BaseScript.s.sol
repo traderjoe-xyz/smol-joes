@@ -6,6 +6,7 @@ import "forge-std/Script.sol";
 import {SmolJoes, ISmolJoes} from "contracts/SmolJoes.sol";
 import {SmolJoeDescriptor, ISmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
 import {SmolJoeSeeder, ISmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
+import {SmolJoesWorkshop} from "contracts/SmolJoesWorkshop.sol";
 import {SVGRenderer} from "contracts/SVGRenderer.sol";
 import {SmolJoeArt, ISmolJoeArt} from "contracts/SmolJoeArt.sol";
 import {Inflator} from "contracts/Inflator.sol";
@@ -30,6 +31,7 @@ contract BaseScript is Script {
         address multisig;
         address seeder;
         address smolJoes;
+        address workshop;
     }
 
     function setUp() public virtual {

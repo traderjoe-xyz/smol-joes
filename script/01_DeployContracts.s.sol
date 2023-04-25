@@ -19,6 +19,7 @@ contract DeployContract is BaseScript {
             SVGRenderer renderer = new SVGRenderer();
             SmolJoeSeeder seeder = new SmolJoeSeeder();
 
+
             uint256 deployerNonce = vm.getNonce(deployer);
             address artAddressPrediction = computeCreateAddress(deployer, deployerNonce + 1);
 

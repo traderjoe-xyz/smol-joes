@@ -9,6 +9,10 @@ solc = '0.8.13'
 
 fs_permissions = [{ access = "read", path = "./"}]
 
+[etherscan]
+fuji = { key = "${SNOWTRACE_API_KEY}", chain = 43113 }
+avalanche = { key = "${SNOWTRACE_API_KEY}", chain = 43114 }
+
 # To test the SVG generation, use "export FOUNDRY_PROFILE=svgtesting"
 [profile.svgtesting]
 match_test = "test_SVGGeneration"
