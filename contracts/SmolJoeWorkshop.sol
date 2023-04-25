@@ -135,6 +135,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     {
         _checkPricePaid(Type.SmolJoe);
         _upgradeSmolJoe(tokenId);
+
+        emit SmolJoeUpgrade(msg.value);
     }
 
     function batchUpgradeSmolJoe(uint256[] calldata tokenIds)
@@ -150,6 +152,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeSmolJoe(tokenIds[i]);
         }
+
+        emit SmolJoeUpgrade(msg.value);
     }
 
     function upgradeCreepWithBeegPumpkin(uint256 tokenId, uint256 pumpkinId)
@@ -162,6 +166,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     {
         _checkPricePaid(Type.Unique);
         _upgradeCreepWithBeegPumpkin(tokenId, pumpkinId);
+
+        emit UniqueCreepUpgrade(msg.value);
     }
 
     function batchUpgradeCreepWithBeegPumpkin(uint256[] calldata tokenIds, uint256[] calldata pumpkinIds)
@@ -181,6 +187,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeCreepWithBeegPumpkin(tokenIds[i], pumpkinIds[i]);
         }
+
+        emit UniqueCreepUpgrade(msg.value);
     }
 
     function upgradeCreepWithSmolPumpkin(uint256 tokenId, uint256 pumpkinId)
@@ -193,6 +201,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     {
         _checkPricePaid(_getCreepType(tokenId));
         _upgradeCreepWithSmolPumpkin(tokenId, pumpkinId);
+
+        emit GenerativeCreepUpgrade(msg.value);
     }
 
     function batchUpgradeCreepWithSmolPumpkin(uint256[] calldata tokenIds, uint256[] calldata pumpkinIds)
@@ -212,6 +222,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeCreepWithSmolPumpkin(tokenIds[i], pumpkinIds[i]);
         }
+
+        emit GenerativeCreepUpgrade(msg.value);
     }
 
     function upgradeCreep(uint256 tokenId)
@@ -224,6 +236,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     {
         _checkPricePaid(_getCreepType(tokenId));
         _upgradeCreep(tokenId);
+
+        emit CreepUpgrade(msg.value);
     }
 
     function batchUpgradeCreep(uint256[] calldata tokenIds)
@@ -239,18 +253,26 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         for (uint256 i = 0; i < tokenIds.length; i++) {
             _upgradeCreep(tokenIds[i]);
         }
+
+        emit CreepUpgrade(msg.value);
     }
 
     function setUpgradeStartTime(StartTimes upgradeType, uint256 timestamp) external override onlyOwner {
         _startTimeByCategory[upgradeType] = timestamp;
+
+        emit UpgradeStartTimeSet(upgradeType, timestamp);
     }
 
     function setUpgradePrice(Type category, uint256 amount) external override onlyOwner {
         _upgradePriceByCategory[category] = amount;
+
+        emit UpgradePriceSet(category, amount);
     }
 
     function setGlobalEndTime(uint64 timestamp) external override onlyOwner {
         globalEndTime = timestamp;
+
+        emit GlobalEndTimeSet(timestamp);
     }
 
     function pause() external override onlyOwner {
@@ -270,6 +292,8 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         if (!success) {
             revert SmolJoeWorkshop__WithdrawalFailed();
         }
+
+        emit AvaxWithdrawn(to, amount);
     }
 
     function _upgradeSmolJoe(uint256 tokenId) internal {

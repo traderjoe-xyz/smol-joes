@@ -17,6 +17,15 @@ interface ISmolJoeWorkshop {
     error SmolJoeWorkshop__TokenOwnershipRequired();
     error SmolJoeWorkshop__UpgradeNotEnabled();
 
+    event UpgradeStartTimeSet(StartTimes category, uint256 timestamp);
+    event UpgradePriceSet(Type category, uint256 price);
+    event GlobalEndTimeSet(uint64 timestamp);
+    event AvaxWithdrawn(address to, uint256 amount);
+    event SmolJoeUpgrade(uint256 amountPaid);
+    event UniqueCreepUpgrade(uint256 amountPaid);
+    event GenerativeCreepUpgrade(uint256 amountPaid);
+    event CreepUpgrade(uint256 amountPaid);
+
     /**
      * @dev Type of the NFT to upgrade. Can be a Smol Joe V1, or a Smol Creep
      * Smol Creeps are divided into categories that will have different upgrade prices
