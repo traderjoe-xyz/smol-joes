@@ -46,19 +46,20 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     // Smols have Ids from 200
     uint16 private _lastSmolMinted = 199;
 
-    address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
-
     // This bytes string maps each Creep token ID to its Type
     // Creep types have been fetched using the `get-creep-types` task
     bytes constant _creepTypes =
         "\x45\x11\x11\x11\x43\x11\x33\x31\x21\x11\x41\x41\x22\x11\x51\x11\x15\x13\x15\x51\x53\x13\x52\x11\x25\x32\x55\x14\x21\x11\x41\x51\x11\x11\x53\x23\x15\x52\x12\x11\x11\x43\x11\x11\x22\x11\x31\x21\x11\x52\x54\x11\x45\x11\x11\x51\x34\x12\x13\x44\x35\x43\x35\x25\x14\x31\x11\x12\x55\x13\x34\x13\x13\x12\x21\x35\x11\x15\x11\x51\x31\x13\x51\x11\x24\x11\x31\x21\x13\x23\x11\x31\x51\x31\x51\x31\x34\x11\x11\x11\x11\x11\x21\x51\x11\x12\x11\x11\x24\x11\x33\x31\x11\x12\x15\x33\x35\x11\x15\x11\x51\x13\x11\x12\x21\x14\x53\x11\x11\x31\x15\x31\x11\x51\x14\x31\x11\x12\x13\x21\x11\x15\x11\x31\x14\x13\x11\x11\x11\x51\x21\x51\x12\x11\x12\x11\x12\x53\x11\x51\x15\x11\x11\x41\x12\x14\x51\x12\x12\x41\x25\x11\x13\x51\x15\x52\x12\x11\x54\x45\x41\x11\x21\x12\x43\x11\x13\x11\x13\x53\x15\x14\x23\x51\x31\x55\x51\x11\x11\x51\x11\x14\x11\x25\x14\x33\x11\x51\x13\x15\x31\x11\x11\x13\x12\x13\x15\x21\x13\x52\x51\x12\x52\x13\x51\x23\x21\x41\x11\x13\x15\x31\x31\x11\x51\x54\x11\x54\x11\x11\x53\x35\x44\x51\x31\x15\x11\x14\x15\x31\x13\x11\x14\x24\x15\x11\x13\x23\x13\x31\x51\x11\x31\x14\x11\x11\x31\x21\x33\x11\x33\x43\x11\x31\x15\x21\x31\x33\x11\x45\x11\x11\x55\x11\x51\x51\x51\x31\x31\x33\x25\x11\x11\x12\x13\x11\x52\x11\x12\x14\x33\x11\x12\x11\x13\x13\x15\x51\x12\x21\x21\x11\x11\x52\x31\x11\x14\x11\x11\x21\x11\x32\x11\x31\x11\x11\x21\x11\x13\x11\x21\x14\x31\x11\x35\x21\x23\x11\x11\x23\x21\x11\x13\x31\x31\x11\x11\x15\x12\x51\x11\x15\x11\x11\x11\x43\x13\x44\x32\x11\x25\x14\x13\x11\x43\x11\x11\x11\x13\x21\x11\x42\x31\x21\x51\x11\x51\x11\x11\x51\x11\x31\x51\x11\x11\x11\x14\x13\x11\x11\x15\x12\x11\x31\x15\x21\x35\x11\x11\x11";
 
+    address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
+
     modifier isUpgradeEnabled(StartTimes category) {
         uint256 startTime = _startTimeByCategory[category];
 
-        require(
-            startTime > 0 && block.timestamp >= startTime && block.timestamp < globalEndTime, "Upgrade is not enabled"
-        );
+        if (startTime == 0 || block.timestamp < startTime || block.timestamp >= globalEndTime) {
+            revert SmolJoeWorkshop__UpgradeNotEnabled();
+        }
+
         _;
     }
 
@@ -69,30 +70,25 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         address _smolPumpkins,
         address _beegPumpkins
     ) {
-        require(
-            keccak256(bytes(IERC721Metadata(_smolJoesV1).name())) == keccak256("Smol Joes"),
-            "Invalid Smol Joes V1 address"
-        );
+        if (keccak256(bytes(IERC721Metadata(_smolJoesV1).name())) != keccak256("Smol Joes")) {
+            revert SmolJoeWorkshop__InvalidCollectionAddress(_smolJoesV1);
+        }
 
-        require(
-            keccak256(bytes(IERC721Metadata(_smolJoesV2).name())) == keccak256("Smol Joes Season 2"),
-            "Invalid Smol Joes V2 address"
-        );
+        if (keccak256(bytes(IERC721Metadata(_smolJoesV2).name())) != keccak256("Smol Joes Season 2")) {
+            revert SmolJoeWorkshop__InvalidCollectionAddress(_smolJoesV2);
+        }
 
-        require(
-            keccak256(bytes(IERC721Metadata(_smolCreeps).name())) == keccak256("Smol Creeps"),
-            "Invalid Smol Creeps address"
-        );
+        if (keccak256(bytes(IERC721Metadata(_smolCreeps).name())) != keccak256("Smol Creeps")) {
+            revert SmolJoeWorkshop__InvalidCollectionAddress(_smolCreeps);
+        }
 
-        require(
-            keccak256(bytes(IERC721Metadata(_smolPumpkins).name())) == keccak256("Smol Pumpkins"),
-            "Invalid Smol Pumpkins address"
-        );
+        if (keccak256(bytes(IERC721Metadata(_smolPumpkins).name())) != keccak256("Smol Pumpkins")) {
+            revert SmolJoeWorkshop__InvalidCollectionAddress(_smolPumpkins);
+        }
 
-        require(
-            keccak256(bytes(IERC721Metadata(_beegPumpkins).name())) == keccak256("Beeg Pumpkins"),
-            "Invalid Beeg Pumpkins address"
-        );
+        if (keccak256(bytes(IERC721Metadata(_beegPumpkins).name())) != keccak256("Beeg Pumpkins")) {
+            revert SmolJoeWorkshop__InvalidCollectionAddress(_beegPumpkins);
+        }
 
         smolJoesV1 = IERC721(_smolJoesV1);
         smolJoesV2 = ISmolJoes(_smolJoesV2);
@@ -113,7 +109,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         _creepTypeYield[Type.Diamond] = 3;
     }
 
-    function getCreepType(uint256 tokenId) external view override returns (Type) {
+    function getCreepType(uint256 tokenId) external pure override returns (Type) {
         return _getCreepType(tokenId);
     }
 
@@ -176,7 +172,9 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         nonReentrant
         isUpgradeEnabled(StartTimes.UniqueCreep)
     {
-        require(tokenIds.length == pumpkinIds.length, "Invalid input");
+        if (tokenIds.length != pumpkinIds.length) {
+            revert SmolJoeWorkshop__InvalidInputLength();
+        }
 
         _checkPricePaid(Type.Unique, tokenIds.length);
 
@@ -205,7 +203,9 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         nonReentrant
         isUpgradeEnabled(StartTimes.GenerativeCreep)
     {
-        require(tokenIds.length == pumpkinIds.length, "Invalid input");
+        if (tokenIds.length == pumpkinIds.length) {
+            revert SmolJoeWorkshop__InvalidInputLength();
+        }
 
         _checkPricePaid(tokenIds);
 
@@ -267,7 +267,9 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         }
 
         (bool success,) = to.call{value: amount}("");
-        require(success, "Transfer failed");
+        if (!success) {
+            revert SmolJoeWorkshop__WithdrawalFailed();
+        }
     }
 
     function _upgradeSmolJoe(uint256 tokenId) internal {
@@ -283,7 +285,9 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         _verifyOwnership(beegPumpkins, pumpkinId);
 
         Type creepType = _getCreepType(tokenId);
-        require(creepType == Type.Unique, "Creep is not unique");
+        if (creepType != Type.Unique) {
+            revert SmolJoeWorkshop__InvalidType();
+        }
 
         _burn(smolCreeps, tokenId);
         _burn(beegPumpkins, pumpkinId);
@@ -297,10 +301,9 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
 
         Type creepType = _getCreepType(tokenId);
 
-        require(
-            creepType == Type.Bone || creepType == Type.Zombie || creepType == Type.Gold || creepType == Type.Diamond,
-            "Invalid creep type"
-        );
+        if (creepType != Type.Bone && creepType != Type.Zombie && creepType != Type.Gold && creepType != Type.Diamond) {
+            revert SmolJoeWorkshop__InvalidType();
+        }
 
         _burn(smolCreeps, tokenId);
         _burn(smolPumpkins, pumpkinId);
@@ -333,11 +336,15 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     }
 
     function _checkPricePaid(Type category) internal view {
-        require(msg.value == _getUpgradePrice(category), "Insufficient AVAX paid");
+        if (msg.value != _getUpgradePrice(category)) {
+            revert SmolJoeWorkshop__InsufficientAvaxPaid();
+        }
     }
 
     function _checkPricePaid(Type category, uint256 amount) internal view {
-        require(msg.value == amount * _getUpgradePrice(category), "Insufficient AVAX paid");
+        if (msg.value != amount * _getUpgradePrice(category)) {
+            revert SmolJoeWorkshop__InsufficientAvaxPaid();
+        }
     }
 
     function _checkPricePaid(uint256[] calldata tokenIds) internal view {
@@ -347,11 +354,15 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
             totalPrice += _getUpgradePrice(_getCreepType(tokenIds[i]));
         }
 
-        require(msg.value == totalPrice, "Insufficient AVAX paid");
+        if (msg.value != totalPrice) {
+            revert SmolJoeWorkshop__InsufficientAvaxPaid();
+        }
     }
 
     function _verifyOwnership(IERC721 collection, uint256 tokenId) internal view {
-        require(collection.ownerOf(tokenId) == msg.sender, "Not owner of token");
+        if (collection.ownerOf(tokenId) != msg.sender) {
+            revert SmolJoeWorkshop__TokenOwnershipRequired();
+        }
     }
 
     function _getCreepType(uint256 tokenId) internal pure returns (Type) {

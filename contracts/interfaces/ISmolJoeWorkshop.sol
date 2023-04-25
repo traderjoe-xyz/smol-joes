@@ -9,6 +9,14 @@ import {ISmolJoes} from "./ISmolJoes.sol";
  * @title Interface for the Workshop contract
  */
 interface ISmolJoeWorkshop {
+    error SmolJoeWorkshop__InvalidCollectionAddress(address collection);
+    error SmolJoeWorkshop__InvalidInputLength();
+    error SmolJoeWorkshop__WithdrawalFailed();
+    error SmolJoeWorkshop__InvalidType();
+    error SmolJoeWorkshop__InsufficientAvaxPaid();
+    error SmolJoeWorkshop__TokenOwnershipRequired();
+    error SmolJoeWorkshop__UpgradeNotEnabled();
+
     /**
      * @dev Type of the NFT to upgrade. Can be a Smol Joe V1, or a Smol Creep
      * Smol Creeps are divided into categories that will have different upgrade prices
@@ -19,6 +27,7 @@ interface ISmolJoeWorkshop {
      * - Diamond Creep: 3 for 3 AVAX
      * - Unique Creep: 1 Luminary for 5 AVAX
      */
+
     enum Type {
         SmolJoe,
         Bone,
@@ -54,7 +63,7 @@ interface ISmolJoeWorkshop {
 
     function globalEndTime() external view returns (uint64);
 
-    function getCreepType(uint256 creepId) external view returns (Type);
+    function getCreepType(uint256 creepId) external pure returns (Type);
 
     function getUpgradePrice(Type category) external view returns (uint256);
 
