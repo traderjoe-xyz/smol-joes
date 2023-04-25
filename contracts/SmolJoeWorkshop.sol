@@ -28,6 +28,11 @@ import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
  */
 contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWorkshop {
     /**
+     * @dev Address where the burned tokens are sent
+     */
+    address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
+
+    /**
      * @notice The Smol Joes Season 2 contract address
      */
     ISmolJoes public immutable override smolJoesV2;
@@ -56,6 +61,16 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     uint64 public override globalEndTime;
 
     /**
+     * @dev Luminaries have Ids 100 to 199
+     */
+    uint8 private _lastLuminaryMinted = 99;
+
+    /**
+     * @dev Smols have Ids starting from 200
+     */
+    uint16 private _lastSmolMinted = 199;
+
+    /**
      * @dev The amount of Smols that will be minted for each type of Smol Creep
      */
     mapping(Type => uint256) private _creepTypeYield;
@@ -69,27 +84,16 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
     mapping(StartTimes => uint256) private _startTimeByCategory;
 
     /**
-     * @dev Luminaries have Ids 100 to 199
-     */
-    uint8 private _lastLuminaryMinted = 99;
-
-    /**
-     * @dev Smols have Ids starting from 200
-     */
-    uint16 private _lastSmolMinted = 199;
-
-    /**
      * @dev This bytes string maps each Creep token ID to its Type (two per bytes)
      * Creep types have been fetched using the `get-creep-types` task
      */
-    bytes constant _creepTypes =
+    bytes private constant _creepTypes =
         "\x45\x11\x11\x11\x43\x11\x33\x31\x21\x11\x41\x41\x22\x11\x51\x11\x15\x13\x15\x51\x53\x13\x52\x11\x25\x32\x55\x14\x21\x11\x41\x51\x11\x11\x53\x23\x15\x52\x12\x11\x11\x43\x11\x11\x22\x11\x31\x21\x11\x52\x54\x11\x45\x11\x11\x51\x34\x12\x13\x44\x35\x43\x35\x25\x14\x31\x11\x12\x55\x13\x34\x13\x13\x12\x21\x35\x11\x15\x11\x51\x31\x13\x51\x11\x24\x11\x31\x21\x13\x23\x11\x31\x51\x31\x51\x31\x34\x11\x11\x11\x11\x11\x21\x51\x11\x12\x11\x11\x24\x11\x33\x31\x11\x12\x15\x33\x35\x11\x15\x11\x51\x13\x11\x12\x21\x14\x53\x11\x11\x31\x15\x31\x11\x51\x14\x31\x11\x12\x13\x21\x11\x15\x11\x31\x14\x13\x11\x11\x11\x51\x21\x51\x12\x11\x12\x11\x12\x53\x11\x51\x15\x11\x11\x41\x12\x14\x51\x12\x12\x41\x25\x11\x13\x51\x15\x52\x12\x11\x54\x45\x41\x11\x21\x12\x43\x11\x13\x11\x13\x53\x15\x14\x23\x51\x31\x55\x51\x11\x11\x51\x11\x14\x11\x25\x14\x33\x11\x51\x13\x15\x31\x11\x11\x13\x12\x13\x15\x21\x13\x52\x51\x12\x52\x13\x51\x23\x21\x41\x11\x13\x15\x31\x31\x11\x51\x54\x11\x54\x11\x11\x53\x35\x44\x51\x31\x15\x11\x14\x15\x31\x13\x11\x14\x24\x15\x11\x13\x23\x13\x31\x51\x11\x31\x14\x11\x11\x31\x21\x33\x11\x33\x43\x11\x31\x15\x21\x31\x33\x11\x45\x11\x11\x55\x11\x51\x51\x51\x31\x31\x33\x25\x11\x11\x12\x13\x11\x52\x11\x12\x14\x33\x11\x12\x11\x13\x13\x15\x51\x12\x21\x21\x11\x11\x52\x31\x11\x14\x11\x11\x21\x11\x32\x11\x31\x11\x11\x21\x11\x13\x11\x21\x14\x31\x11\x35\x21\x23\x11\x11\x23\x21\x11\x13\x31\x31\x11\x11\x15\x12\x51\x11\x15\x11\x11\x11\x43\x13\x44\x32\x11\x25\x14\x13\x11\x43\x11\x11\x11\x13\x21\x11\x42\x31\x21\x51\x11\x51\x11\x11\x51\x11\x31\x51\x11\x11\x11\x14\x13\x11\x11\x15\x12\x11\x31\x15\x21\x35\x11\x11\x11";
 
     /**
-     * @dev Address where the burned tokens are sent
+     * @dev Checks if the upgrade is enabled
+     * @param category Upgrade category
      */
-    address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
-
     modifier isUpgradeEnabled(StartTimes category) {
         uint256 startTime = _startTimeByCategory[category];
 
@@ -100,6 +104,14 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         _;
     }
 
+    /**
+     * @dev Contract constructor
+     * @param _smolJoesV1 Address of the Smol Joes V1 collection
+     * @param _smolJoesV2 Address of the Smol Joes V2 collection
+     * @param _smolCreeps Address of the Smol Creeps collection
+     * @param _smolPumpkins Address of the Smol Pumpkins collection
+     * @param _beegPumpkins Address of the Beeg Pumpkins collection
+     */
     constructor(
         address _smolJoesV1,
         address _smolJoesV2,

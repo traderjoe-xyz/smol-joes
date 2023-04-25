@@ -36,7 +36,6 @@ interface ISmolJoeWorkshop {
      * - Diamond Creep: 3 for 3 AVAX
      * - Unique Creep: 1 Luminary for 5 AVAX
      */
-
     enum Type {
         SmolJoe,
         Bone,
