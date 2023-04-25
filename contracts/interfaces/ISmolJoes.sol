@@ -10,13 +10,13 @@ import {ISmolJoeSeeder} from "./ISmolJoeSeeder.sol";
  * @title Interface for SmolJoes
  */
 interface ISmolJoes is IOZNFTBaseUpgradeable {
-    event DescriptorUpdated(address descriptor);
-    event SeederUpdated(address seeder);
-    event WorkshopUpdated(address workshop);
-
     error SmolJoes__Unauthorized();
     error SmolJoes__InvalidAddress();
     error SmolJoes__InexistentToken(uint256 tokenId);
+
+    event DescriptorUpdated(address descriptor);
+    event SeederUpdated(address seeder);
+    event WorkshopUpdated(address workshop);
 
     function descriptor() external view returns (ISmolJoeDescriptorMinimal);
 
