@@ -3,7 +3,7 @@ pragma solidity 0.8.13;
 
 import "../TestHelper.sol";
 
-contract BasicTest is TestHelper {
+contract GenerateSVGTest is TestHelper {
     using Strings for uint256;
 
     function test_SVGGeneration() public {
