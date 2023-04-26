@@ -5,7 +5,7 @@
   "author": "Patate <patate@joepegs.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn hardhat make-descriptor-art --clean-directory false",
+    "postinstall": "yarn make-art",
     "build": "forge build",
     "test": "forge test",
     "test:svg": "export FOUNDRY_PROFILE=svgtesting && forge test",
@@ -15,22 +15,11 @@
     "get-creep-types": "yarn ts-node tasks/get-creep-types.ts"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
-    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
-    "@nomiclabs/hardhat-ethers": "^2.2.2",
-    "@nomiclabs/hardhat-etherscan": "^3.1.7",
-    "@typechain/hardhat": "^6.1.5",
     "@types/node": "^18.14.1",
     "axios": "^1.3.6",
-    "chai": "^4.3.7",
     "convert-svg-to-png": "^0.6.4",
     "dotenv": "^16.0.3",
     "ethers": "^5.0.0",
-    "hardhat": "^2.12.7",
-    "hardhat-deploy": "^0.11.26",
-    "hardhat-gas-reporter": "^1.0.9",
-    "solidity-coverage": "^0.8.2",
     "ts-node": "^10.9.1",
     "typechain": "^8.1.1",
     "typescript": "^4.9.5"
