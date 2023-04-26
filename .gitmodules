@@ -5,3 +5,6 @@
 [submodule "lib/nft-base-contracts"]
 	path = lib/nft-base-contracts
 	url = https://github.com/traderjoe-xyz/nft-base-contracts
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
