@@ -43,10 +43,11 @@ MAP.set("Smol sJoe", "Smol sJOE Joe");
 MAP.set("Smol veJoe", "Smol veJOE Joe");
 MAP.set("Smol Radioactive Suit Joe", "Smol Hazmat Joe");
 
-task(
-  "get-the-hundreds-mapping",
-  "Fetches the metadata of the original Smol Joes collection to match the old NFT IDs to the new ones"
-).setAction(async () => {
+const getImageURL = (id: number) => {
+  return BASE_URL + ((id + BATCH_REVEAL_OFFSET) % 100);
+};
+
+const main = async () => {
   const oldSmolJoes = [];
   const newSmolJoes = [];
   const mapping = [];
@@ -77,8 +78,6 @@ task(
 
   console.log(`Mapping: ${mapping.length} items`);
   console.log(mapping);
-});
-
-const getImageURL = (id: number) => {
-  return BASE_URL + ((id + BATCH_REVEAL_OFFSET) % 100);
 };
+
+main();

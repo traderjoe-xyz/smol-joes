@@ -11,11 +11,9 @@ contract GenerateSVGTest is TestHelper {
         _populateDescriptor(descriptor);
         console.log("Gas used to populate descriptor: ", gasLeft - gasleft());
 
-        string[] memory inputs = new string[](5);
+        string[] memory inputs = new string[](3);
         inputs[0] = "yarn";
-        inputs[1] = "hardhat";
-        inputs[2] = "render-images";
-        inputs[3] = "--token-id";
+        inputs[1] = "render-image";
 
         uint256 amountToGenerate = 5;
 
@@ -28,8 +26,10 @@ contract GenerateSVGTest is TestHelper {
                 string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
-            inputs[4] = i.toString();
-            vm.ffi(inputs);
+            inputs[2] = i.toString();
+            bytes memory result = vm.ffi(inputs);
+
+            console.log(string(result));
         }
 
         for (uint256 i = 50; i < 50 + amountToGenerate; i++) {
@@ -41,7 +41,7 @@ contract GenerateSVGTest is TestHelper {
                 string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
-            inputs[4] = i.toString();
+            inputs[2] = i.toString();
             vm.ffi(inputs);
         }
 
@@ -54,7 +54,7 @@ contract GenerateSVGTest is TestHelper {
                 string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
-            inputs[4] = i.toString();
+            inputs[2] = i.toString();
             vm.ffi(inputs);
         }
 
@@ -64,7 +64,7 @@ contract GenerateSVGTest is TestHelper {
                 string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
 
-            inputs[4] = i.toString();
+            inputs[2] = i.toString();
             vm.ffi(inputs);
         }
     }
