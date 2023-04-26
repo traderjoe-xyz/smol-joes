@@ -310,7 +310,7 @@ contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard, ISmolJoeWor
         nonReentrant
         isUpgradeEnabled(StartTimes.GenerativeCreep)
     {
-        if (tokenIds.length == pumpkinIds.length) {
+        if (tokenIds.length != pumpkinIds.length) {
             revert SmolJoeWorkshop__InvalidInputLength();
         }
 
