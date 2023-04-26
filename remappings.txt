@@ -3,4 +3,4 @@ forge-std/=lib/forge-std/src/
 openzeppelin/=lib/openzeppelin-contracts/contracts/
 nft-base-contracts/=lib/nft-base-contracts/src/
 solady/=lib/solady/src/
-base64/=lib/Base64.sol/contracts/
+base64/=lib/base64/

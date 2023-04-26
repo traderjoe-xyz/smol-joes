@@ -36,19 +36,17 @@ library NFTDescriptor {
             abi.encodePacked(
                 "data:application/json;base64,",
                 Base64.encode(
-                    string(
-                        abi.encodePacked(
-                            '{"name":"',
-                            params.name,
-                            '", "description":"',
-                            params.description,
-                            '", "attributes":',
-                            _generateTraitData(params.parts, params.brotherhood),
-                            ', "image": "',
-                            "data:image/svg+xml;base64,",
-                            image,
-                            '"}'
-                        )
+                    abi.encodePacked(
+                        '{"name":"',
+                        params.name,
+                        '", "description":"',
+                        params.description,
+                        '", "attributes":',
+                        _generateTraitData(params.parts, params.brotherhood),
+                        ', "image": "',
+                        "data:image/svg+xml;base64,",
+                        image,
+                        '"}'
                     )
                 )
             )
@@ -66,7 +64,7 @@ library NFTDescriptor {
         view
         returns (string memory svg)
     {
-        return Base64.encode(renderer.generateSVG(params));
+        return Base64.encode(bytes(renderer.generateSVG(params)));
     }
 
     /**
