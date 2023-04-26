@@ -3,7 +3,7 @@ pragma solidity 0.8.13;
 
 import "./00_BaseScript.s.sol";
 
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {Strings} from "openzeppelin/utils/Strings.sol";
 
 contract PopulateDescriptor is BaseScript {
     using stdJson for string;

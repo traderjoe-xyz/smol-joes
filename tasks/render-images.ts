@@ -1,59 +1,43 @@
 import { writeFileSync, readFileSync } from "fs";
-import { task, types } from "hardhat/config";
 import path from "path";
 import { convert } from "convert-svg-to-png";
 
-task(
-  "render-images",
-  "Generate PNG images from the SVGs provided by the descriptor"
-)
-  .addParam("tokenId", "ID of the token to be generated", undefined, types.int)
-  .addOptionalParam(
-    "uriPath",
-    "Location of the raw URI to render",
-    "../script/files/raw-uris-sample/",
-    types.string
-  )
-  .addOptionalParam(
-    "metadataPath",
-    "Location of generated token metadatas",
-    "../script/files/metadatas-sample/",
-    types.string
-  )
-  .addOptionalParam(
-    "imagePath",
-    "Location of generated PNGs",
-    "../script/files/images-sample/",
-    types.string
-  )
-  .setAction(async ({ tokenId, uriPath, metadataPath, imagePath }, {}) => {
-    const tokenURI = readFileSync(
-      path.join(__dirname, uriPath, tokenId.toString() + ".txt")
-    ).toString();
+const main = async () => {
+  const tokenId = process.argv[2];
 
-    const decodedTokenURI = Buffer.from(
-      tokenURI.replace("data:application/json;base64,", ""),
-      "base64"
-    ).toString("utf-8");
+  const uriPath = "../script/files/raw-uris-sample/";
+  const metadataPath = "../script/files/metadatas-sample/";
+  const imagePath = "../script/files/images-sample/";
 
-    console.log(decodedTokenURI);
+  const tokenURI = readFileSync(
+    path.join(__dirname, uriPath, tokenId.toString() + ".txt")
+  ).toString();
 
-    const tokenMetadata = JSON.parse(decodedTokenURI);
+  const decodedTokenURI = Buffer.from(
+    tokenURI.replace("data:application/json;base64,", ""),
+    "base64"
+  ).toString("utf-8");
 
-    const svg = Buffer.from(
-      tokenMetadata.image.replace("data:image/svg+xml;base64,", ""),
-      "base64"
-    ).toString("utf-8");
+  console.log(decodedTokenURI);
 
-    tokenMetadata.image = "...";
+  const tokenMetadata = JSON.parse(decodedTokenURI);
 
-    writeFileSync(
-      path.join(__dirname, metadataPath, tokenId.toString() + ".json"),
-      JSON.stringify(tokenMetadata, undefined, 4)
-    );
+  const svg = Buffer.from(
+    tokenMetadata.image.replace("data:image/svg+xml;base64,", ""),
+    "base64"
+  ).toString("utf-8");
 
-    writeFileSync(
-      path.join(__dirname, imagePath, tokenId.toString() + ".png"),
-      await convert(svg)
-    );
-  });
+  tokenMetadata.image = "...";
+
+  writeFileSync(
+    path.join(__dirname, metadataPath, tokenId.toString() + ".json"),
+    JSON.stringify(tokenMetadata, undefined, 4)
+  );
+
+  writeFileSync(
+    path.join(__dirname, imagePath, tokenId.toString() + ".png"),
+    await convert(svg)
+  );
+};
+
+main();

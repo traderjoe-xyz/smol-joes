@@ -3,19 +3,19 @@ pragma solidity 0.8.13;
 
 import "forge-std/Test.sol";
 
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import {LZEndpointMock} from "solidity-examples/contracts/mocks/LZEndpointMock.sol";
+import {Strings} from "openzeppelin/utils/Strings.sol";
+import {IERC721} from "openzeppelin/token/ERC721/IERC721.sol";
+import {LZEndpointMock} from "lib/nft-base-contracts/lib/solidity-examples/contracts/mocks/LZEndpointMock.sol";
 
 import {PopulateDescriptor} from "script/02_PopulateDescriptor.s.sol";
 
-import {SmolJoeDescriptor, ISmolJoeDescriptor} from "contracts/SmolJoeDescriptor.sol";
-import {SmolJoeWorkshop, ISmolJoeWorkshop} from "contracts/SmolJoeWorkshop.sol";
-import {SmolJoeSeeder, ISmolJoeSeeder} from "contracts/SmolJoeSeeder.sol";
-import {SVGRenderer, ISVGRenderer} from "contracts/SVGRenderer.sol";
-import {SmolJoeArt, ISmolJoeArt} from "contracts/SmolJoeArt.sol";
-import {Inflator, IInflator} from "contracts/Inflator.sol";
-import {SmolJoes} from "contracts/SmolJoes.sol";
+import {SmolJoeDescriptor, ISmolJoeDescriptor} from "src/SmolJoeDescriptor.sol";
+import {SmolJoeWorkshop, ISmolJoeWorkshop} from "src/SmolJoeWorkshop.sol";
+import {SmolJoeSeeder, ISmolJoeSeeder} from "src/SmolJoeSeeder.sol";
+import {SVGRenderer, ISVGRenderer} from "src/SVGRenderer.sol";
+import {SmolJoeArt, ISmolJoeArt} from "src/SmolJoeArt.sol";
+import {Inflator, IInflator} from "src/Inflator.sol";
+import {SmolJoes} from "src/SmolJoes.sol";
 
 contract TestHelper is PopulateDescriptor, Test {
     SmolJoes token;

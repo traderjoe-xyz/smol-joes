@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.13;
 
-import {Base64} from "base64-sol/base64.sol";
-import {SSTORE2} from "solady/src/utils/SSTORE2.sol";
+import {Base64} from "base64/base64.sol";
+import {SSTORE2} from "solady/utils/SSTORE2.sol";
 
 import {ISmolJoeArt} from "./interfaces/ISmolJoeArt.sol";
 import {IInflator} from "./interfaces/IInflator.sol";

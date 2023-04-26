@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.13;
 
+import {OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable} from "nft-base-contracts/OZNFTBaseUpgradeable.sol";
 import {
-    OZNFTBaseUpgradeable, IOZNFTBaseUpgradeable
-} from "@traderjoe-xyz/nft-base-contracts/src/OZNFTBaseUpgradeable.sol";
-import {
-    ONFT721CoreUpgradeable,
-    IONFT721CoreUpgradeable
-} from "@traderjoe-xyz/nft-base-contracts/src/layerZero/ONFT721CoreUpgradeable.sol";
+    ONFT721CoreUpgradeable, IONFT721CoreUpgradeable
+} from "nft-base-contracts/layerZero/ONFT721CoreUpgradeable.sol";
 
 import {ISmolJoeDescriptorMinimal} from "./interfaces/ISmolJoeDescriptorMinimal.sol";
 import {ISmolJoeSeeder} from "./interfaces/ISmolJoeSeeder.sol";
