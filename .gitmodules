@@ -14,3 +14,6 @@
 [submodule "lib/Base64.sol"]
 	path = lib/Base64.sol
 	url = https://github.com/BlockChainCaffe/Base64.sol
+[submodule "lib/base64"]
+	path = lib/base64
+	url = https://github.com/Brechtpd/base64
