@@ -3,8 +3,8 @@ pragma solidity 0.8.13;
 
 import "forge-std/Test.sol";
 
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {Strings} from "openzeppelin/utils/Strings.sol";
+import {IERC721} from "openzeppelin/token/ERC721/IERC721.sol";
 import {LZEndpointMock} from "solidity-examples/contracts/mocks/LZEndpointMock.sol";
 
 import {PopulateDescriptor} from "script/02_PopulateDescriptor.s.sol";

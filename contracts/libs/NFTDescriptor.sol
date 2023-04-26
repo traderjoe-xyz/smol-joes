@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.13;
 
-import {Base64} from "base64-sol/base64.sol";
+import {Base64} from "base64/base64.sol";
 import {ISVGRenderer} from "../interfaces/ISVGRenderer.sol";
 import {ISmolJoeArt} from "../interfaces/ISmolJoeArt.sol";
 
@@ -36,17 +36,19 @@ library NFTDescriptor {
             abi.encodePacked(
                 "data:application/json;base64,",
                 Base64.encode(
-                    abi.encodePacked(
-                        '{"name":"',
-                        params.name,
-                        '", "description":"',
-                        params.description,
-                        '", "attributes":',
-                        _generateTraitData(params.parts, params.brotherhood),
-                        ', "image": "',
-                        "data:image/svg+xml;base64,",
-                        image,
-                        '"}'
+                    string(
+                        abi.encodePacked(
+                            '{"name":"',
+                            params.name,
+                            '", "description":"',
+                            params.description,
+                            '", "attributes":',
+                            _generateTraitData(params.parts, params.brotherhood),
+                            ', "image": "',
+                            "data:image/svg+xml;base64,",
+                            image,
+                            '"}'
+                        )
                     )
                 )
             )
@@ -64,7 +66,7 @@ library NFTDescriptor {
         view
         returns (string memory svg)
     {
-        return Base64.encode(bytes(renderer.generateSVG(params)));
+        return Base64.encode(renderer.generateSVG(params));
     }
 
     /**

@@ -3,7 +3,7 @@ pragma solidity 0.8.13;
 
 import "./00_BaseScript.s.sol";
 
-import {ERC721, Strings} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {ERC721, Strings} from "openzeppelin/token/ERC721/ERC721.sol";
 
 contract DeployWorkshopCollections is BaseScript {
     string chain = "anvil";

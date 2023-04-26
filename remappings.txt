@@ -1,5 +1,6 @@
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
-openzeppelin-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/
-solidity-examples/=node_modules/@layerzerolabs/solidity-examples/
-operator-filter-registry/=node_modules/operator-filter-registry/
+openzeppelin/=lib/openzeppelin-contracts/contracts/
+nft-base-contracts/=lib/nft-base-contracts/src/
+solady/=lib/solady/src/
+base64/=lib/Base64.sol/contracts/

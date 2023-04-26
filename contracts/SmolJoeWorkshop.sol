@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.13;
 
-import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import {IERC721Metadata} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
+import {Pausable} from "openzeppelin/security/Pausable.sol";
+import {IERC721} from "openzeppelin/token/ERC721/IERC721.sol";
+import {Ownable2Step} from "openzeppelin/access/Ownable2Step.sol";
+import {ReentrancyGuard} from "openzeppelin/security/ReentrancyGuard.sol";
+import {IERC721Metadata} from "openzeppelin/token/ERC721/extensions/IERC721Metadata.sol";
 
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
