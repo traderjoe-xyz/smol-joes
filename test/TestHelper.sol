@@ -27,6 +27,9 @@ contract TestHelper is PopulateDescriptor, Test {
 
     LZEndpointMock lzEndpointMock;
 
+    address alice = makeAddr("alice");
+    address bob = makeAddr("bob");
+
     function setUp() public virtual override {
         inflator = new Inflator();
         renderer = new SVGRenderer();
