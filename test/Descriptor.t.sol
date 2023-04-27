@@ -8,7 +8,7 @@ contract DescriptorTest is TestHelper {
     uint256[10] private _bodiesByBrotherhood = [1, 3, 2, 3, 2, 4, 2, 2, 2, 3];
     uint256[10] private _shoesByBrotherhood = [6, 8, 6, 4, 5, 8, 3, 6, 7, 5];
     uint256[10] private _pantsByBrotherhood = [5, 10, 8, 7, 9, 10, 7, 7, 6, 7];
-    uint256[10] private _shirtsByBrotherhood = [10, 9, 9, 9, 10, 10, 10, 10, 10, 10];
+    uint256[10] private _shirtsByBrotherhood = [10, 8, 9, 9, 9, 8, 10, 10, 9, 9];
     uint256[10] private _beardsByBrotherhood = [5, 5, 5, 5, 5, 5, 4, 4, 5, 3];
     uint256[10] private _hairsCapsHeadsByBrotherhood = [9, 9, 10, 8, 9, 10, 8, 10, 8, 10];
     uint256[10] private _eyeAccessoriesByBrotherhood = [3, 3, 3, 5, 2, 2, 5, 2, 1, 3];
