@@ -6,7 +6,7 @@ import "./00_BaseScript.s.sol";
 import {ERC721, Strings} from "openzeppelin/token/ERC721/ERC721.sol";
 
 contract DeployWorkshopCollections is BaseScript {
-    string chain = "anvil";
+    string chain = "avalanche_fuji";
 
     function run() public {
         Deployment memory config = configs[chain];
@@ -37,8 +37,8 @@ contract DeployWorkshopCollections is BaseScript {
             smolJoesV1,
             address(smolJoes),
             smolCreeps,
-            beegPumpkins,
-            smolPumpkins
+            smolPumpkins,
+            beegPumpkins
         );
 
         workshop.setGlobalEndTime(uint64(block.timestamp + 100 days));
@@ -49,16 +49,24 @@ contract DeployWorkshopCollections is BaseScript {
 
         smolJoes.setWorkshop(address(workshop));
 
+        WorkshopFakeCollection(smolJoesV1).mint(0);
+        WorkshopFakeCollection(smolJoesV1).approve(address(workshop), 0);
+        workshop.upgradeSmolJoe{value: 0.05 ether}(0);
+
+        WorkshopFakeCollection(smolCreeps).mint(0);
+        WorkshopFakeCollection(beegPumpkins).mint(0);
+        WorkshopFakeCollection(smolCreeps).approve(address(workshop), 0);
+        WorkshopFakeCollection(beegPumpkins).approve(address(workshop), 0);
+        workshop.upgradeCreepWithBeegPumpkin{value: 0.05 ether}(0, 0);
+
+        workshop.withdrawAvax(deployer, 0.1 ether);
+
         vm.stopBroadcast();
 
         console.log("Smol Joes V1: ", smolJoesV1);
         console.log("Smol Creeps: ", smolCreeps);
-        console.log("Beeg Pumpkins: ", beegPumpkins);
         console.log("Smol Pumpkins: ", smolPumpkins);
-
-        WorkshopFakeCollection(smolJoesV1).mint(0);
-        WorkshopFakeCollection(smolJoesV1).approve(address(workshop), 0);
-        workshop.upgradeSmolJoe{value: 5 ether}(0);
+        console.log("Beeg Pumpkins: ", beegPumpkins);
     }
 }
 
