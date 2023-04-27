@@ -309,11 +309,11 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
                 "Creative",
                 "Gentleman",
                 "Magical Being",
-                "Military",
+                "Warrior",
                 "Musician",
                 "Outlaw",
-                "Religious",
-                "Superhero"
+                "Worshiper",
+                "Hero"
             ];
 
             string memory joeId = tokenId.toString();
