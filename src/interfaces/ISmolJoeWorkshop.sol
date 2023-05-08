@@ -101,9 +101,9 @@ interface ISmolJoeWorkshop {
 
     function setUpgradeStartTime(StartTimes category, uint256 timestamp) external;
 
-    function setGlobalEndTime(uint64 timestamp) external;
-
     function setUpgradePrice(Type category, uint256 price) external;
+
+    function setGlobalEndTime(uint64 timestamp) external;
 
     function pause() external;
 

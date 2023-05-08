@@ -30,7 +30,6 @@ contract MultichainTest is TestHelper {
 
     function test_Bridge() public {
         uint256 tokenId = 200;
-
         token.mint(address(this), tokenId);
 
         assertEq(token.ownerOf(tokenId), address(this), "test_Bridge::1");
@@ -39,6 +38,38 @@ contract MultichainTest is TestHelper {
 
         (uint256 nativeFee,) = token_B.estimateSendFee(chainId_B, abi.encodePacked(address(this)), tokenId, false, "");
 
+        token.sendFrom{value: nativeFee}(
+            address(this), chainId_B, abi.encodePacked(address(this)), tokenId, payable(address(this)), address(0), ""
+        );
+
+        assertEq(token.ownerOf(tokenId), address(token), "test_Bridge::2");
+        assertEq(token_B.ownerOf(tokenId), address(this), "test_Bridge::3");
+
+        ISmolJoeSeeder.Seed memory seed_B = token_B.getTokenSeed(tokenId);
+
+        assertEq(abi.encode(seed_A), abi.encode(seed_B), "test_Bridge::4");
+        assertEq(token.tokenURI(tokenId), token_B.tokenURI(tokenId), "test_Bridge::5");
+    }
+
+    function test_BridgeFrom() public {
+        uint256 tokenId = 200;
+        token.mint(address(this), tokenId);
+
+        ISmolJoeSeeder.Seed memory seed_A = token.getTokenSeed(tokenId);
+
+        (uint256 nativeFee,) = token_B.estimateSendFee(chainId_B, abi.encodePacked(address(this)), tokenId, false, "");
+
+        deal(alice, nativeFee);
+
+        vm.expectRevert("ONFT721: send caller is not owner nor approved");
+        vm.prank(alice);
+        token.sendFrom{value: nativeFee}(
+            address(this), chainId_B, abi.encodePacked(address(this)), tokenId, payable(address(this)), address(0), ""
+        );
+
+        token.setApprovalForAll(alice, true);
+
+        vm.prank(alice);
         token.sendFrom{value: nativeFee}(
             address(this), chainId_B, abi.encodePacked(address(this)), tokenId, payable(address(this)), address(0), ""
         );
