@@ -122,23 +122,6 @@ contract WorkshopTest is TestHelper {
         }
     }
 
-    function test_WithdrawAVAX() public {
-        _takeOwnership(smolJoesV1, 0);
-
-        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.SmolJoe);
-
-        skip(1 days);
-        workshop.upgradeSmolJoe{value: price}(0);
-
-        uint256 balanceBefore = address(this).balance;
-
-        workshop.withdrawAvax(address(this), 0);
-
-        uint256 balanceAfter = address(this).balance;
-
-        assertEq(balanceAfter - balanceBefore, price, "test_WithdrawAVAX::1");
-    }
-
     function test_UpgradeSmolJoe() public {
         _takeOwnership(smolJoesV1, 0);
 
@@ -148,6 +131,48 @@ contract WorkshopTest is TestHelper {
         workshop.upgradeSmolJoe{value: price}(0);
 
         assertEq(token.ownerOf(0), address(this));
+    }
+
+    function test_revert_UpgradeSmolJoe() public {
+        _takeOwnership(smolJoesV1, 0);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.SmolJoe);
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeSmolJoe{value: price}(0);
+
+        skip(1 days);
+
+        // Can't upgrade without paying, or paying too much
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.upgradeSmolJoe(0);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.upgradeSmolJoe{value: price - 1}(0);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.upgradeSmolJoe{value: price + 1}(0);
+
+        // Can't upgrade a Smol Joe that people don't own
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.upgradeSmolJoe{value: price}(1);
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.upgradeSmolJoe{value: price}(0);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeSmolJoe{value: price}(0);
     }
 
     function test_BatchUpgradeSmolJoe() public {
@@ -167,6 +192,51 @@ contract WorkshopTest is TestHelper {
         assertEq(token.ownerOf(1), address(this));
     }
 
+    function test_revert_BatchUpgradeSmolJoe() public {
+        uint256[] memory smolJoeIds = new uint256[](2);
+        smolJoeIds[0] = 0;
+        smolJoeIds[1] = 1;
+
+        _takeOwnership(smolJoesV1, smolJoeIds[0]);
+        _takeOwnership(smolJoesV1, smolJoeIds[1]);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.SmolJoe);
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeSmolJoe{value: smolJoeIds.length * price}(smolJoeIds);
+
+        skip(1 days);
+
+        // Can't upgrade without paying for all the upgrades
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.batchUpgradeSmolJoe{value: price}(smolJoeIds);
+
+        // Can't upgrade a Smol Joe that people don't own
+        smolJoeIds[1] = 2;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.batchUpgradeSmolJoe{value: smolJoeIds.length * price}(smolJoeIds);
+
+        smolJoeIds[1] = 1;
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.batchUpgradeSmolJoe{value: smolJoeIds.length * price}(smolJoeIds);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeSmolJoe{value: smolJoeIds.length * price}(smolJoeIds);
+    }
+
     function test_UpgradeCreepWithBeegPumpkin() public {
         uint256 uniqueCreepId = 0;
 
@@ -179,6 +249,55 @@ contract WorkshopTest is TestHelper {
         workshop.upgradeCreepWithBeegPumpkin{value: price}(uniqueCreepId, 0);
 
         assertEq(token.ownerOf(100), address(this));
+    }
+
+    function test_revert_UpgradeCreepWithBeegPumpkin() public {
+        uint256 uniqueCreepId = 0;
+
+        _takeOwnership(smolCreeps, uniqueCreepId);
+        _takeOwnership(beegPumpkins, 0);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.Unique);
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeCreepWithBeegPumpkin{value: price}(uniqueCreepId, 0);
+
+        skip(3 days);
+
+        // Can't upgrade without paying
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.upgradeCreepWithBeegPumpkin(uniqueCreepId, 0);
+
+        // Can't upgrade a Creep that people don't own
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.upgradeCreepWithBeegPumpkin{value: price}(1, 0);
+
+        // Can't upgrade using a Beeg Pumpkin that people don't own
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.upgradeCreepWithBeegPumpkin{value: price}(uniqueCreepId, 1);
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.upgradeCreepWithBeegPumpkin{value: price}(uniqueCreepId, 0);
+
+        workshop.unpause();
+
+        // Can't upgrade if the Smol Creep is not unique
+        _takeOwnership(smolCreeps, 1);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InvalidType.selector);
+        workshop.upgradeCreepWithBeegPumpkin{value: price}(1, 0);
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeCreepWithBeegPumpkin{value: price}(uniqueCreepId, 0);
     }
 
     function test_BatchUpgradeCreepWithBeegPumpkin() public {
@@ -201,6 +320,83 @@ contract WorkshopTest is TestHelper {
         workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
 
         assertEq(token.ownerOf(100), address(this));
+    }
+
+    function test_revert_BatchUpgradeCreepWithBeegPumpkin() public {
+        uint256[] memory uniqueCreepIds = new uint256[](2);
+        uniqueCreepIds[0] = 0;
+        uniqueCreepIds[1] = 29;
+
+        uint256[] memory beegPumpkinIds = new uint256[](2);
+        beegPumpkinIds[0] = 0;
+        beegPumpkinIds[1] = 1;
+
+        _takeOwnership(smolCreeps, uniqueCreepIds[0]);
+        _takeOwnership(smolCreeps, uniqueCreepIds[1]);
+        _takeOwnership(beegPumpkins, beegPumpkinIds[0]);
+        _takeOwnership(beegPumpkins, beegPumpkinIds[1]);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.Unique);
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
+
+        skip(3 days);
+
+        // Can't upgrade without paying
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: price}(uniqueCreepIds, beegPumpkinIds);
+
+        // Can't upgrade a Creep that people don't own
+        uniqueCreepIds[1] = 28;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
+
+        uniqueCreepIds[1] = 29;
+
+        // Can't upgrade using a Beeg Pumpkin that people don't own
+        beegPumpkinIds[1] = 2;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
+
+        beegPumpkinIds[1] = 1;
+
+        // Can't upgrade if the Smol Creep is not unique
+        _takeOwnership(smolCreeps, 1);
+        uniqueCreepIds[1] = 1;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InvalidType.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
+
+        uniqueCreepIds[1] = 29;
+
+        // Can't upgrade if the two arrays are not the same length
+        uint256[] memory invalidBeegPumpkinIds = new uint256[](1);
+        invalidBeegPumpkinIds[0] = 0;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InvalidInputLength.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(
+            uniqueCreepIds, invalidBeegPumpkinIds
+        );
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeCreepWithBeegPumpkin{value: uniqueCreepIds.length * price}(uniqueCreepIds, beegPumpkinIds);
     }
 
     function test_UpgradeCreepWithSmolPumpkin_Bone() public {
@@ -267,6 +463,56 @@ contract WorkshopTest is TestHelper {
         assertEq(token.ownerOf(202), address(this));
     }
 
+    function test_revert_UpgradeCreepWithSmolPumpkin() public {
+        uint256 boneCreepId = 2;
+
+        _takeOwnership(smolCreeps, boneCreepId);
+        _takeOwnership(smolPumpkins, 0);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.Bone);
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeCreepWithSmolPumpkin{value: price}(boneCreepId, 0);
+
+        skip(7 days);
+
+        // Can't upgrade without paying
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.upgradeCreepWithSmolPumpkin{value: price - 1}(boneCreepId, 0);
+
+        // Can't upgrade with a Smol Creep that people don't own
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.upgradeCreepWithSmolPumpkin{value: price}(3, 0);
+
+        // Can't upgrade with a Smol Pumpkin that people don't own
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.upgradeCreepWithSmolPumpkin{value: price}(boneCreepId, 3);
+
+        // Can't upgrade if the Smol Creep is not a valid type (unique)
+        _takeOwnership(smolCreeps, 0);
+        uint256 uniqueCreepUpgradePrice = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.Unique);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InvalidType.selector);
+        workshop.upgradeCreepWithSmolPumpkin{value: uniqueCreepUpgradePrice}(0, 0);
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.upgradeCreepWithSmolPumpkin{value: price}(boneCreepId, 0);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeCreepWithSmolPumpkin{value: price}(boneCreepId, 0);
+    }
+
     function test_BatchUpgradeCreepWithSmolPumpkin() public {
         uint256[] memory tokenIds = new uint256[](3);
         tokenIds[0] = 2;
@@ -302,6 +548,96 @@ contract WorkshopTest is TestHelper {
         }
 
         assertEq(token.balanceOf(address(this)), yieldExpected);
+    }
+
+    function test_revert_BatchUpgradeCreepWithSmolPumpkin() public {
+        uint256[] memory tokenIds = new uint256[](3);
+        tokenIds[0] = 2;
+        tokenIds[1] = 17;
+        tokenIds[2] = 8;
+
+        uint256[] memory smolPumpkinIds = new uint256[](3);
+        smolPumpkinIds[0] = 0;
+        smolPumpkinIds[1] = 1;
+        smolPumpkinIds[2] = 2;
+
+        _takeOwnership(smolCreeps, tokenIds[0]);
+        _takeOwnership(smolCreeps, tokenIds[1]);
+        _takeOwnership(smolCreeps, tokenIds[2]);
+
+        _takeOwnership(smolPumpkins, smolPumpkinIds[0]);
+        _takeOwnership(smolPumpkins, smolPumpkinIds[1]);
+        _takeOwnership(smolPumpkins, smolPumpkinIds[2]);
+
+        uint256 totalPrice;
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            uint256 unitPrice =
+                workshop.getUpgradePrice(ISmolJoeWorkshop.Type(uint8(workshop.getCreepType(tokenIds[i]))));
+            totalPrice += unitPrice;
+        }
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice}(tokenIds, smolPumpkinIds);
+
+        skip(7 days);
+
+        // Can't upgrade without paying
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice - 1}(tokenIds, smolPumpkinIds);
+
+        // Can't upgrade with a Smol Creep that people don't own
+        tokenIds[2] = 12;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice}(tokenIds, smolPumpkinIds);
+
+        tokenIds[2] = 8;
+
+        // Can't upgrade with a Smol Pumpkin that people don't own
+        smolPumpkinIds[2] = 3;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice}(tokenIds, smolPumpkinIds);
+
+        smolPumpkinIds[2] = 2;
+
+        // Can't upgrade with an invalid Smol Creep type
+        uint256 price = totalPrice
+            - workshop.getUpgradePrice(ISmolJoeWorkshop.Type(uint8(workshop.getCreepType(tokenIds[2]))))
+            + workshop.getUpgradePrice(ISmolJoeWorkshop.Type(uint8(workshop.getCreepType(0))));
+
+        tokenIds[2] = 0;
+        _takeOwnership(smolCreeps, tokenIds[2]);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InvalidType.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: price}(tokenIds, smolPumpkinIds);
+
+        tokenIds[2] = 2;
+
+        // Can't upgrade with invalid array lengths
+        uint256[] memory invalidSmolPumpkinIds = new uint256[](2);
+        smolPumpkinIds[0] = 0;
+        smolPumpkinIds[1] = 1;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InvalidInputLength.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice}(tokenIds, invalidSmolPumpkinIds);
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice}(tokenIds, smolPumpkinIds);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeCreepWithSmolPumpkin{value: totalPrice}(tokenIds, smolPumpkinIds);
     }
 
     function test_UpgradeCreep_Unique() public {
@@ -378,6 +714,44 @@ contract WorkshopTest is TestHelper {
         assertEq(token.ownerOf(202), address(this));
     }
 
+    function test_revert_UpgradeCreep() public {
+        uint256 diamondCreepId = 9;
+
+        _takeOwnership(smolCreeps, diamondCreepId);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.Diamond);
+
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeCreep{value: price}(diamondCreepId);
+
+        skip(42 days);
+
+        // Can't upgrade without paying
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.upgradeCreep{value: price - 1}(diamondCreepId);
+
+        // Can't upgrade with a Smol Creep that people don't own
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.upgradeCreep{value: price}(1);
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.upgradeCreep{value: price}(diamondCreepId);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.upgradeCreep{value: price}(diamondCreepId);
+    }
+
     function test_BatchUpgradeCreep() public {
         uint256[] memory tokenIds = new uint256[](3);
         tokenIds[0] = 2;
@@ -406,18 +780,157 @@ contract WorkshopTest is TestHelper {
         assertEq(token.balanceOf(address(this)), yieldExpected);
     }
 
-    function test_Revert_UpgradeCreepWithSmolPumpkin_Unique() public {
-        uint256 uniqueCreepId = 0;
+    function test_revert_BatchUpgradeCreep() public {
+        uint256[] memory tokenIds = new uint256[](3);
+        tokenIds[0] = 2;
+        tokenIds[1] = 17;
+        tokenIds[2] = 8;
 
-        _takeOwnership(smolCreeps, uniqueCreepId);
-        _takeOwnership(smolPumpkins, 0);
+        _takeOwnership(smolCreeps, tokenIds[0]);
+        _takeOwnership(smolCreeps, tokenIds[1]);
+        _takeOwnership(smolCreeps, tokenIds[2]);
 
-        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.Unique);
+        uint256 totalPrice;
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type(uint8(workshop.getCreepType(tokenIds[i]))));
+            totalPrice += price;
+        }
 
-        skip(7 days);
+        // Can't upgrade before start time
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeCreep{value: totalPrice}(tokenIds);
 
-        vm.expectRevert();
-        workshop.upgradeCreepWithSmolPumpkin{value: price}(uniqueCreepId, 0);
+        skip(42 days);
+
+        // Can't upgrade without paying
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__InsufficientAvaxPaid.selector);
+        workshop.batchUpgradeCreep{value: totalPrice - 1}(tokenIds);
+
+        // Can't upgrade with a Smol Creep that people don't own
+        tokenIds[0] = 3;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__TokenOwnershipRequired.selector);
+        workshop.batchUpgradeCreep{value: totalPrice}(tokenIds);
+
+        tokenIds[0] = 2;
+
+        // Can't upgrade if the contract is paused
+        workshop.pause();
+
+        vm.expectRevert("Pausable: paused");
+        workshop.batchUpgradeCreep{value: totalPrice}(tokenIds);
+
+        workshop.unpause();
+
+        // Can't upgrade if the end time has passed
+        uint256 endTime = workshop.globalEndTime();
+
+        vm.warp(endTime + 1 days);
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__UpgradeNotEnabled.selector);
+        workshop.batchUpgradeCreep{value: totalPrice}(tokenIds);
+    }
+
+    function test_SetUpgradeStartTime(uint64 newStartTime, uint8 category_) public {
+        ISmolJoeWorkshop.StartTimes category = ISmolJoeWorkshop.StartTimes(uint8(bound(category_, 0, 3)));
+
+        workshop.setUpgradeStartTime(category, newStartTime);
+
+        assertEq(workshop.getUpgradeStartTime(category), newStartTime, "test_SetUpgradeStartTime::1");
+    }
+
+    function test_revert_SetUpgradeStartTime() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(alice);
+        workshop.setUpgradeStartTime(ISmolJoeWorkshop.StartTimes.SmolJoe, 0);
+    }
+
+    function test_SetUpgradePrice(uint256 newPrice, uint8 category_) public {
+        ISmolJoeWorkshop.Type category = ISmolJoeWorkshop.Type(uint8(bound(category_, 0, 5)));
+
+        workshop.setUpgradePrice(category, newPrice);
+
+        assertEq(workshop.getUpgradePrice(category), newPrice, "test_SetUpgradePrice::1");
+    }
+
+    function test_revert_SetUpgradePrice() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(alice);
+        workshop.setUpgradePrice(ISmolJoeWorkshop.Type.SmolJoe, 0);
+    }
+
+    function test_SetGlobalEndTime(uint64 newEndTime) public {
+        workshop.setGlobalEndTime(newEndTime);
+
+        assertEq(workshop.globalEndTime(), newEndTime, "test_SetGlobalEndTime::1");
+    }
+
+    function test_revert_SetGlobalEndTime() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(alice);
+        workshop.setGlobalEndTime(0);
+    }
+
+    function test_WithdrawAVAX() public {
+        _takeOwnership(smolJoesV1, 0);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.SmolJoe);
+
+        skip(1 days);
+        workshop.upgradeSmolJoe{value: price}(0);
+
+        uint256 balanceBefore = address(this).balance;
+
+        workshop.withdrawAvax(address(this), 0);
+
+        uint256 balanceAfter = address(this).balance;
+
+        assertEq(balanceAfter - balanceBefore, price, "test_WithdrawAVAX::1");
+    }
+
+    function test_revert_WithdrawAVAX() public {
+        _takeOwnership(smolJoesV1, 0);
+
+        uint256 price = workshop.getUpgradePrice(ISmolJoeWorkshop.Type.SmolJoe);
+
+        skip(1 days);
+        workshop.upgradeSmolJoe{value: price}(0);
+
+        // Can't withdraw if not the owner
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(alice);
+        workshop.withdrawAvax(address(this), 0);
+
+        // Can't withdraw if the receiver can't receive AVAX
+        revertReceive = true;
+
+        vm.expectRevert(ISmolJoeWorkshop.SmolJoeWorkshop__WithdrawalFailed.selector);
+        workshop.withdrawAvax(address(this), 0);
+    }
+
+    function test_Pause() public {
+        workshop.pause();
+
+        assertTrue(workshop.paused(), "test_Pause::1");
+    }
+
+    function test_revert_Pause() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(alice);
+        workshop.pause();
+    }
+
+    function test_Unpause() public {
+        workshop.pause();
+        workshop.unpause();
+
+        assertTrue(!workshop.paused(), "test_Unpause::1");
+    }
+
+    function test_revert_Unpause() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        vm.prank(alice);
+        workshop.unpause();
     }
 
     function _takeOwnership(address collection, uint256 tokenId) internal {
@@ -429,5 +942,11 @@ contract WorkshopTest is TestHelper {
         IERC721(collection).approve(address(workshop), tokenId);
     }
 
-    receive() external payable {}
+    bool revertReceive;
+
+    receive() external payable {
+        if (revertReceive) {
+            revert("revertReceive");
+        }
+    }
 }
