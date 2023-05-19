@@ -79,17 +79,17 @@ library NFTDescriptor {
         returns (string memory traitData)
     {
         string[9] memory traitNames =
-            ["Background", "Body", "Shoes", "Pants", "Shirt", "Beard", "HairCapHead", "EyeAccessory", "Accesory"];
+            ["Background", "Body", "Shoes", "Pants", "Shirt", "Beard", "Headwear", "Eyewear", "Accesory"];
 
         // forgefmt: disable-next-item
         string[11] memory brotherhoodNames = [
-            "None", "Academics", "Athletes", "Creatives", "Gentlemans", "MagicalBeings",
+            "None", "Academics", "Athletes", "Creatives", "Gentlemen", "MagicalBeings",
             "Military",  "Musicians",  "Outlaws", "Religious", "Superheros"
         ];
 
         traitData = "[";
 
-        traitData = _appendTrait(traitData, "Brotherhood", brotherhoodNames[uint8(brotherhood)]);
+        traitData = _appendTrait(traitData, "House", brotherhoodNames[uint8(brotherhood)]);
         traitData = string(abi.encodePacked(traitData, ","));
 
         // Originals and Luminarys have a single part
@@ -106,7 +106,7 @@ library NFTDescriptor {
                 }
             }
         } else {
-            traitData = _appendTrait(traitData, "Rarity", "Generative");
+            traitData = _appendTrait(traitData, "Rarity", "Smols");
             traitData = string(abi.encodePacked(traitData, ","));
 
             for (uint256 i = 0; i < parts.length; i++) {

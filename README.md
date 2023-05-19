@@ -20,7 +20,7 @@ Instead of storing each pixel individually, which would take `{x, y, color} = 5 
 
 Here, instead of storing `9 * 5 = 45 bytes` of data, we do `5 * 6 = 30 bytes`. This optimization is particularly suited for images that have large parts of the same color.
 
-As a further optimization, colors, that take `3 bytes` to be stored as RGB, are not stored in each individual rectangle, but instead in a `color palette`, i.e. a list of every color used. Each rectangle will now hold the color position in the palette, instead of the color itself. Since Smol Joes have ~12k different colors, the index is stored in `2 bytes` (instead of 3 for the full RGB).
+As a further optimization, colors, that take `3 bytes` to be stored as RGB, are not stored in each individual rectangle, but instead in a `color palette`, i.e. a list of every color used. Each rectangle will now hold the color position in the palette, instead of the color itself. Since Smol Joes have more than 255 different colors, the index is stored in `2 bytes` (instead of 3 for the full RGB).
 
 Smol Joes images have been encoded using a script forked from the Nouns repository, that can be found [here](https://github.com/Mathieu-Be/nouns-monorepo/blob/master/packages/nouns-assets/scripts/encode.ts). After encoding, the bytes arrays are then compressed.
 
@@ -45,9 +45,9 @@ House Emblems: Luminaries and Smols have their house emblem displayed below them
 
 ## Testing
 
-This project uses both `Hardhat` and `Foundry`. Tests are using Foundry.
+Tests are using Foundry.
 
-`GenerateSVG.t.sol` can be used to test the SVG generation during development. To run the test in this contract, set the `FOUNDRY_PROFILE` env variable to `svgtesting`:
+`GenerateSVG.t.sol` can be used to test the SVG generation during development. To run the test in this contract, set the `FOUNDRY_PROFILE` env variable to `svgtesting` or use:
 
 ```
 yarn test:svg
@@ -58,9 +58,9 @@ yarn test:svg
 RLE images are stored individually in `files/assets-data/image-data.json`. The `make-descriptor-art` task is in charge of gathering every assets of the same couple {trait type, brotherhood}, pack the data and then compress it. This data is then stored in individual `abi` files that will be uploaded on-chain. Files are stored in `script/files/encoded-assets/`.
 
 ```
-yarn hardhat make-descriptor-art --clean-directory true
+yarn make-art
 ```
 
 The `_populateDescriptor` function in `PopulateDescriptor.s.sol` will loop over all these files and call `addMultipleTraits` to upload it.
 
-`SSTORE2` storage is limited by the size a contract bytecode can have, that is why Originals assets are split into 5 pages.
+`SSTORE2` storage is limited by the size a contract bytecode can have, that is why Originals assets are split into 2 pages.
