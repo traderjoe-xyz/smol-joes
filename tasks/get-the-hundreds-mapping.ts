@@ -1,4 +1,3 @@
-import { task } from "hardhat/config";
 import axios from "axios";
 
 import HundredsData1 from "../files/assets-data/hundreds-data-1.json";
@@ -37,7 +36,7 @@ MAP.set("Smol Blue Joe", "Smol Blue Cat Joe");
 
 // Minor Name change
 MAP.set("Smol Hotdog Joe", "Smol Hot Dog Joe");
-MAP.set("Smol Volly", "Smol Volley Joe");
+MAP.set("Smol Volly", "Smol Volly Joe");
 MAP.set("Smol xJoe", "Smol xJOE Joe");
 MAP.set("Smol sJoe", "Smol sJOE Joe");
 MAP.set("Smol veJoe", "Smol veJOE Joe");
