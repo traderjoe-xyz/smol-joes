@@ -10,13 +10,33 @@
     "workshop": "0x000000000000000000000000000000000000dead"
   },
   "avalanche_fuji": {
-    "art": "0x95aE0B1AA3cCf15F928A1D7a719EC12ee98c3dF4",
+    "art": "0x12e2f2C0ecA9C54A6EFCDC70450a8796a7E30ff2",
     "chainIdLZ": 10106,
-    "descriptor": "0x6b5DA166fD03484d8461b72f29b216e67856758A",
+    "descriptor": "0x714E472521233e4dA7dF713644dD159a3Fc6479a",
     "lzEndpoint": "0x93f54D755A063cE7bB9e6Ac47Eccc8e33411d706",
     "multisig": "0x1119fbb02F38764CD90F2d9fB35FeDcd8378ac2A",
-    "seeder": "0xF50dF5705bAf8438Efcc1070CDD43BCBEaB3a498",
-    "smolJoes": "0x795ae9f4Ee642F377FC04e438511ced407314102",
+    "seeder": "0x2a2788B516F85eaE0aed109c0EaBB9Dc2793EACb",
+    "smolJoes": "0x94D470058deFb31bc5bf577ca49852e0B19FDbf2",
     "workshop": "0x000000000000000000000000000000000000dead"
+  },
+  "bnb_smart_chain_testnet": {
+    "art": "0xe6CBCC8589ddDC61083831907b6599ac62EceF5D",
+    "chainIdLZ": 10102,
+    "descriptor": "0x6E1b9F568457DDFD613ac6e07Bc788879A14D8fa",
+    "lzEndpoint": "0x6Fcb97553D41516Cb228ac03FdC8B9a0a9df04A1",
+    "multisig": "0x1119fbb02F38764CD90F2d9fB35FeDcd8378ac2A",
+    "seeder": "0x7f281f22eDB332807A039073a7F34A4A215bE89e",
+    "smolJoes": "0xC8Af41e49e2C03eA14706C7aa9cEE60454bc5c03",
+    "workshop": "0x000000000000000000000000000000000000dead"
+  },
+  "avalanche": {
+    "art": "0xDEAafBaaa26276186A582384cA63c83559C532c4",
+    "chainIdLZ": 106,
+    "descriptor": "0x3f6d384f7e7602A7fE6D7801B5A6B76392b910F5",
+    "lzEndpoint": "0x3c2269811836af69497E5F486A85D7316753cf62",
+    "multisig": "0x64c4607AD853999EE5042Ba8377BfC4099C273DE",
+    "seeder": "0xb9e3cEBDef0A4bb58729bCe084866B60dC7629F5",
+    "smolJoes": "0xB449701A5ebB1D660CB1D206A94f151F5a544a81",
+    "workshop": "0x35dDE90bDa56C8aCAB30a12E505b054a47C9d4Ba"
   }
 }

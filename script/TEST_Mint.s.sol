@@ -4,8 +4,9 @@ pragma solidity 0.8.13;
 import "./00_BaseScript.s.sol";
 
 contract Mint is BaseScript {
-    uint256 idToMint = 2;
     string chain = "avalanche_fuji";
+
+    uint256[] idsToMint = [0, 1, 2];
 
     function run() public {
         Deployment memory config = configs[chain];
@@ -20,8 +21,8 @@ contract Mint is BaseScript {
             smolJoes.setWorkshop(deployer);
         }
 
-        for (uint256 i = 205; i < 220; i++) {
-            smolJoes.mint(deployer, i);
+        for (uint256 i = 0; i < idsToMint.length; i++) {
+            smolJoes.mint(deployer, idsToMint[i]);
         }
 
         vm.stopBroadcast();
