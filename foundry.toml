@@ -17,5 +17,6 @@ match_test = "test_SVGGeneration"
 no_match_test = "Foo" # Placeholder no overwrite the default no_match_test
 ffi = true
 fs_permissions = [{ access = "read-write", path = "./"}]
+gas_limit = "18446744073709551615"
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
