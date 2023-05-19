@@ -11,7 +11,7 @@ contract DescriptorTest is TestHelper {
     uint256[10] private _shirtsByBrotherhood = [10, 8, 9, 9, 9, 8, 10, 10, 9, 9];
     uint256[10] private _beardsByBrotherhood = [5, 5, 5, 5, 5, 5, 4, 4, 5, 3];
     uint256[10] private _hairsCapsHeadsByBrotherhood = [9, 9, 10, 8, 9, 10, 8, 10, 8, 10];
-    uint256[10] private _eyeAccessoriesByBrotherhood = [3, 3, 3, 5, 2, 2, 5, 2, 1, 3];
+    uint256[10] private _eyeAccessoriesByBrotherhood = [3, 3, 3, 5, 1, 2, 5, 2, 1, 3];
     uint256[10] private _accessoriesByBrotherhood = [7, 10, 8, 7, 8, 8, 5, 7, 6, 8];
 
     function test_Populate() public {
