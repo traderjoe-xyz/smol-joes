@@ -26,7 +26,7 @@ contract PopulateDescriptor is BaseScript {
         }
     }
 
-    // Data used here is created with `yarn hardhat make-descriptor-art --clean-directory true`
+    // Data used here is created with `yarn make-art`
     function _populateDescriptor(ISmolJoeDescriptor descriptor) internal {
         string memory assetsLocation = "script/files/encoded-assets/";
 

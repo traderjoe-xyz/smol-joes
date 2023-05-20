@@ -10,6 +10,8 @@ fs_permissions = [{ access = "read", path = "./"}]
 [etherscan]
 fuji = { key = "${SNOWTRACE_API_KEY}", chain = 43113 }
 avalanche = { key = "${SNOWTRACE_API_KEY}", chain = 43114 }
+bnb_smart_chain_testnet = { key = "${BSCSCAN_API_KEY}", chain = 97 }
+bnb_smart_chain = { key = "${BSCSCAN_API_KEY}", chain = 56 }
 
 # To test the SVG generation, use "export FOUNDRY_PROFILE=svgtesting"
 [profile.svgtesting]

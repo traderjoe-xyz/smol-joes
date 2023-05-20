@@ -26,7 +26,7 @@ contract SetMapping is BaseScript {
             if (
                 keccak256(abi.encode(chain)) == keccak256(abi.encode("anvil"))
                     || keccak256(abi.encode(chain)) == keccak256(abi.encode("avalanche_fuji"))
-                    || keccak256(abi.encode(chain)) == keccak256(abi.encode("avalanche_mainnet"))
+                    || keccak256(abi.encode(chain)) == keccak256(abi.encode("avalanche"))
             ) {
                 Deployment memory config = configs[chain];
 

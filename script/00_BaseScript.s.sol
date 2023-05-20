@@ -18,7 +18,7 @@ contract BaseScript is Script {
     // and the deployed addresses will correspond to the ones in the config.json file.
     // string[] chains = ["anvil"];
 
-    string[] chains = ["avalanche_fuji"];
+    string[] chains = ["avalanche"];
 
     address deployer;
     mapping(string => Deployment) configs;
