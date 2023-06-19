@@ -83,8 +83,8 @@ library NFTDescriptor {
 
         // forgefmt: disable-next-item
         string[11] memory brotherhoodNames = [
-            "None", "Academics", "Athletes", "Creatives", "Gentlemen", "MagicalBeings",
-            "Military",  "Musicians",  "Outlaws", "Religious", "Superheros"
+            "The Hundreds", "Academics", "Athletes", "Creatives", "Gentlemen", "Heroes", "Magical Beings",
+             "Musicians",  "Outlaws", "Warriors",  "Worshipers"
         ];
 
         traitData = "[";

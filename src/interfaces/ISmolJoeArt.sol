@@ -43,12 +43,12 @@ interface ISmolJoeArt {
         Athletes,
         Creatives,
         Gentlemans,
+        Superheros,
         MagicalBeings,
-        Military,
         Musicians,
         Outlaws,
-        Religious,
-        Superheros
+        Military,
+        Religious
     }
 
     /**
