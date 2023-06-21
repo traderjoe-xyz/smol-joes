@@ -7,6 +7,10 @@ import path from "path";
 import { ethers } from "ethers";
 import fs from "fs";
 
+// Part 2 is smaller than part 1
+const HUNDREDS_DATA_SLICE_1 = 18;
+const HUNDREDS_DATA_SLICE_2 = 17;
+
 const saveToFileAbiEncoded = (
   filepath: string,
   traitPage: {
@@ -43,10 +47,18 @@ const main = async () => {
   for (let i = 0; i < 3; i++) {
     const bodypartsPage = dataToDescriptorInput(
       images_1
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_1 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_1
+        )
         .map(({ data }) => data),
       images_1
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_1 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_1
+        )
         .map(({ filename }) => filename)
     );
 
@@ -80,10 +92,18 @@ const main = async () => {
   for (let i = 0; i < 3; i++) {
     const bodypartsPage = dataToDescriptorInput(
       images_2
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_2 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_2
+        )
         .map(({ data }) => data),
       images_2
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_2 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_2
+        )
         .map(({ filename }) => filename)
     );
 
