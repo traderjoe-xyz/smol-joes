@@ -317,7 +317,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
             ];
 
             string memory joeId = tokenId.toString();
-            name = string(abi.encodePacked("Smol ", brotherhoodNames[uint8(seed.brotherhood) - 1], " #", joeId));
+            name = string(abi.encodePacked("Smol ", brotherhoodNames[uint8(seed.brotherhood) - 1], " #", joeId, " Joe"));
         }
         string memory description = string(abi.encodePacked("The Expansion of Smol Joes"));
 
