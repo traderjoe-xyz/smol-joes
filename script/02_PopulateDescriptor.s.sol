@@ -129,5 +129,14 @@ contract PopulateDescriptor is BaseScript {
 
             descriptor.setHouseEmblem(ISmolJoeArt.Brotherhood(i + 1), emblem);
         }
+
+        // Add Luminaries metadata
+        for (uint256 i = 0; i < brotherhoods.length; i++) {
+            bytes memory metadata = vm.parseBytes(
+                vm.readFile(string(abi.encodePacked(assetsLocation, "metadata_", brotherhoods[i], ".abi")))
+            );
+
+            descriptor.setLuminariesMetadata(ISmolJoeArt.Brotherhood(i + 1), metadata);
+        }
     }
 }

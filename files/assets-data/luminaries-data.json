@@ -7405,5 +7405,507 @@
       "brotherhood": "worship",
       "data": "PHBhdGggICAgZD0iTTQxMCA4MDloMTh2NmgtMTh6bTYwIDBoMTh2NmgtMTh6bS02NiA2aDZ2NmgtNnptMTIgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0zNiAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0tODQgNmg2djZoLTZ6bTEyIDBoNnY2aC02em0xMiAwaDEydjZoLTEyem0zMCAwaDEydjZoLTEyem0xOCAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bS04NCA2aDZ2NmgtNnptMTIgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0xMiAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0xMiAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bS04NCA2aDZ2NmgtNnptMTIgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0xMiAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0xMiAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bS05NiA2aDE4djZoLTE4em00OCAwaDZ2NmgtNnptMTIgMGg2djZoLTZ6bTM2IDBoMTh2NmgtMTh6bS05NiA2aDZ2NmgtNnptMTIgMGg2djZoLTZ6bTM2IDBoNnY2aC02em0xMiAwaDZ2NmgtNnptMzYgMGg2djZoLTZ6bTEyIDBoNnY2aC02em0tMTA4IDZoNnY2aC02eiIgLz48cGF0aCBmaWxsPSIjM2IzYjNiIiBkPSJNNDEwIDg1MWgxMnY2aC0xMnoiIC8+PHBhdGggZD0iTTQ0MCA4NTFoNnY2aC02em0xMiAwaDZ2NmgtNnoiIC8+PHBhdGggZmlsbD0iIzNiM2IzYiIgZD0iTTQ3NiA4NTFoMTJ2NmgtMTJ6IiAvPjxwYXRoIGQ9Ik01MDAgODUxaDZ2NmgtNnptLTEwMiA2aDZ2NmgtNnptMzYgMGg2djZoLTZ6bTI0IDBoNnY2aC02em0zNiAwaDZ2NmgtNnptLTkwIDZoMzB2NmgtMzB6bTYwIDBoMzB2NmgtMzB6IiAvPg=="
     }
+  ],
+  "metadatas": [
+    {
+      "filename": "Smol Archimedes Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Philosopher's Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Archimedes Shawl\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Balding White Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Mathematical Compass\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Confucius Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Thinking Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Philosopher Smock\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black with Mustache\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Paragon Bun\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Edison Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Suit Slacks\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Electric Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Curly Grey Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Light Bulb\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Einstein Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Classroom Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Atomic Pullover\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Einstein Buzz\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Einstein's Atom\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Galileo Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes with Socks\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Thinking Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Astronomic RObe\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Short Grey Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Telescope\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Hawking Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Advanced Wheelchair\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Classy Academic Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Curly Grey Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Reading Glasses\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Laboratory Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Suit Slacks\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Lab Coat\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Orange\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Orange Curl\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Lab Spectacles\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Laboratory Wrench\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Marx Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Suit Slacks\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Marxist Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Marxist Flow\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Shakespeare Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Puffy Platoons\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Elizabeethan Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Shakespearean Cap\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Quill\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Vinci Joe",
+      "brotherhood": "academics",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Academics\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Academia Rose\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Thinking Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Da Vinci's Robe\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Renaissance Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Mathematical Compass\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Ali Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Boxing Trainers\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Gold Silk Boxing Shorts\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Boxing Headguard\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Boxing Gloves\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Chad Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red High Top Trainers\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Red Trainers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Chad Singlet\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Curly Black Cut\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Barbell\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Hawk Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Skater Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Baggy Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Skater Stripes\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dirty Blonde\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Skater Beenie\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Skateboard\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Kobe Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red High Top Trainers\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Basketball Shorts\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"LA Jersey\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Baller Sweatband\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Basketball Goggles\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Basketball\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Maradona Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Futball Shorts\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Argentina No. 10\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Curly Black Cut\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Bag of Coke\"\n  }\n]"
+    },
+    {
+      "filename": "Smol McGregor Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"UFC Shorts\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"McGreggor Tats\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Light Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Brown Round Cut\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Fighting Gloves\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Montana Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Striped Shoe\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"American Football Tights\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Football Jersey\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Football Helmet\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Football\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Nadal Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Striped Shoe\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Tennis Shorts\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Tennis Polo\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Tennis Bandana\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Tennis Racket\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Ruth Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Baseball Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Baseball Jersey\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Baseball Helmet\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Baseball Bat\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Slater Joe",
+      "brotherhood": "athletes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Athletes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Blue Blitz\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Surfboard\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Half-on Wetsuit\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Surfer Muscles\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dirty Blonde\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Luscious Surfer Locks\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Sunglasses\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Banksy Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Grey Sweatpants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Suspicious Hoodie\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Neon Ski Mask\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Spray Paint\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Bunyan Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Cargo Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Lumberjack Flannel\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Frontier Beenie\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Chainsaw\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Chaplin Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Ragged Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Loose Grey Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Silent Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bowler Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Walking Cane\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Dali Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Dali Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Silent Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black with Pointy Mustache\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Melting Clock\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Compass\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Hype Beast Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black High Top Trainers\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Supreme Joggers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Bape Hoodie\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Light Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Supreme Cap\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Knitting Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Dali Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Knit Sweater\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Red Knit Beenie\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Yarn Ball\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Murakami Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Purple Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"White Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Psychedelic Blazer\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Anime Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Thoughtful Glasses\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Pharrell Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Buckle Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Cargo Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Pink Blazer\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Power Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Ramsey Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Kitchen Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Cooking Blouse\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"White Cook Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Meat Cleaver\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Warhol Joe",
+      "brotherhood": "creatives",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Creatives\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Creative's Cobalt\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Dali Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Designer Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Styled White Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Stylish Frames\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Photo Snap\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Abe Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Suit Slacks\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Gentlemanly Suit and Tie\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Honest Top Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Candyman Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Relaxed Tan Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Candy Trench Coat\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Light Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Chocolate Top Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Candy Cane\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Gandhi Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Cream Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"White Tunic\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Peaceful Lenses\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Wooden Walking Stick\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Lagerfeld Joe ",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Grey Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Expensive Grey Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"White Hair with Tail\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Fashion Frames\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Birman Cat\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Master Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Big Brown Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Bright White Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Jedi Shawl\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Force Hood\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Plasma Saber\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Monopoly Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Suit Slacks\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Monopoly Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Light Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Capitalist Top Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Candy Cane\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Morgan Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"White Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Bright White Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Velvet White Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Tight Curly Grey\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Mr T Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Heavy-duty Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Gold Chain and Vest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Black Mohawk\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Golden Spectacles\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Rockefeller Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Black Suit Slacks\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Gentlemanly Suit and Tie\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Tight Curly Grey\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Sherlock Joe",
+      "brotherhood": "gentlemen",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Gentlemen\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Gentlemanly Grullo\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Dark Tan Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Tweed Frock Coat\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Deerstalker hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Gentle Sun Blockers\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Pipe\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Ant Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Tall Black Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Ant Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Ant Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Ant Helmet\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Aqua Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Skintight Green Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Aqua Armor\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Hair of the Sea\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Hero Trident\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Bat Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Tall Black Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Gold Super Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Bat Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bat Mask\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Batarang\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Captain Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Tall Black Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Blue Tights\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Captain Smol Uniform\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"We-Smol Helmet\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Shoe Shield\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Claw Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Golden Hero Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Gold Super Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Clawed Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Spiked Claw Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Dagger Hands\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Smash Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Green\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Smashed Purple Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Super Muscles\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Green\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Super Normal Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Spider Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Blue Tights\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Spider Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Red\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Spider Mask\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Webslinger\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Telepathy Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Telepathy Wheels\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Telepathy Blazer\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Thor Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Golden Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Superhero Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Thunder Armor\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Light Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Norse Crown\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Thor's Hammer\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Turtle Joe",
+      "brotherhood": "heroes",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Heroes\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Heroic Haze\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Green\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Turtle Toes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Turtle Belt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Turtle Shell\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Green\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Turtle Disguise\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Nunchucks\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Airbender Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Airbender Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Elemental Tunic\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"The Chosen One\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Element Staff\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Fairy Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Purple Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Fairy Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Fairy Wings\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Blonde\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Tiara\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Fairy Wand\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Genie Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Blue\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Lamp of Wishes\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Golden Vest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Wishful Ponytail\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Groundskeeper Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Big Brown Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Groundskeeper Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Ragged Brown Coat\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Dusty Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Magical Umbrella\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Headmaster Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Curly Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Wizarding Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Wizard Smock\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Spellbound Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Magical Sight Enhancers\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Elder Wand\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Hurculean Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Warrior Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Toga Warrior\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Light Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Lion Headwear\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Warrior's Stick\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Leprechaun Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Irish Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Lucky Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Orange\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Lucky Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Pot o' Gold\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Minotaur Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Hooves\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Bull Legs\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Minotaur Muscle\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bull Horns\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Minotaur Hands\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Unicorn Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Purple Hooves\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Horse Legs\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Unicorn Chest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Unihorn\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Witch Joe",
+      "brotherhood": "magic",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Magical Beings\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Mystic Maroon\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Green\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Witchy Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Witchy Sweater\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Sorcerer's Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Broomstick\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Bowie Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Starman Shorts\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Starman Top\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Orange\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bowie Cut\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Ziggy Lightning\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Microphone\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Dylan Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Skinny Jeans\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Leather Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Lyricist Brown\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Clubmasters\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Acoustic Guitar\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Elvis Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Elvis Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Elvis Jumpsuit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"The King Quiff\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Microphone\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Hendrix Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Wailers' Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Voodoo Child Long-Sleeve\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Purple Bandana Afro\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Electric Guitar\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Jackson Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes with Socks\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Jumpsuit Bottoms\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Thriller Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Thriller Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Microphone\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Kurt Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Skinny Jeans\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Animal Print Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dirty Blonde\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Ushanka Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Square Whites\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Acoustic Guitar\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Lennon Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Peace, Love, Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Imagine Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Lyricist Brown\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Windsor Shades\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Acoustic Guitar\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Marley Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Wailers' Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Reggae Top\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Dreadlocks\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Joint\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Prince Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Purple Haze Bottoms\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Prince's Purple Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Thriller Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Prince's Signature Guitar\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Tupac Joe",
+      "brotherhood": "musicians",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Musicians\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Melodic Midnight\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Skinny Jeans\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Tupac's Top\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Rapper's Bandana\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Microphone\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Bandit Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Cowboy Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Jeans\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Gunslinger Vest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Close Cut Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Revolvers\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Cartel Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Curly Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Jeans\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Luxury Shirt\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Stetson Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Golden Shades\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Cowboy Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Cowboy Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Cowboy Ranglers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Cowboy Vest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Cowboy Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Lasso\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Escapee Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Prisoner Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Prison Tattoos\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Prison Cut\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Mafia Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Spats\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Italian Suit Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Red Rose Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Close Cut Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Machine Guns\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Prisoner Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Prisoner Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Jumpsuit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Prisoner's Beenie\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Shank\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Scavenger Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Big Brown Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Viking Breeches\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Ragged Coat\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Scavenged Bandana\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Thief joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Ugly Sweatpants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Suspect Hoodie\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Dark Ski Mask\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Money Bag\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Viking Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Viking Breeches\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Viking Armor\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Orange\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Horned Helmet\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Battleaxe\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Yakuza Joe",
+      "brotherhood": "outlaws",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Outlaws\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Dusty Orange\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Fundoshi\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Yakuza Tattoos\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Traditional Bun\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Throwing Star\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Alexander Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Chainmail Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Gold Breastplate\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Brown Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Bronze Shield and Spear\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Ceasar Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Cloth Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"White Tunic\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Laurel Wreath\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Roman Sword\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Guevara Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Tactical Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Open-chested Green Shirt\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Beret\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Cigar\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Khan Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Mongol Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Mongol Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Mongol Vest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Mongol Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Eagle\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Napoleon Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Tiny Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"White Breeches\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Double Breasted Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bicorne\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Patton Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Tactical Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"WW2 Military Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"WW2 US General Cap\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Pistol\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Spartan",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Chainmail Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Spartan Muscles\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Spartan Helmet\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Roman Sword\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Tzu Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Samurai Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Samurai Armour\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black with Mustache\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bamboo Coolie Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Flaming Crossbow\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Washington Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"White Breeches\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Revolutionary Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"White Wig\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Wellington Joe",
+      "brotherhood": "warriors",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Warriors\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Military Green\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Wellington Boots\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"White Breeches\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Military Dinner Jacket\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Bicorne\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Cutlass\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Bishop Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Holy Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Gold Smock\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Mitre Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Shepherd's Staff\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Illuminati Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Illuminati Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Red Cloak\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Broad Brimmed Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Third Eye\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol MLK Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Black Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Preacher Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Revered Suit\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Close Cut\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Holy Book\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Odin Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Brown Sandals\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Chainmail Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Odin Armour\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Odin's Crown\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Odin's Cane\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Pharoah Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Beaded Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Pharoah Muscles\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Striped Pharoah Hat\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Pharoah Staff\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Poseidon Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Fish Tail\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Fishy Chest\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Dark Grey\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Divine Locks\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Greek Trident\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Rasputin Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Red Shoes\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Preacher Pants\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Rasputin Coat\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Black\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Mystic Hair\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Crucafix\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Shaman Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Animal Skin Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Beaded Smock\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"Brown\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Feather Head-dress\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"Tribal Paint\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"None\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Shoeologist joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"Tan\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Shoe Shoe\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Illuminati Skirt\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Strange Red Cloak\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Shoe\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Shoe\"\n  }\n]"
+    },
+    {
+      "filename": "Smol Templar Joe",
+      "brotherhood": "worship",
+      "data": "[\n  {\n    \"trait_type\": \"House\",\n    \"value\": \"Worshipers\"\n  },\n  {\n    \"trait_type\": \"Rarity\",\n    \"value\": \"Luminary\"\n  },\n  {\n    \"trait_type\": \"Background\",\n    \"value\": \"Sacred Sky\"\n  },\n  {\n    \"trait_type\": \"Body\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Shoes\",\n    \"value\": \"Pointed Sabaton\"\n  },\n  {\n    \"trait_type\": \"Pants\",\n    \"value\": \"Chainmail Trousers\"\n  },\n  {\n    \"trait_type\": \"Shirt\",\n    \"value\": \"Knight's Dress\"\n  },\n  {\n    \"trait_type\": \"Beard\",\n    \"value\": \"White\"\n  },\n  {\n    \"trait_type\": \"Headwear\",\n    \"value\": \"Gold Crown\"\n  },\n  {\n    \"trait_type\": \"Eyewear\",\n    \"value\": \"None\"\n  },\n  {\n    \"trait_type\": \"Accessory\",\n    \"value\": \"Knight's Sword\"\n  }\n]"
+    }
   ]
 }

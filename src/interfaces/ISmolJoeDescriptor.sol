@@ -69,6 +69,10 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function setHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer) external;
 
+    function setLuminariesMetadata(ISmolJoeArt.Brotherhood brotherhood, bytes calldata metadatas) external;
+
+    function setLuminariesMetadataPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer) external;
+
     function addTraits(
         ISmolJoeArt.TraitType traitType,
         ISmolJoeArt.Brotherhood brotherhood,

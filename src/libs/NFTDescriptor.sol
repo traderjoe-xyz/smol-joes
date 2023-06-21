@@ -15,6 +15,7 @@ library NFTDescriptor {
         string description;
         ISmolJoeArt.Brotherhood brotherhood;
         string emblem;
+        string metadata;
         ISVGRenderer.Part[] parts;
     }
 
@@ -42,7 +43,9 @@ library NFTDescriptor {
                         '", "description":"',
                         params.description,
                         '", "attributes":',
-                        _generateTraitData(params.parts, params.brotherhood),
+                        bytes(params.metadata).length == 0
+                            ? _generateTraitData(params.parts, params.brotherhood)
+                            : params.metadata,
                         ', "image": "',
                         "data:image/svg+xml;base64,",
                         image,
@@ -92,10 +95,9 @@ library NFTDescriptor {
         traitData = _appendTrait(traitData, "House", brotherhoodNames[uint8(brotherhood)]);
         traitData = string(abi.encodePacked(traitData, ","));
 
-        // Originals and Luminarys have a single part
+        // Originals have a single part. Luminaries already have their trait populated
         if (parts.length == 1) {
-            traitData =
-                _appendTrait(traitData, "Rarity", brotherhood == ISmolJoeArt.Brotherhood.None ? "Original" : "Luminary");
+            traitData = _appendTrait(traitData, "Rarity", "Original");
             traitData = string(abi.encodePacked(traitData, ","));
 
             for (uint256 i = 0; i < traitNames.length; i++) {

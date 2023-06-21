@@ -134,7 +134,7 @@ const main = async () => {
   console.log("\n========== LUMINARIES =========");
 
   let luminariesPagesAmount = 0;
-  const { palette, images, emblems } = LuminariesData;
+  const { palette, images, emblems, metadatas } = LuminariesData;
 
   let {
     luminaries,
@@ -164,6 +164,8 @@ const main = async () => {
   ];
 
   Object.keys(Brotherhood).map((brotherhood) => {
+    if (!isNaN(Number(brotherhood))) return;
+
     bodyparts.forEach((bodypart) => {
       const brotherhoodBodyparts = bodypart.object.filter(
         (item) => item.brotherhood === brotherhood
@@ -199,6 +201,24 @@ const main = async () => {
     );
   });
 
+  Object.keys(Brotherhood).forEach((brotherhood) => {
+    if (!isNaN(Number(brotherhood))) return;
+
+    const metadata = metadatas.filter(
+      (metadata) => metadata.brotherhood === brotherhood
+    );
+
+    console.log(brotherhood);
+
+    writeFileSync(
+      path.join(exportPath, `metadata_${brotherhood}.abi`),
+      ethers.utils.defaultAbiCoder.encode(
+        ["string[]"],
+        [metadata.map(({ data }) => data)]
+      )
+    );
+  });
+
   console.log("\n=== PALETTE ===");
   console.log(`palette luminaries: ${palette.length}`);
 
@@ -207,6 +227,9 @@ const main = async () => {
 
   console.log("\n=== EMBLEMS ===");
   console.log(`emblems length: ${emblems.length}`);
+
+  console.log("\n=== METADATA ===");
+  console.log(`metadatas ok`);
 };
 
 main();
