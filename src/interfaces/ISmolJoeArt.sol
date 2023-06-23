@@ -22,6 +22,7 @@ interface ISmolJoeArt {
     event InflatorUpdated(address newInflator);
     event PaletteSet(uint8 paletteIndex);
     event HouseEmblemSet(Brotherhood brotherhood, address pointer);
+    event LuminariesMetadataSet(Brotherhood brotherhood, address pointer);
 
     enum TraitType {
         Original,
@@ -88,6 +89,8 @@ interface ISmolJoeArt {
 
     function getHouseEmblem(Brotherhood brotherhood) external view returns (string memory svg);
 
+    function getLuminariesMetadata(Brotherhood brotherhood) external view returns (bytes[] memory);
+
     function palettes(uint8 paletteIndex) external view returns (bytes memory);
 
     function setDescriptor(address descriptor) external;
@@ -101,6 +104,10 @@ interface ISmolJoeArt {
     function setHouseEmblem(Brotherhood brotherhood, string calldata svgString) external;
 
     function setHouseEmblemPointer(Brotherhood brotherhood, address pointer) external;
+
+    function setLuminariesMetadata(Brotherhood brotherhood, bytes calldata metadatas) external;
+
+    function setLuminariesMetadataPointer(Brotherhood brotherhood, address pointer) external;
 
     function addTraits(
         TraitType traitType,

@@ -196,7 +196,6 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
     /**
      * @notice Set the house emblem for a given brotherhood.
-     * @dev This function can only be called by the descriptor.
      * @param brotherhood The brotherhood
      * @param svgString The Base 64 encoded SVG string
      */
@@ -210,12 +209,37 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
     /**
      * @notice Set the house emblem for a given brotherhood.
-     * @dev This function can only be called by the descriptor.
      * @param brotherhood The brotherhood
      * @param pointer The address of the contract holding the Base 64 encoded SVG string
      */
     function setHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer) external override onlyOwner {
         art.setHouseEmblemPointer(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Set the luminaries metadata for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param metadatas The metadata array, abi encoded
+     */
+    function setLuminariesMetadata(ISmolJoeArt.Brotherhood brotherhood, bytes calldata metadatas)
+        external
+        override
+        onlyOwner
+    {
+        art.setLuminariesMetadata(brotherhood, metadatas);
+    }
+
+    /**
+     * @notice Set the house emblem for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param pointer The address of the contract holding the metadata array
+     */
+    function setLuminariesMetadataPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer)
+        external
+        override
+        onlyOwner
+    {
+        art.setLuminariesMetadataPointer(brotherhood, pointer);
     }
 
     /**
@@ -336,11 +360,17 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         view
         returns (string memory)
     {
+        string memory metadata;
+        if (seed.luminaryId > 0) {
+            metadata = string(art.getLuminariesMetadata(seed.brotherhood)[seed.luminaryId - 1]);
+        }
+
         NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
             name: name,
             description: description,
             brotherhood: seed.brotherhood,
             emblem: art.getHouseEmblem(seed.brotherhood),
+            metadata: metadata,
             parts: _getPartsForSeed(seed)
         });
 

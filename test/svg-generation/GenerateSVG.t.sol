@@ -42,9 +42,7 @@ contract GenerateSVGTest is TestHelper {
             );
 
             inputs[2] = i.toString();
-            bytes memory result = vm.ffi(inputs);
-
-            console.log(string(result));
+            vm.ffi(inputs);
         }
 
         for (uint256 i = 50; i < 50 + amountToGenerate; i++) {
