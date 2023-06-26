@@ -141,8 +141,11 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
     function generateSVGImage(ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
-        ISVGRenderer.SVGParams memory params =
-            ISVGRenderer.SVGParams({parts: _getPartsForSeed(seed), emblem: art.getHouseEmblem(seed.brotherhood)});
+        ISVGRenderer.SVGParams memory params = ISVGRenderer.SVGParams({
+            parts: _getPartsForSeed(seed),
+            emblem: seed.luminaryId == 0 && seed.originalId == 0 ? art.getHouseEmblem(seed.brotherhood) : "",
+            glowingEmblem: seed.luminaryId > 0 ? art.getGlowingHouseEmblem(seed.brotherhood) : ""
+        });
         return NFTDescriptor.generateSVGImage(renderer, params);
     }
 
@@ -214,6 +217,32 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      */
     function setHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer) external override onlyOwner {
         art.setHouseEmblemPointer(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Set the glowing house emblem for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param svgString The Base 64 encoded SVG string
+     */
+    function setGlowingHouseEmblem(ISmolJoeArt.Brotherhood brotherhood, string calldata svgString)
+        external
+        override
+        onlyOwner
+    {
+        art.setGlowingHouseEmblem(brotherhood, svgString);
+    }
+
+    /**
+     * @notice Set the glowing house emblem for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param pointer The address of the contract holding the Base 64 encoded SVG string
+     */
+    function setGlowingHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer)
+        external
+        override
+        onlyOwner
+    {
+        art.setGlowingHouseEmblemPointer(brotherhood, pointer);
     }
 
     /**
@@ -369,7 +398,8 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
             name: name,
             description: description,
             brotherhood: seed.brotherhood,
-            emblem: art.getHouseEmblem(seed.brotherhood),
+            emblem: seed.luminaryId == 0 && seed.originalId == 0 ? art.getHouseEmblem(seed.brotherhood) : "",
+            glowingEmblem: seed.luminaryId > 0 ? art.getGlowingHouseEmblem(seed.brotherhood) : "",
             metadata: metadata,
             parts: _getPartsForSeed(seed)
         });

@@ -134,7 +134,8 @@ const main = async () => {
   console.log("\n========== LUMINARIES =========");
 
   let luminariesPagesAmount = 0;
-  const { palette, images, emblems, metadatas } = LuminariesData;
+  const { palette, images, emblems, glowingEmblems, metadatas } =
+    LuminariesData;
 
   let {
     luminaries,
@@ -201,6 +202,13 @@ const main = async () => {
     );
   });
 
+  glowingEmblems.forEach((emblem) => {
+    writeFileSync(
+      path.join(exportPath, `glowing_emblem_${emblem.brotherhood}.abi`),
+      emblem.data
+    );
+  });
+
   Object.keys(Brotherhood).forEach((brotherhood) => {
     if (!isNaN(Number(brotherhood))) return;
 
@@ -227,6 +235,9 @@ const main = async () => {
 
   console.log("\n=== EMBLEMS ===");
   console.log(`emblems length: ${emblems.length}`);
+
+  console.log("\n=== GLOWING EMBLEMS ===");
+  console.log(`glowing emblems length: ${glowingEmblems.length}`);
 
   console.log("\n=== METADATA ===");
   console.log(`metadatas ok`);

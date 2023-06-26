@@ -38,7 +38,11 @@ contract SVGRenderer is ISVGRenderer {
      * @return svg The constructed SVG image.
      */
     function generateSVG(SVGParams calldata params) external pure override returns (string memory svg) {
-        return string(abi.encodePacked(_SVG_START_TAG, _generateSVGRects(params), params.emblem, _SVG_END_TAG));
+        return string(
+            abi.encodePacked(
+                _SVG_START_TAG, _generateSVGRects(params), params.emblem, params.glowingEmblem, _SVG_END_TAG
+            )
+        );
     }
 
     /**
@@ -50,7 +54,7 @@ contract SVGRenderer is ISVGRenderer {
         Part[] memory parts = new Part[](1);
         parts[0] = part;
 
-        return _generateSVGRects(SVGParams({parts: parts, emblem: ""}));
+        return _generateSVGRects(SVGParams({parts: parts, emblem: "", glowingEmblem: ""}));
     }
 
     /**
@@ -59,7 +63,7 @@ contract SVGRenderer is ISVGRenderer {
      * @return partialSVG The constructed SVG image.
      */
     function generateSVGParts(Part[] calldata parts) external pure override returns (string memory partialSVG) {
-        return _generateSVGRects(SVGParams({parts: parts, emblem: ""}));
+        return _generateSVGRects(SVGParams({parts: parts, emblem: "", glowingEmblem: ""}));
     }
 
     /**
