@@ -15,6 +15,7 @@ library NFTDescriptor {
         string description;
         ISmolJoeArt.Brotherhood brotherhood;
         string emblem;
+        string glowingEmblem;
         string metadata;
         ISVGRenderer.Part[] parts;
     }
@@ -30,8 +31,10 @@ library NFTDescriptor {
         view
         returns (string memory)
     {
-        string memory image =
-            generateSVGImage(renderer, ISVGRenderer.SVGParams({parts: params.parts, emblem: params.emblem}));
+        string memory image = generateSVGImage(
+            renderer,
+            ISVGRenderer.SVGParams({parts: params.parts, emblem: params.emblem, glowingEmblem: params.glowingEmblem})
+        );
 
         return string(
             abi.encodePacked(
