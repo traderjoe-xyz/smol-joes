@@ -10,13 +10,13 @@
     "workshop": "0x000000000000000000000000000000000000dead"
   },
   "avalanche_fuji": {
-    "art": "0x12e2f2C0ecA9C54A6EFCDC70450a8796a7E30ff2",
+    "art": "0x3eeF992c97766Ece78F257AbB1D427814330A0a8",
     "chainIdLZ": 10106,
-    "descriptor": "0x714E472521233e4dA7dF713644dD159a3Fc6479a",
+    "descriptor": "0x310693Cb1880c914876Ae6397778B89FbEe57824",
     "lzEndpoint": "0x93f54D755A063cE7bB9e6Ac47Eccc8e33411d706",
     "multisig": "0x1119fbb02F38764CD90F2d9fB35FeDcd8378ac2A",
-    "seeder": "0x2a2788B516F85eaE0aed109c0EaBB9Dc2793EACb",
-    "smolJoes": "0x94D470058deFb31bc5bf577ca49852e0B19FDbf2",
+    "seeder": "0x3BeebD3100575A4E7948f86Ad8deb9080634621B",
+    "smolJoes": "0x953c5104A81d5691221cA3E8775388E8EC0931C7",
     "workshop": "0x000000000000000000000000000000000000dead"
   },
   "bnb_smart_chain_testnet": {
