@@ -9,6 +9,7 @@
     "build": "forge build",
     "test": "forge test",
     "test:svg": "export FOUNDRY_PROFILE=svgtesting && forge test",
+    "test:upgrade": "export FOUNDRY_PROFILE=upgradetesting && forge test",
     "make-art": "yarn ts-node tasks/make-descriptor-art.ts",
     "render-image": "yarn ts-node tasks/render-images.ts",
     "get-hundreds-mapping": "yarn ts-node tasks/get-the-hundreds-mapping.ts",
