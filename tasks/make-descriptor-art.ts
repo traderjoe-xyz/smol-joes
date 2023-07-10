@@ -2,6 +2,7 @@ import { writeFileSync } from "fs";
 import HundredsData1 from "../files/assets-data/hundreds-data-1.json";
 import HundredsData2 from "../files/assets-data/hundreds-data-2.json";
 import LuminariesData from "../files/assets-data/luminaries-data.json";
+import ExtraWarriorAccessoryData from "../files/assets-data/extra-warrior-accessory.json";
 import { dataToDescriptorInput, Brotherhood } from "./utils";
 import path from "path";
 import { ethers } from "ethers";
@@ -226,6 +227,26 @@ const main = async () => {
       )
     );
   });
+
+  // Extra item
+  const extraWarriorAccessoryPage = dataToDescriptorInput(
+    ExtraWarriorAccessoryData.images.accessories.map(({ data }) => data),
+    ExtraWarriorAccessoryData.images.accessories.map(({ filename }) => filename)
+  );
+
+  saveToFileAbiEncoded(
+    path.join(exportPath, `extra_warrior_accessory_page.abi`),
+    extraWarriorAccessoryPage
+  );
+
+  const accessoryPaletteValue = `0x000000${ExtraWarriorAccessoryData.palette.join(
+    ""
+  )}`;
+
+  writeFileSync(
+    path.join(exportPath, "extra_warrior_accessory_palette.abi"),
+    ethers.utils.defaultAbiCoder.encode(["bytes"], [accessoryPaletteValue])
+  );
 
   console.log("\n=== PALETTE ===");
   console.log(`palette luminaries: ${palette.length}`);
