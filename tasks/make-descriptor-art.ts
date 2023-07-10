@@ -7,6 +7,10 @@ import path from "path";
 import { ethers } from "ethers";
 import fs from "fs";
 
+// Part 2 is smaller than part 1
+const HUNDREDS_DATA_SLICE_1 = 18;
+const HUNDREDS_DATA_SLICE_2 = 17;
+
 const saveToFileAbiEncoded = (
   filepath: string,
   traitPage: {
@@ -43,10 +47,18 @@ const main = async () => {
   for (let i = 0; i < 3; i++) {
     const bodypartsPage = dataToDescriptorInput(
       images_1
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_1 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_1
+        )
         .map(({ data }) => data),
       images_1
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_1 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_1
+        )
         .map(({ filename }) => filename)
     );
 
@@ -80,10 +92,18 @@ const main = async () => {
   for (let i = 0; i < 3; i++) {
     const bodypartsPage = dataToDescriptorInput(
       images_2
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_2 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_2
+        )
         .map(({ data }) => data),
       images_2
-        .filter((_, index) => i * 18 <= index && index < (i + 1) * 18)
+        .filter(
+          (_, index) =>
+            i * HUNDREDS_DATA_SLICE_2 <= index &&
+            index < (i + 1) * HUNDREDS_DATA_SLICE_2
+        )
         .map(({ filename }) => filename)
     );
 
@@ -114,7 +134,8 @@ const main = async () => {
   console.log("\n========== LUMINARIES =========");
 
   let luminariesPagesAmount = 0;
-  const { palette, images, emblems } = LuminariesData;
+  const { palette, images, emblems, glowingEmblems, metadatas } =
+    LuminariesData;
 
   let {
     luminaries,
@@ -144,6 +165,8 @@ const main = async () => {
   ];
 
   Object.keys(Brotherhood).map((brotherhood) => {
+    if (!isNaN(Number(brotherhood))) return;
+
     bodyparts.forEach((bodypart) => {
       const brotherhoodBodyparts = bodypart.object.filter(
         (item) => item.brotherhood === brotherhood
@@ -179,6 +202,31 @@ const main = async () => {
     );
   });
 
+  glowingEmblems.forEach((emblem) => {
+    writeFileSync(
+      path.join(exportPath, `glowing_emblem_${emblem.brotherhood}.abi`),
+      emblem.data
+    );
+  });
+
+  Object.keys(Brotherhood).forEach((brotherhood) => {
+    if (!isNaN(Number(brotherhood))) return;
+
+    const metadata = metadatas.filter(
+      (metadata) => metadata.brotherhood === brotherhood
+    );
+
+    console.log(brotherhood);
+
+    writeFileSync(
+      path.join(exportPath, `metadata_${brotherhood}.abi`),
+      ethers.utils.defaultAbiCoder.encode(
+        ["string[]"],
+        [metadata.map(({ data }) => data)]
+      )
+    );
+  });
+
   console.log("\n=== PALETTE ===");
   console.log(`palette luminaries: ${palette.length}`);
 
@@ -187,6 +235,12 @@ const main = async () => {
 
   console.log("\n=== EMBLEMS ===");
   console.log(`emblems length: ${emblems.length}`);
+
+  console.log("\n=== GLOWING EMBLEMS ===");
+  console.log(`glowing emblems length: ${glowingEmblems.length}`);
+
+  console.log("\n=== METADATA ===");
+  console.log(`metadatas ok`);
 };
 
 main();

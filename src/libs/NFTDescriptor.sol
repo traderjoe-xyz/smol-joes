@@ -15,6 +15,8 @@ library NFTDescriptor {
         string description;
         ISmolJoeArt.Brotherhood brotherhood;
         string emblem;
+        string glowingEmblem;
+        string metadata;
         ISVGRenderer.Part[] parts;
     }
 
@@ -29,8 +31,10 @@ library NFTDescriptor {
         view
         returns (string memory)
     {
-        string memory image =
-            generateSVGImage(renderer, ISVGRenderer.SVGParams({parts: params.parts, emblem: params.emblem}));
+        string memory image = generateSVGImage(
+            renderer,
+            ISVGRenderer.SVGParams({parts: params.parts, emblem: params.emblem, glowingEmblem: params.glowingEmblem})
+        );
 
         return string(
             abi.encodePacked(
@@ -42,7 +46,9 @@ library NFTDescriptor {
                         '", "description":"',
                         params.description,
                         '", "attributes":',
-                        _generateTraitData(params.parts, params.brotherhood),
+                        bytes(params.metadata).length == 0
+                            ? _generateTraitData(params.parts, params.brotherhood)
+                            : params.metadata,
                         ', "image": "',
                         "data:image/svg+xml;base64,",
                         image,
@@ -79,12 +85,12 @@ library NFTDescriptor {
         returns (string memory traitData)
     {
         string[9] memory traitNames =
-            ["Background", "Body", "Shoes", "Pants", "Shirt", "Beard", "Headwear", "Eyewear", "Accesory"];
+            ["Background", "Body", "Shoes", "Pants", "Shirt", "Beard", "Headwear", "Eyewear", "Accessory"];
 
         // forgefmt: disable-next-item
         string[11] memory brotherhoodNames = [
-            "None", "Academics", "Athletes", "Creatives", "Gentlemen", "MagicalBeings",
-            "Military",  "Musicians",  "Outlaws", "Religious", "Superheros"
+            "The Hundred", "Academics", "Athletes", "Creatives", "Gentlemen", "Heroes", "Magical Beings",
+             "Musicians",  "Outlaws", "Warriors",  "Worshipers"
         ];
 
         traitData = "[";
@@ -92,10 +98,9 @@ library NFTDescriptor {
         traitData = _appendTrait(traitData, "House", brotherhoodNames[uint8(brotherhood)]);
         traitData = string(abi.encodePacked(traitData, ","));
 
-        // Originals and Luminarys have a single part
+        // Originals have a single part. Luminaries already have their trait populated
         if (parts.length == 1) {
-            traitData =
-                _appendTrait(traitData, "Rarity", brotherhood == ISmolJoeArt.Brotherhood.None ? "Original" : "Luminary");
+            traitData = _appendTrait(traitData, "Rarity", "Original");
             traitData = string(abi.encodePacked(traitData, ","));
 
             for (uint256 i = 0; i < traitNames.length; i++) {

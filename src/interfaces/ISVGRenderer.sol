@@ -30,6 +30,7 @@ interface ISVGRenderer {
     struct SVGParams {
         Part[] parts;
         string emblem;
+        string glowingEmblem;
     }
 
     function generateSVG(SVGParams memory params) external view returns (string memory svg);

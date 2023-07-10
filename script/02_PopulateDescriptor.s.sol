@@ -92,14 +92,55 @@ contract PopulateDescriptor is BaseScript {
             }
         }
 
-        ISmolJoeArt.TraitType[] memory traitTypeList = new ISmolJoeArt.TraitType[](brotherhoods.length);
-        ISmolJoeArt.Brotherhood[] memory brotherhoodList = new ISmolJoeArt.Brotherhood[](brotherhoods.length);
-        bytes[] memory traitsList = new bytes[](brotherhoods.length);
-        uint80[] memory traitsLengthList = new uint80[](brotherhoods.length);
-        uint16[] memory traitsCountList = new uint16[](brotherhoods.length);
+        // Add traits for the Luminaries, in two batches
+        uint256 batchSize = 5;
 
-        // Add traits for the Luminaries and the Smols
-        for (uint256 i = 0; i < traitTypes.length; i++) {
+        ISmolJoeArt.TraitType[] memory traitTypeList = new ISmolJoeArt.TraitType[](batchSize);
+        ISmolJoeArt.Brotherhood[] memory brotherhoodList = new ISmolJoeArt.Brotherhood[](batchSize);
+        bytes[] memory traitsList = new bytes[](batchSize);
+        uint80[] memory traitsLengthList = new uint80[](batchSize);
+        uint16[] memory traitsCountList = new uint16[](batchSize);
+
+        for (uint256 i = 0; i < brotherhoods.length / batchSize; i++) {
+            for (uint256 j = 0; j < batchSize; j++) {
+                try vm.readFile(
+                    string(
+                        abi.encodePacked(
+                            assetsLocation, traitTypes[0], "_", brotherhoods[j + i * batchSize], "_page.abi"
+                        )
+                    )
+                ) returns (string memory result) {
+                    (bytes memory traits, uint80 traitsLength, uint16 traitsCount) =
+                        abi.decode(vm.parseBytes(result), (bytes, uint80, uint16));
+
+                    traitTypeList[j] = ISmolJoeArt.TraitType.Luminary;
+                    brotherhoodList[j] = ISmolJoeArt.Brotherhood(j + i * batchSize + 1);
+                    traitsList[j] = traits;
+                    traitsLengthList[j] = traitsLength;
+                    traitsCountList[j] = traitsCount;
+                } catch {
+                    console.log(
+                        "No traits for trait: %s, brotherhood: %s, page: %s",
+                        traitTypes[0],
+                        brotherhoods[j + i * batchSize],
+                        i
+                    );
+                }
+            }
+
+            // console.log("Adding %s brotherhoods for trait: ", brotherhoodList.length, traitTypes[0]);
+
+            descriptor.addMultipleTraits(traitTypeList, brotherhoodList, traitsList, traitsLengthList, traitsCountList);
+        }
+
+        // Add traits for  the Smols
+        traitTypeList = new ISmolJoeArt.TraitType[](brotherhoods.length);
+        brotherhoodList = new ISmolJoeArt.Brotherhood[](brotherhoods.length);
+        traitsList = new bytes[](brotherhoods.length);
+        traitsLengthList = new uint80[](brotherhoods.length);
+        traitsCountList = new uint16[](brotherhoods.length);
+
+        for (uint256 i = 1; i < traitTypes.length; i++) {
             for (uint256 j = 0; j < brotherhoods.length; j++) {
                 try vm.readFile(
                     string(abi.encodePacked(assetsLocation, traitTypes[i], "_", brotherhoods[j], "_page.abi"))
@@ -128,6 +169,23 @@ contract PopulateDescriptor is BaseScript {
                 vm.readFile(string(abi.encodePacked(assetsLocation, "emblem_", brotherhoods[i], ".abi")));
 
             descriptor.setHouseEmblem(ISmolJoeArt.Brotherhood(i + 1), emblem);
+        }
+
+        // Add glowing emblems
+        for (uint256 i = 0; i < brotherhoods.length; i++) {
+            string memory emblem =
+                vm.readFile(string(abi.encodePacked(assetsLocation, "glowing_emblem_", brotherhoods[i], ".abi")));
+
+            descriptor.setGlowingHouseEmblem(ISmolJoeArt.Brotherhood(i + 1), emblem);
+        }
+
+        // Add Luminaries metadata
+        for (uint256 i = 0; i < brotherhoods.length; i++) {
+            bytes memory metadata = vm.parseBytes(
+                vm.readFile(string(abi.encodePacked(assetsLocation, "metadata_", brotherhoods[i], ".abi")))
+            );
+
+            descriptor.setLuminariesMetadata(ISmolJoeArt.Brotherhood(i + 1), metadata);
         }
     }
 }

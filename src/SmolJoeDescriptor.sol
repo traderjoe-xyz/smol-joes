@@ -141,8 +141,11 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @notice Given a seed, construct a base64 encoded SVG image.
      */
     function generateSVGImage(ISmolJoeSeeder.Seed memory seed) external view override returns (string memory) {
-        ISVGRenderer.SVGParams memory params =
-            ISVGRenderer.SVGParams({parts: _getPartsForSeed(seed), emblem: art.getHouseEmblem(seed.brotherhood)});
+        ISVGRenderer.SVGParams memory params = ISVGRenderer.SVGParams({
+            parts: _getPartsForSeed(seed),
+            emblem: seed.luminaryId == 0 && seed.originalId == 0 ? art.getHouseEmblem(seed.brotherhood) : "",
+            glowingEmblem: seed.luminaryId > 0 ? art.getGlowingHouseEmblem(seed.brotherhood) : ""
+        });
         return NFTDescriptor.generateSVGImage(renderer, params);
     }
 
@@ -196,7 +199,6 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
     /**
      * @notice Set the house emblem for a given brotherhood.
-     * @dev This function can only be called by the descriptor.
      * @param brotherhood The brotherhood
      * @param svgString The Base 64 encoded SVG string
      */
@@ -210,12 +212,63 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
 
     /**
      * @notice Set the house emblem for a given brotherhood.
-     * @dev This function can only be called by the descriptor.
      * @param brotherhood The brotherhood
      * @param pointer The address of the contract holding the Base 64 encoded SVG string
      */
     function setHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer) external override onlyOwner {
         art.setHouseEmblemPointer(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Set the glowing house emblem for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param svgString The Base 64 encoded SVG string
+     */
+    function setGlowingHouseEmblem(ISmolJoeArt.Brotherhood brotherhood, string calldata svgString)
+        external
+        override
+        onlyOwner
+    {
+        art.setGlowingHouseEmblem(brotherhood, svgString);
+    }
+
+    /**
+     * @notice Set the glowing house emblem for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param pointer The address of the contract holding the Base 64 encoded SVG string
+     */
+    function setGlowingHouseEmblemPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer)
+        external
+        override
+        onlyOwner
+    {
+        art.setGlowingHouseEmblemPointer(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Set the luminaries metadata for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param metadatas The metadata array, abi encoded
+     */
+    function setLuminariesMetadata(ISmolJoeArt.Brotherhood brotherhood, bytes calldata metadatas)
+        external
+        override
+        onlyOwner
+    {
+        art.setLuminariesMetadata(brotherhood, metadatas);
+    }
+
+    /**
+     * @notice Set the house emblem for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @param pointer The address of the contract holding the metadata array
+     */
+    function setLuminariesMetadataPointer(ISmolJoeArt.Brotherhood brotherhood, address pointer)
+        external
+        override
+        onlyOwner
+    {
+        art.setLuminariesMetadataPointer(brotherhood, pointer);
     }
 
     /**
@@ -308,16 +361,16 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
                 "Athlete",
                 "Creative",
                 "Gentleman",
+                "Hero",
                 "Magical Being",
-                "Warrior",
                 "Musician",
                 "Outlaw",
-                "Worshiper",
-                "Hero"
+                "Warrior",
+                "Worshiper"
             ];
 
             string memory joeId = tokenId.toString();
-            name = string(abi.encodePacked("Smol ", brotherhoodNames[uint8(seed.brotherhood) - 1], " #", joeId));
+            name = string(abi.encodePacked("Smol ", brotherhoodNames[uint8(seed.brotherhood) - 1], " Joe #", joeId));
         }
         string memory description = string(abi.encodePacked("The Expansion of Smol Joes"));
 
@@ -336,11 +389,18 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         view
         returns (string memory)
     {
+        string memory metadata;
+        if (seed.luminaryId > 0) {
+            metadata = string(art.getLuminariesMetadata(seed.brotherhood)[seed.luminaryId - 1]);
+        }
+
         NFTDescriptor.TokenURIParams memory params = NFTDescriptor.TokenURIParams({
             name: name,
             description: description,
             brotherhood: seed.brotherhood,
-            emblem: art.getHouseEmblem(seed.brotherhood),
+            emblem: seed.luminaryId == 0 && seed.originalId == 0 ? art.getHouseEmblem(seed.brotherhood) : "",
+            glowingEmblem: seed.luminaryId > 0 ? art.getGlowingHouseEmblem(seed.brotherhood) : "",
+            metadata: metadata,
             parts: _getPartsForSeed(seed)
         });
 

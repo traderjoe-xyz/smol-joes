@@ -4,6 +4,7 @@ import { convert } from "convert-svg-to-png";
 
 const main = async () => {
   const tokenId = process.argv[2];
+  const fileName = process.argv[3];
 
   const uriPath = "../script/files/raw-uris-sample/";
   const metadataPath = "../script/files/metadatas-sample/";
@@ -30,12 +31,16 @@ const main = async () => {
   tokenMetadata.image = "...";
 
   writeFileSync(
-    path.join(__dirname, metadataPath, tokenId.toString() + ".json"),
+    path.join(
+      __dirname,
+      metadataPath,
+      (fileName ?? tokenId.toString()) + ".json"
+    ),
     JSON.stringify(tokenMetadata, undefined, 4)
   );
 
   writeFileSync(
-    path.join(__dirname, imagePath, tokenId.toString() + ".png"),
+    path.join(__dirname, imagePath, (fileName ?? tokenId.toString()) + ".png"),
     await convert(svg)
   );
 };

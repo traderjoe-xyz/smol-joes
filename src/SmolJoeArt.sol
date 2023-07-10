@@ -40,6 +40,20 @@ contract SmolJoeArt is ISmolJoeArt {
     mapping(Brotherhood => address) private _houseEmblemsPointers;
 
     /**
+     * @notice Brotherhoods Glowing House Emblems
+     * @dev Emblems have a higher resolution than the other traits
+     * That is why they are stored sepparately, directly as a SVG string (in Base64)
+     */
+    mapping(Brotherhood => address) private _glowingHouseEmblemsPointers;
+
+    /**
+     * @notice Luminaries trait metadata
+     * @dev Luminaries are single images, but have specific traits that do not correspond to real images
+     * That is why they are stored sepparately
+     */
+    mapping(Brotherhood => address) private _luminariesMetadataPointers;
+
+    /**
      * @notice Require that the sender is the descriptor.
      */
     modifier onlyDescriptor() {
@@ -93,6 +107,38 @@ contract SmolJoeArt is ISmolJoeArt {
             return "";
         } else {
             return string(Base64.decode(string(SSTORE2.read(pointer))));
+        }
+    }
+
+    /**
+     * @notice Get the Base 64 encoded SVG string describing the glowing emblem for a given brotherhood.
+     * Glowing emblems are used for the Luminaries
+     * @dev This is not a valid SVG as it needs to be appended to the rest of the image built by the SVG renderer
+     * @param brotherhood The brotherhood
+     * @return The SVG string
+     */
+    function getGlowingHouseEmblem(Brotherhood brotherhood) external view override returns (string memory) {
+        address pointer = _glowingHouseEmblemsPointers[brotherhood];
+
+        if (pointer == address(0)) {
+            return "";
+        } else {
+            return string(Base64.decode(string(SSTORE2.read(pointer))));
+        }
+    }
+
+    /**
+     * @notice Get the abi encoded array describing the luminaries metadata for a given brotherhood.
+     * @param brotherhood The brotherhood
+     * @return The metadata string
+     */
+    function getLuminariesMetadata(Brotherhood brotherhood) external view override returns (bytes[] memory) {
+        address pointer = _luminariesMetadataPointers[brotherhood];
+
+        if (pointer == address(0)) {
+            return new bytes[](0);
+        } else {
+            return abi.decode(SSTORE2.read(pointer), (bytes[]));
         }
     }
 
@@ -180,6 +226,65 @@ contract SmolJoeArt is ISmolJoeArt {
      * @param brotherhood The brotherhood
      */
     function setHouseEmblemPointer(Brotherhood brotherhood, address pointer) external override onlyDescriptor {
+        _houseEmblemsPointers[brotherhood] = pointer;
+
+        emit HouseEmblemSet(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Set the glowing house emblem for a given brotherhood.
+     * @dev This function can only be called by the descriptor.
+     * @param brotherhood The brotherhood
+     * @param svgString The Base 64 encoded SVG string
+     */
+    function setGlowingHouseEmblem(Brotherhood brotherhood, string calldata svgString)
+        external
+        override
+        onlyDescriptor
+    {
+        address pointer = SSTORE2.write(bytes(svgString));
+
+        _glowingHouseEmblemsPointers[brotherhood] = pointer;
+
+        emit HouseGlowingEmblemSet(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Sets the glowing house emblem pointer address.
+     * @dev This function can only be called by the descriptor.
+     * Can be set to address(0) to remove the house emblem from the image.
+     * @param brotherhood The brotherhood
+     */
+    function setGlowingHouseEmblemPointer(Brotherhood brotherhood, address pointer) external override onlyDescriptor {
+        _glowingHouseEmblemsPointers[brotherhood] = pointer;
+
+        emit HouseGlowingEmblemSet(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Set the luminaries metadata for a given brotherhood.
+     * @dev This function can only be called by the descriptor.
+     * @param brotherhood The brotherhood
+     * @param metadatas The abi encoded metadata array
+     */
+    function setLuminariesMetadata(Brotherhood brotherhood, bytes calldata metadatas)
+        external
+        override
+        onlyDescriptor
+    {
+        address pointer = SSTORE2.write(metadatas);
+
+        _luminariesMetadataPointers[brotherhood] = pointer;
+
+        emit LuminariesMetadataSet(brotherhood, pointer);
+    }
+
+    /**
+     * @notice Sets the luminaries metadata pointer address.
+     * @dev This function can only be called by the descriptor.
+     * @param brotherhood The brotherhood
+     */
+    function setLuminariesMetadataPointer(Brotherhood brotherhood, address pointer) external override onlyDescriptor {
         _houseEmblemsPointers[brotherhood] = pointer;
 
         emit HouseEmblemSet(brotherhood, pointer);
