@@ -187,5 +187,26 @@ contract PopulateDescriptor is BaseScript {
 
             descriptor.setLuminariesMetadata(ISmolJoeArt.Brotherhood(i + 1), metadata);
         }
+
+        // Add warrior extra trait
+        palette = abi.decode(
+            vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "extra_warrior_accessory_palette.abi")))),
+            (bytes)
+        );
+        descriptor.setPalette(3, palette);
+
+        bytes memory warriorExtraTrait =
+            vm.parseBytes(vm.readFile(string(abi.encodePacked(assetsLocation, "extra_warrior_accessory_page.abi"))));
+
+        (bytes memory extraTraits, uint80 extraTraitsLength, uint16 extraTraitsCount) =
+            abi.decode(warriorExtraTrait, (bytes, uint80, uint16));
+
+        descriptor.addTraits(
+            ISmolJoeArt.TraitType.Accessories,
+            ISmolJoeArt.Brotherhood.Warriors,
+            extraTraits,
+            extraTraitsLength,
+            extraTraitsCount
+        );
     }
 }
