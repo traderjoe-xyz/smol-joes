@@ -16,6 +16,8 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     event DataURIToggled(bool enabled);
     event BaseURIUpdated(string baseURI);
+    event OGMigrationTriggerUpdated(bool enabled);
+    event OGURIUpdated(string ogURI);
     event ArtUpdated(ISmolJoeArt art);
     event RendererUpdated(ISVGRenderer renderer);
 

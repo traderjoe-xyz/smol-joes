@@ -26,6 +26,11 @@ match_test = "test_Custom_UpgradeDescriptor"
 no_match_test = "Foo"
 ffi = true
 fs_permissions = [{ access = "read-write", path = "./" }]
-# memory_limit = 100_000_000_000
+
+[profile.ogmigration]
+match_test = "test_Custom_MigrateOGs"
+no_match_test = "Foo"
+ffi = true
+fs_permissions = [{ access = "read-write", path = "./" }]
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
