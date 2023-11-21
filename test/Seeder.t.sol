@@ -62,11 +62,11 @@ contract SeederTest is TestHelper {
         }
 
         // Smols
-        for (uint256 i = 200; i < 10_200; i++) {
+        for (uint256 i = 200; i < 20_200; i++) {
             seed = seeder.generateSeed(i, descriptor);
 
             // Test the URI generation for some of the tokens
-            if (i % 100 == 0) {
+            if (i % 400 == 0) {
                 descriptor.tokenURI(i, seed);
             }
 
@@ -93,7 +93,7 @@ contract SeederTest is TestHelper {
                 for (uint256 k = 0; k < traitTypeAmount; k++) {
                     assertApproxEqRel(
                         bodyPartsDistribution[traitType][ISmolJoeArt.Brotherhood(j + 1)][k],
-                        1_000 / traitTypeAmount,
+                        2_000 / traitTypeAmount,
                         35e16, // 35%
                         "test_GenerateSeed::5"
                     );
@@ -105,7 +105,7 @@ contract SeederTest is TestHelper {
         for (uint256 i = 0; i < 10; i++) {
             assertApproxEqRel(
                 brotherhoodDistribution[ISmolJoeArt.Brotherhood(i + 1)],
-                1_000,
+                2_000,
                 5e16, // 5%
                 "test_GenerateSeed::6"
             );

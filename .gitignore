@@ -28,3 +28,6 @@ script/files/**/*.png
 
 # Temporarly ignore testnet deployments
 deployments/fuji
+
+# Mac files
+.DS_Store
