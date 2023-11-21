@@ -42,6 +42,8 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      */
     bool public isOGMigrationTriggered;
 
+    address public originals;
+
     /**
      * @notice OG URI, used for the Originals (IDs 0 to 99) when isOGMigrationTriggered is true
      */
@@ -141,7 +143,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         override
         returns (string memory)
     {
-        if (tokenId < 100 && isOGMigrationTriggered) {
+        if (tokenId < 100 && isOGMigrationTriggered && msg.sender != originals) {
             return string(abi.encodePacked(ogURI, tokenId.toString()));
         }
 
