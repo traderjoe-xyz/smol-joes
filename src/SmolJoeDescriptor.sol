@@ -130,6 +130,14 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         emit OGURIUpdated(_ogURI);
     }
 
+    function setOriginals(address _originals) external onlyOwner {
+        if (address(_originals) == address(0)) {
+            revert SmolJoeDescriptor__InvalidAddress();
+        }
+
+        originals = _originals;
+    }
+
     /**
      * @notice Given a token ID and seed, construct a token URI for a Smol Joe.
      * @dev The returned value may be a base64 encoded data URI or an API URL.

@@ -13,7 +13,7 @@ import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
 /**
  * @title The Originals Workshop is used to migrate OG Smol Joes into their own contract.
  */
-contract SmolJoeWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
+contract MigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     /**
      * @dev Address where the burned tokens are sent
      */

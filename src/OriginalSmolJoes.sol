@@ -13,7 +13,7 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 /**
  * @title The Smol Joe ERC-721 token
  */
-contract SmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
+contract OriginalSmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     /**
      * @notice The Smol Joe token URI descriptor.
      */

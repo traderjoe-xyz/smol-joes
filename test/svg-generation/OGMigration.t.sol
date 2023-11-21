@@ -9,6 +9,8 @@ contract OGMigrationTest is TestHelper {
     using Strings for uint256;
 
     SmolJoeDescriptor oldDescriptor;
+    MigrationWorkshop migrationWorkshop;
+    OriginalSmolJoes originals;
 
     uint256 constant OG_INDEX = 0;
     uint256 constant LUMINARY_INDEX = 101;
@@ -30,6 +32,7 @@ contract OGMigrationTest is TestHelper {
         bytes32 luminaryURIHash = keccak256(abi.encodePacked(token.tokenURI(LUMINARY_INDEX)));
         bytes32 generativeURIHash = keccak256(abi.encodePacked(token.tokenURI(GENERATIVE_INDEX)));
 
+        // 1. Migrate Descriptor
         vm.startPrank(token.owner());
         descriptor = new SmolJoeDescriptor(art, oldDescriptor.renderer());
         oldDescriptor.setArtDescriptor(address(descriptor));
@@ -45,6 +48,7 @@ contract OGMigrationTest is TestHelper {
             "test_Custom_MigrateOGs::2"
         );
 
+        // 2. Update OGs metadata
         descriptor.setOGMigrationTrigger(true);
         assertEq(token.tokenURI(OG_INDEX), OG_INDEX.toString(), "test_Custom_MigrateOGs::3");
         assertEq(
@@ -55,5 +59,28 @@ contract OGMigrationTest is TestHelper {
             generativeURIHash,
             "test_Custom_MigrateOGs::5"
         );
+
+        // 3. Migrate OGs
+        originals = new OriginalSmolJoes(descriptor, seeder, address(lzEndpointMock), msg.sender);
+        migrationWorkshop = new MigrationWorkshop(address(token), address(originals), block.timestamp + 1 days);
+        originals.setWorkshop(address(migrationWorkshop));
+        descriptor.setOriginals(address(originals));
+
+        assertEq(migrationWorkshop.startTime(), block.timestamp + 1 days, "test_Custom_MigrateOGs::6");
+
+        address owner = token.ownerOf(OG_INDEX);
+        vm.startPrank(owner);
+        token.approve(address(migrationWorkshop), OG_INDEX);
+
+        vm.warp(block.timestamp + 1 days);
+        migrationWorkshop.migrate(OG_INDEX);
+
+        assertEq(
+            token.ownerOf(OG_INDEX), address(0x000000000000000000000000000000000000dEaD), "test_Custom_MigrateOGs::7"
+        );
+        assertEq(originals.ownerOf(OG_INDEX), owner, "test_Custom_MigrateOGs::8");
+
+        assertEq(token.tokenURI(OG_INDEX), OG_INDEX.toString(), "test_Custom_MigrateOGs::9");
+        assertEq(keccak256(abi.encodePacked(originals.tokenURI(OG_INDEX))), ogURIHash, "test_Custom_MigrateOGs::10");
     }
 }
