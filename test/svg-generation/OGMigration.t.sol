@@ -9,7 +9,7 @@ contract OGMigrationTest is TestHelper {
     using Strings for uint256;
 
     SmolJoeDescriptor oldDescriptor;
-    MigrationWorkshop migrationWorkshop;
+    OGMigrationWorkshop migrationWorkshop;
     OriginalSmolJoes originals;
 
     uint256 constant OG_INDEX = 0;
@@ -62,7 +62,7 @@ contract OGMigrationTest is TestHelper {
 
         // 3. Migrate OGs
         originals = new OriginalSmolJoes(descriptor, seeder, address(lzEndpointMock), msg.sender);
-        migrationWorkshop = new MigrationWorkshop(address(token), address(originals), block.timestamp + 1 days);
+        migrationWorkshop = new OGMigrationWorkshop(address(token), address(originals), block.timestamp + 1 days);
         originals.setWorkshop(address(migrationWorkshop));
         descriptor.setOriginals(address(originals));
 

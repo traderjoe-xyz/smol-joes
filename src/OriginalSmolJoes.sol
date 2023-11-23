@@ -45,7 +45,7 @@ contract OriginalSmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
         address _lzEndpoint,
         address _royaltyReceiver
     ) initializer {
-        __OZNFTBase_init("TBD", "TBD", _lzEndpoint, 0, _royaltyReceiver, _royaltyReceiver);
+        __OZNFTBase_init("OG Smol Joes", "100SJ", _lzEndpoint, 0, _royaltyReceiver, _royaltyReceiver);
 
         _setDescriptor(_descriptor);
         _setSeeder(_seeder);
@@ -139,7 +139,6 @@ contract OriginalSmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     /**
      * @notice Mint a new token.
      * @dev The mint logic is expected to be handled by the Smol Joe Workshop.
-     * The Workshop needs to correctly account for the available token IDs and mint accordingly.
      * The Workshop address can be updated by the owner, allowing the implementation of different sale mechanisms in the future.
      * @param to The address to mint the token to.
      * @param tokenID The token ID to mint.

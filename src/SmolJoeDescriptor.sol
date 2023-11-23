@@ -40,14 +40,17 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     /**
      * @notice Whether or not the OG migration has been triggered
      */
-    bool public isOGMigrationTriggered;
+    bool public override isOGMigrationTriggered;
 
-    address public originals;
+    /**
+     * @notice Address of the Originals contract
+     */
+    address public override originals;
 
     /**
      * @notice OG URI, used for the Originals (IDs 0 to 99) when isOGMigrationTriggered is true
      */
-    string public ogURI;
+    string public override ogURI;
 
     constructor(ISmolJoeArt _art, ISVGRenderer _renderer) {
         _setArt(_art);
@@ -110,7 +113,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @notice Set the OG migration trigger.
      * @param _isOGMigrationTriggered whether or not the OG migration has been triggered.
      */
-    function setOGMigrationTrigger(bool _isOGMigrationTriggered) external onlyOwner {
+    function setOGMigrationTrigger(bool _isOGMigrationTriggered) external override onlyOwner {
         if (isOGMigrationTriggered == _isOGMigrationTriggered) {
             revert SmolJoeDescriptor__UpdateToSameState();
         }
@@ -124,13 +127,17 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @notice Set the OG URI for all Originals.
      * @param _ogURI the OG URI to use.
      */
-    function setOGURI(string calldata _ogURI) external onlyOwner {
+    function setOGURI(string calldata _ogURI) external override onlyOwner {
         ogURI = _ogURI;
 
         emit OGURIUpdated(_ogURI);
     }
 
-    function setOriginals(address _originals) external onlyOwner {
+    /**
+     * @notice Set the Originals contract address.
+     * @param _originals the address to set.
+     */
+    function setOriginals(address _originals) external override onlyOwner {
         if (address(_originals) == address(0)) {
             revert SmolJoeDescriptor__InvalidAddress();
         }

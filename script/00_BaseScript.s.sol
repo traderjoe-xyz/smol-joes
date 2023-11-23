@@ -8,7 +8,7 @@ import {SmolJoeDescriptor, ISmolJoeDescriptor} from "src/SmolJoeDescriptor.sol";
 import {SmolJoeSeeder, ISmolJoeSeeder} from "src/SmolJoeSeeder.sol";
 import {SmolJoeWorkshop, ISmolJoeWorkshop} from "src/SmolJoeWorkshop.sol";
 import {OriginalSmolJoes} from "src/OriginalSmolJoes.sol";
-import {MigrationWorkshop} from "src/OriginalsWorkshop.sol";
+import {OGMigrationWorkshop} from "src/OGMigrationWorkshop.sol";
 import {SVGRenderer} from "src/SVGRenderer.sol";
 import {SmolJoeArt, ISmolJoeArt} from "src/SmolJoeArt.sol";
 import {Inflator} from "src/Inflator.sol";

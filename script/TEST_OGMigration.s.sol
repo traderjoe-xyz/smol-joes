@@ -25,8 +25,8 @@ contract OGMigration is BaseScript {
 
         OriginalSmolJoes originals =
             new OriginalSmolJoes(descriptor, ISmolJoeSeeder(config.seeder), address(config.lzEndpoint), msg.sender);
-        MigrationWorkshop migrationWorkshop =
-            new MigrationWorkshop(address(smolJoes), address(originals), block.timestamp);
+        OGMigrationWorkshop migrationWorkshop =
+            new OGMigrationWorkshop(address(smolJoes), address(originals), block.timestamp);
         originals.setWorkshop(address(migrationWorkshop));
         descriptor.setOriginals(address(originals));
 

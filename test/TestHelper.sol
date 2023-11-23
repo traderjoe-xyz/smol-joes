@@ -11,7 +11,7 @@ import {PopulateDescriptor} from "script/02_PopulateDescriptor.s.sol";
 
 import {SmolJoeDescriptor, ISmolJoeDescriptor} from "src/SmolJoeDescriptor.sol";
 import {SmolJoeWorkshop, ISmolJoeWorkshop} from "src/SmolJoeWorkshop.sol";
-import {MigrationWorkshop} from "src/OriginalsWorkshop.sol";
+import {OGMigrationWorkshop} from "src/OGMigrationWorkshop.sol";
 import {OriginalSmolJoes} from "src/OriginalSmolJoes.sol";
 import {SmolJoeSeeder, ISmolJoeSeeder} from "src/SmolJoeSeeder.sol";
 import {SVGRenderer, ISVGRenderer} from "src/SVGRenderer.sol";

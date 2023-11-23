@@ -9,11 +9,12 @@ import {IERC721Metadata} from "openzeppelin/token/ERC721/extensions/IERC721Metad
 
 import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
 import {ISmolJoeWorkshop} from "./interfaces/ISmolJoeWorkshop.sol";
+import {IOGMigrationWorkshop} from "./interfaces/IOGMigrationWorkshop.sol";
 
 /**
  * @title The Originals Workshop is used to migrate OG Smol Joes into their own contract.
  */
-contract MigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
+contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigrationWorkshop {
     /**
      * @dev Address where the burned tokens are sent
      */
@@ -22,25 +23,17 @@ contract MigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     /**
      * @notice The Smol Joes Season 2 contract address
      */
-    ISmolJoes public immutable smolJoesV2;
+    ISmolJoes public immutable override smolJoesV2;
 
     /**
      * @notice The new Originals contract address
      */
-    ISmolJoes public immutable originals;
+    ISmolJoes public immutable override originals;
 
     /**
      * @notice The start time of the migration
      */
-    uint256 public startTime;
-
-    error SmolJoeWorkshop__InvalidCollectionAddress(address collection);
-    error SmolJoeWorkshop__TokenOwnershipRequired();
-    error SmolJoeWorkshop__InvalidTokenID();
-    error SmolJoeWorkshop__InvalidStartTime();
-
-    event Migration(uint256 indexed tokenID);
-    event StartTimeSet(uint256 startTime);
+    uint256 public override startTime;
 
     /**
      * @dev Contract constructor
@@ -53,7 +46,7 @@ contract MigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
             revert SmolJoeWorkshop__InvalidCollectionAddress(_smolJoesV2);
         }
 
-        if (keccak256(bytes(IERC721Metadata(_originals).name())) != keccak256("TBD")) {
+        if (keccak256(bytes(IERC721Metadata(_originals).name())) != keccak256("OG Smol Joes")) {
             revert SmolJoeWorkshop__InvalidCollectionAddress(_originals);
         }
 
@@ -65,18 +58,22 @@ contract MigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
     /**
      * @notice Pauses the contract to prevent any upgrades
      */
-    function pause() external onlyOwner {
+    function pause() external override onlyOwner {
         _pause();
     }
 
     /**
      * @notice Unpauses the contract, allowing upgrades again
      */
-    function unpause() external onlyOwner {
+    function unpause() external override onlyOwner {
         _unpause();
     }
 
-    function setStartTime(uint256 _startTime) external onlyOwner {
+    /**
+     * @notice Sets the start time of the migration
+     * @param _startTime The start time of the migration
+     */
+    function setStartTime(uint256 _startTime) external override onlyOwner {
         if (startTime < block.timestamp) {
             revert SmolJoeWorkshop__InvalidStartTime();
         }
@@ -86,7 +83,11 @@ contract MigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard {
         emit StartTimeSet(_startTime);
     }
 
-    function migrate(uint256 tokenID) external whenNotPaused nonReentrant {
+    /**
+     * @notice Migrates a Smol Joe V2 token into the Originals contract
+     * @param tokenID The token ID to migrate
+     */
+    function migrate(uint256 tokenID) external override whenNotPaused nonReentrant {
         if (tokenID > 99) {
             revert SmolJoeWorkshop__InvalidTokenID();
         }

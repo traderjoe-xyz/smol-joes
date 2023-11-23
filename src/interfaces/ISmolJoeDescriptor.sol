@@ -27,7 +27,17 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function isDataURIEnabled() external returns (bool);
 
+    function ogURI() external returns (string memory);
+
     function baseURI() external returns (string memory);
+
+    function isOGMigrationTriggered() external returns (bool);
+
+    function originals() external returns (address);
+
+    function setOriginals(address originals) external;
+
+    function setOGMigrationTrigger(bool enabled) external;
 
     function setArt(ISmolJoeArt art) external;
 
@@ -38,6 +48,8 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
     function setArtInflator(IInflator inflator) external;
 
     function setDataURIEnabled(bool isEnabled) external;
+
+    function setOGURI(string calldata ogURI) external;
 
     function setBaseURI(string calldata baseURI) external;
 
