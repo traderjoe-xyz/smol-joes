@@ -20,6 +20,7 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
     event OGURIUpdated(string ogURI);
     event ArtUpdated(ISmolJoeArt art);
     event RendererUpdated(ISVGRenderer renderer);
+    event OriginalsUpdated(address originals);
 
     function art() external returns (ISmolJoeArt);
 

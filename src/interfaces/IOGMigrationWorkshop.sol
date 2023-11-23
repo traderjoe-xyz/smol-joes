@@ -9,10 +9,11 @@ import {ISmolJoes} from "./ISmolJoes.sol";
  * @title Interface for the OG Migration Workshop contract
  */
 interface IOGMigrationWorkshop {
-    error SmolJoeWorkshop__InvalidCollectionAddress(address collection);
-    error SmolJoeWorkshop__TokenOwnershipRequired();
-    error SmolJoeWorkshop__InvalidTokenID();
-    error SmolJoeWorkshop__InvalidStartTime();
+    error OGMigrationWorkshop__InvalidCollectionAddress(address collection);
+    error OGMigrationWorkshop__TokenOwnershipRequired();
+    error OGMigrationWorkshop__InvalidTokenID();
+    error OGMigrationWorkshop__InvalidStartTime();
+    error OGMigrationWorkshop__MigrationNotStarted();
 
     event Migration(uint256 indexed tokenID);
     event StartTimeSet(uint256 startTime);

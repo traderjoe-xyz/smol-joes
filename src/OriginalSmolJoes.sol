@@ -15,6 +15,11 @@ import {ISmolJoes} from "./interfaces/ISmolJoes.sol";
  */
 contract OriginalSmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
     /**
+     * @dev Originals are tokens 0 to 99 in the Smol Joes V2 collection
+     */
+    uint256 private constant ORIGINALS_LAST_TOKEN_ID = 99;
+
+    /**
      * @notice The Smol Joe token URI descriptor.
      */
     ISmolJoeDescriptorMinimal public override descriptor;
@@ -140,11 +145,12 @@ contract OriginalSmolJoes is OZNFTBaseUpgradeable, ISmolJoes {
      * @notice Mint a new token.
      * @dev The mint logic is expected to be handled by the Smol Joe Workshop.
      * The Workshop address can be updated by the owner, allowing the implementation of different sale mechanisms in the future.
+     * Same seed as the original token is used.
      * @param to The address to mint the token to.
      * @param tokenID The token ID to mint.
      */
     function mint(address to, uint256 tokenID) external override {
-        if (msg.sender != address(workshop) || tokenID > 99) {
+        if (msg.sender != address(workshop) || tokenID > ORIGINALS_LAST_TOKEN_ID) {
             revert SmolJoes__Unauthorized();
         }
 

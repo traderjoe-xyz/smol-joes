@@ -21,6 +21,11 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
     address private constant BURN_ADDRESS = 0x000000000000000000000000000000000000dEaD;
 
     /**
+     * @dev Originals are tokens 0 to 99 in the Smol Joes V2 collection
+     */
+    uint256 private constant ORIGINALS_LAST_TOKEN_ID = 99;
+
+    /**
      * @notice The Smol Joes Season 2 contract address
      */
     ISmolJoes public immutable override smolJoesV2;
@@ -43,11 +48,11 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
      */
     constructor(address _smolJoesV2, address _originals, uint256 _startTime) {
         if (keccak256(bytes(IERC721Metadata(_smolJoesV2).name())) != keccak256("Smol Joes Season 2")) {
-            revert SmolJoeWorkshop__InvalidCollectionAddress(_smolJoesV2);
+            revert OGMigrationWorkshop__InvalidCollectionAddress(_smolJoesV2);
         }
 
         if (keccak256(bytes(IERC721Metadata(_originals).name())) != keccak256("OG Smol Joes")) {
-            revert SmolJoeWorkshop__InvalidCollectionAddress(_originals);
+            revert OGMigrationWorkshop__InvalidCollectionAddress(_originals);
         }
 
         smolJoesV2 = ISmolJoes(_smolJoesV2);
@@ -75,7 +80,7 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
      */
     function setStartTime(uint256 _startTime) external override onlyOwner {
         if (startTime < block.timestamp) {
-            revert SmolJoeWorkshop__InvalidStartTime();
+            revert OGMigrationWorkshop__InvalidStartTime();
         }
 
         startTime = _startTime;
@@ -88,12 +93,12 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
      * @param tokenID The token ID to migrate
      */
     function migrate(uint256 tokenID) external override whenNotPaused nonReentrant {
-        if (tokenID > 99) {
-            revert SmolJoeWorkshop__InvalidTokenID();
+        if (tokenID > ORIGINALS_LAST_TOKEN_ID) {
+            revert OGMigrationWorkshop__InvalidTokenID();
         }
 
         if (block.timestamp < startTime) {
-            revert SmolJoeWorkshop__InvalidTokenID();
+            revert OGMigrationWorkshop__MigrationNotStarted();
         }
 
         _verifyOwnership(tokenID);
@@ -109,7 +114,7 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
      */
     function _verifyOwnership(uint256 tokenId) internal view {
         if (smolJoesV2.ownerOf(tokenId) != msg.sender) {
-            revert SmolJoeWorkshop__TokenOwnershipRequired();
+            revert OGMigrationWorkshop__TokenOwnershipRequired();
         }
     }
 

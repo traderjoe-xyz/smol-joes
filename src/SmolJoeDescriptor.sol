@@ -143,6 +143,8 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         }
 
         originals = _originals;
+
+        emit OriginalsUpdated(_originals);
     }
 
     /**
@@ -165,6 +167,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         if (isDataURIEnabled) {
             return _dataURI(tokenId, seed);
         }
+
         return string(abi.encodePacked(baseURI, tokenId.toString()));
     }
 
