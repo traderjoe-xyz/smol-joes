@@ -79,7 +79,7 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
      * @param _startTime The start time of the migration
      */
     function setStartTime(uint256 _startTime) external override onlyOwner {
-        if (startTime < block.timestamp) {
+        if (_startTime < block.timestamp) {
             revert OGMigrationWorkshop__InvalidStartTime();
         }
 
@@ -102,8 +102,8 @@ contract OGMigrationWorkshop is Ownable2Step, Pausable, ReentrancyGuard, IOGMigr
         }
 
         _verifyOwnership(tokenID);
-        _mint(msg.sender, tokenID);
         _burn(tokenID);
+        _mint(msg.sender, tokenID);
 
         emit Migration(tokenID);
     }
