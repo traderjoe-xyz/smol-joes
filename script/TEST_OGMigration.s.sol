@@ -20,7 +20,7 @@ contract OGMigration is BaseScript {
         oldDescriptor.setArtDescriptor(address(descriptor));
         smolJoes.setDescriptor(descriptor);
 
-        descriptor.setOGURI("ipfs://bafybeiggzo52clc6wgbhistulakc6ty2xaut4flv2gkohfgqiradgnabzu/");
+        descriptor.setOGMigrationURI("ipfs://bafybeiggzo52clc6wgbhistulakc6ty2xaut4flv2gkohfgqiradgnabzu/");
         descriptor.setOGMigrationTrigger(true);
 
         OriginalSmolJoes originals =

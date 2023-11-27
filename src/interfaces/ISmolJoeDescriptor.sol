@@ -17,7 +17,7 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
     event DataURIToggled(bool enabled);
     event BaseURIUpdated(string baseURI);
     event OGMigrationTriggerUpdated(bool enabled);
-    event OGURIUpdated(string ogURI);
+    event OGMigrationURIUpdated(string ogMigrationURI);
     event ArtUpdated(ISmolJoeArt art);
     event RendererUpdated(ISVGRenderer renderer);
     event OriginalsUpdated(address originals);
@@ -28,7 +28,7 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function isDataURIEnabled() external returns (bool);
 
-    function ogURI() external returns (string memory);
+    function ogMigrationURI() external returns (string memory);
 
     function baseURI() external returns (string memory);
 
@@ -50,7 +50,7 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function setDataURIEnabled(bool isEnabled) external;
 
-    function setOGURI(string calldata ogURI) external;
+    function setOGMigrationURI(string calldata ogMigrationURI) external;
 
     function setBaseURI(string calldata baseURI) external;
 

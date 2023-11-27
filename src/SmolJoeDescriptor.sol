@@ -48,9 +48,9 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     address public override originals;
 
     /**
-     * @notice OG URI, used for the Originals (IDs 0 to 99) when isOGMigrationTriggered is true
+     * @notice OG migration URI, used for the Originals (IDs 0 to 99) on the old contract when isOGMigrationTriggered is true
      */
-    string public override ogURI;
+    string public override ogMigrationURI;
 
     constructor(ISmolJoeArt _art, ISVGRenderer _renderer) {
         _setArt(_art);
@@ -124,13 +124,13 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
     }
 
     /**
-     * @notice Set the OG URI for all Originals.
-     * @param _ogURI the OG URI to use.
+     * @notice Set the OG URI for all Originals of the V2 contract during the migration.
+     * @param _ogMigrationURI the OG URI to use.
      */
-    function setOGURI(string calldata _ogURI) external override onlyOwner {
-        ogURI = _ogURI;
+    function setOGMigrationURI(string calldata _ogMigrationURI) external override onlyOwner {
+        ogMigrationURI = _ogMigrationURI;
 
-        emit OGURIUpdated(_ogURI);
+        emit OGMigrationURIUpdated(_ogMigrationURI);
     }
 
     /**
@@ -161,7 +161,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         returns (string memory)
     {
         if (tokenId < 100 && isOGMigrationTriggered && msg.sender != originals) {
-            return string(abi.encodePacked(ogURI, tokenId.toString()));
+            return string(abi.encodePacked(ogMigrationURI, tokenId.toString()));
         }
 
         if (isDataURIEnabled) {
