@@ -83,4 +83,39 @@ contract OGMigrationTest is TestHelper {
         assertEq(token.tokenURI(OG_INDEX), OG_INDEX.toString(), "test_Custom_MigrateOGs::9");
         assertEq(keccak256(abi.encodePacked(originals.tokenURI(OG_INDEX))), ogURIHash, "test_Custom_MigrateOGs::10");
     }
+
+    function test_Custom_MigrateOGs_FailWhenInvalidTokenID() public {
+        test_Custom_MigrateOGs();
+
+        address owner = token.ownerOf(100);
+        vm.startPrank(owner);
+        token.approve(address(migrationWorkshop), 100);
+
+        vm.expectRevert();
+        migrationWorkshop.migrate(100);
+
+        owner = token.ownerOf(99);
+        vm.startPrank(owner);
+        token.approve(address(migrationWorkshop), 99);
+        migrationWorkshop.migrate(99);
+        vm.stopPrank();
+
+        vm.startPrank(address(migrationWorkshop));
+        vm.expectRevert();
+        token.mint(msg.sender, 100);
+    }
+
+    function test_Custom_MigrateOGs_PostoneUpgrade() public {
+        test_Custom_MigrateOGs();
+
+        vm.startPrank(migrationWorkshop.owner());
+        migrationWorkshop.setStartTime(block.timestamp + 1 days);
+
+        address owner = token.ownerOf(99);
+
+        vm.startPrank(owner);
+        token.approve(address(migrationWorkshop), 99);
+        vm.expectRevert();
+        migrationWorkshop.migrate(99);
+    }
 }
