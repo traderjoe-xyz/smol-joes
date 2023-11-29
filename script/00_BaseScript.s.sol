@@ -30,7 +30,9 @@ contract BaseScript is Script {
         uint16 chainIdLZ;
         address descriptor;
         address lzEndpoint;
+        address migrationWorkshop;
         address multisig;
+        address originals;
         address seeder;
         address smolJoes;
         address workshop;
