@@ -6,7 +6,7 @@ import "../TestHelper.sol";
 contract GenerateSVGTest is TestHelper {
     using Strings for uint256;
 
-    function test_SVGGeneration() public {
+    function test_Custom_SVGGeneration() public {
         uint256 gasLeft = gasleft();
         _populateDescriptor(descriptor);
         console.log("Gas used to populate descriptor: ", gasLeft - gasleft());

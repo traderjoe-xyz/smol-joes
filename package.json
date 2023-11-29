@@ -10,6 +10,7 @@
     "test": "forge test",
     "test:svg": "export FOUNDRY_PROFILE=svgtesting && forge test",
     "test:upgrade": "export FOUNDRY_PROFILE=upgradetesting && forge test",
+    "test:migration": "export FOUNDRY_PROFILE=ogmigration && forge test",
     "make-art": "yarn ts-node tasks/make-descriptor-art.ts",
     "render-image": "yarn ts-node tasks/render-images.ts",
     "get-hundreds-mapping": "yarn ts-node tasks/get-the-hundreds-mapping.ts",
@@ -21,7 +22,7 @@
     "ts-node": "^10.9.1",
     "dotenv": "^16.0.3",
     "ethers": "^5.0.0",
-    "axios": "^1.3.6",
+    "axios": "^1.6.2",
     "convert-svg-to-png": "^0.6.4"
   }
 }

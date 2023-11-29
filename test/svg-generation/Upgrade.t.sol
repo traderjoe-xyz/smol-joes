@@ -19,7 +19,7 @@ contract Upgrade1Test is TestHelper {
         art = SmolJoeArt(0x4DB994fe3716C7aA3639EB47cB1704F6278DA187);
     }
 
-    function test_UpgradeDescriptor() public {
+    function test_Custom_UpgradeDescriptor() public {
         ISmolJoeDescriptorMinimal previousDescriptor = token.descriptor();
 
         string[] memory inputs = new string[](4);

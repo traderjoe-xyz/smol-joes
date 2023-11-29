@@ -16,8 +16,11 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     event DataURIToggled(bool enabled);
     event BaseURIUpdated(string baseURI);
+    event OGMigrationTriggerUpdated(bool enabled);
+    event OGMigrationURIUpdated(string ogMigrationURI);
     event ArtUpdated(ISmolJoeArt art);
     event RendererUpdated(ISVGRenderer renderer);
+    event OriginalsUpdated(address originals);
 
     function art() external returns (ISmolJoeArt);
 
@@ -25,7 +28,17 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
 
     function isDataURIEnabled() external returns (bool);
 
+    function ogMigrationURI() external returns (string memory);
+
     function baseURI() external returns (string memory);
+
+    function isOGMigrationTriggered() external returns (bool);
+
+    function originals() external returns (address);
+
+    function setOriginals(address originals) external;
+
+    function setOGMigrationTrigger(bool enabled) external;
 
     function setArt(ISmolJoeArt art) external;
 
@@ -36,6 +49,8 @@ interface ISmolJoeDescriptor is ISmolJoeDescriptorMinimal {
     function setArtInflator(IInflator inflator) external;
 
     function setDataURIEnabled(bool isEnabled) external;
+
+    function setOGMigrationURI(string calldata ogMigrationURI) external;
 
     function setBaseURI(string calldata baseURI) external;
 
