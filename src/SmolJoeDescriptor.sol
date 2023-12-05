@@ -454,8 +454,8 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
             name: name,
             description: description,
             brotherhood: seed.brotherhood,
-            emblem: seed.luminaryId == 0 && seed.originalId == 0 ? art.getHouseEmblem(seed.brotherhood) : "",
-            glowingEmblem: seed.luminaryId > 0 ? art.getGlowingHouseEmblem(seed.brotherhood) : "",
+            emblem: "",
+            glowingEmblem: "",
             metadata: metadata,
             parts: _getPartsForSeed(seed)
         });
