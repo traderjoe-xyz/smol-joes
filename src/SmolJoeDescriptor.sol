@@ -52,10 +52,17 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      */
     string public override ogMigrationURI;
 
-    constructor(ISmolJoeArt _art, ISVGRenderer _renderer) {
-        _setArt(_art);
-        _setRenderer(_renderer);
-        _setDataURIEnabled(true);
+    constructor(ISmolJoeArt _art, ISVGRenderer _renderer, ISmolJoeDescriptor _previousDescriptor) {
+        if (address(_previousDescriptor) != address(0)) {
+            _setArt(_previousDescriptor.art());
+            _setRenderer(_previousDescriptor.renderer());
+            _setDataURIEnabled(_previousDescriptor.isDataURIEnabled());
+            _setBaseURI(_previousDescriptor.baseURI());
+        } else {
+            _setArt(_art);
+            _setRenderer(_renderer);
+            _setDataURIEnabled(true);
+        }
     }
 
     /**
@@ -104,9 +111,7 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
      * @param _baseURI the base URI to use.
      */
     function setBaseURI(string calldata _baseURI) external override onlyOwner {
-        baseURI = _baseURI;
-
-        emit BaseURIUpdated(_baseURI);
+        _setBaseURI(_baseURI);
     }
 
     /**
@@ -566,6 +571,16 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         isDataURIEnabled = isEnabled;
 
         emit DataURIToggled(isEnabled);
+    }
+
+    /**
+     * @notice Set the base URI for all token IDs.
+     * @param _baseURI the base URI to use.
+     */
+    function _setBaseURI(string memory _baseURI) internal {
+        baseURI = _baseURI;
+
+        emit BaseURIUpdated(_baseURI);
     }
 
     /**

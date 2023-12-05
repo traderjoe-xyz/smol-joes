@@ -34,7 +34,7 @@ contract OGMigrationTest is TestHelper {
 
         // 1. Migrate Descriptor
         vm.startPrank(token.owner());
-        descriptor = new SmolJoeDescriptor(art, oldDescriptor.renderer());
+        descriptor = new SmolJoeDescriptor(art, oldDescriptor.renderer(), ISmolJoeDescriptor(address(0)));
         oldDescriptor.setArtDescriptor(address(descriptor));
         token.setDescriptor(descriptor);
 

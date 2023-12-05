@@ -21,7 +21,8 @@ contract DeployContract is BaseScript {
             uint256 deployerNonce = vm.getNonce(deployer);
             address artAddressPrediction = computeCreateAddress(deployer, deployerNonce + 1);
 
-            SmolJoeDescriptor descriptor = new SmolJoeDescriptor(ISmolJoeArt(artAddressPrediction), renderer);
+            SmolJoeDescriptor descriptor =
+                new SmolJoeDescriptor(ISmolJoeArt(artAddressPrediction), renderer, ISmolJoeDescriptor(address(0)));
             SmolJoeArt art = new SmolJoeArt(address(descriptor), inflator);
 
             require(address(art) == artAddressPrediction, "Art address prediction failed");

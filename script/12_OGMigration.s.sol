@@ -27,7 +27,8 @@ contract AddWarriorTrait is BaseScript {
         vm.createSelectFork(StdChains.getChain(chain).rpcUrl);
 
         vm.startBroadcast(deployer);
-        SmolJoeDescriptor descriptor = new SmolJoeDescriptor(art, oldDescriptor.renderer());
+        SmolJoeDescriptor descriptor =
+            new SmolJoeDescriptor(art, oldDescriptor.renderer(), ISmolJoeDescriptor(address(0)));
 
         // To do from multisig
         bytes memory tx1 = abi.encodeWithSelector(SmolJoeDescriptor.setArtDescriptor.selector, address(descriptor));
