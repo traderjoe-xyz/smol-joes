@@ -73,6 +73,9 @@ contract GenerateSVGTest is TestHelper {
 
         for (uint256 i = 200; i < 200 + amountToGenerate; i++) {
             token.mint(address(1), i);
+
+            console.log("Fetching tokenURI for token ID: ", i);
+
             vm.writeFile(
                 string(abi.encodePacked("./script/files/raw-uris-sample/", i.toString(), ".txt")), token.tokenURI(i)
             );
