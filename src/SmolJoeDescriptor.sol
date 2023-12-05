@@ -56,7 +56,12 @@ contract SmolJoeDescriptor is Ownable2Step, ISmolJoeDescriptor {
         if (address(_previousDescriptor) != address(0)) {
             _setArt(_previousDescriptor.art());
             _setRenderer(_previousDescriptor.renderer());
-            _setDataURIEnabled(_previousDescriptor.isDataURIEnabled());
+
+            bool _isDataURIEnabled = _previousDescriptor.isDataURIEnabled();
+            if (_isDataURIEnabled) {
+                _setDataURIEnabled(isDataURIEnabled);
+            }
+
             _setBaseURI(_previousDescriptor.baseURI());
         } else {
             _setArt(_art);
