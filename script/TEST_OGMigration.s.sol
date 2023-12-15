@@ -16,7 +16,8 @@ contract OGMigration is BaseScript {
 
         vm.startBroadcast(deployer);
 
-        SmolJoeDescriptor descriptor = new SmolJoeDescriptor(ISmolJoeArt(config.art), oldDescriptor.renderer());
+        SmolJoeDescriptor descriptor =
+            new SmolJoeDescriptor(ISmolJoeArt(config.art), oldDescriptor.renderer(), ISmolJoeDescriptor(address(0)));
         oldDescriptor.setArtDescriptor(address(descriptor));
         smolJoes.setDescriptor(descriptor);
 

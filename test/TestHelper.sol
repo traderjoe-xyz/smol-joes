@@ -39,7 +39,7 @@ contract TestHelper is PopulateDescriptor, Test {
 
         lzEndpointMock = new LZEndpointMock(1);
 
-        descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer);
+        descriptor = new SmolJoeDescriptor(ISmolJoeArt(address(1)), renderer, ISmolJoeDescriptor(address(0)));
         art = new SmolJoeArt(address(descriptor), inflator);
 
         uint8[100] memory artMapping;

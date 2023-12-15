@@ -22,13 +22,14 @@ contract AddWarriorTrait is BaseScript {
 
         SmolJoeDescriptor oldDescriptor = SmolJoeDescriptor(config.descriptor);
         SmolJoes smolJoesV2 = SmolJoes(config.smolJoes);
-        SmolJoeArt art = SmolJoeArt(config.art);
 
         vm.createSelectFork(StdChains.getChain(chain).rpcUrl);
 
+        require(address(smolJoesV2.descriptor()) == address(oldDescriptor), "Descriptor mismatch");
+
         vm.startBroadcast(deployer);
         SmolJoeDescriptor descriptor =
-            new SmolJoeDescriptor(art, oldDescriptor.renderer(), ISmolJoeDescriptor(address(0)));
+            new SmolJoeDescriptor(SmolJoeArt(address(0)), SVGRenderer(address(0)), oldDescriptor);
 
         // To do from multisig
         bytes memory tx1 = abi.encodeWithSelector(SmolJoeDescriptor.setArtDescriptor.selector, address(descriptor));
@@ -39,21 +40,8 @@ contract AddWarriorTrait is BaseScript {
         console.log("Tx 2 to : %s", address(smolJoesV2));
         console.logBytes(tx2);
 
-        (address royaltiesReceiver,) = smolJoesV2.royaltyInfo(0, 0);
-
-        OriginalSmolJoes originals =
-            new OriginalSmolJoes(descriptor, smolJoesV2.seeder(), address(smolJoesV2.lzEndpoint()), royaltiesReceiver);
-        OGMigrationWorkshop migrationWorkshop =
-            new OGMigrationWorkshop(address(smolJoesV2), address(originals), block.timestamp + 365 days);
-        originals.setWorkshop(address(migrationWorkshop));
-        descriptor.setOriginals(address(originals));
-
-        originals.setPendingOwner(config.multisig);
-        migrationWorkshop.transferOwnership(config.multisig);
         descriptor.transferOwnership(config.multisig);
 
-        console.log("Originals Smol Joes: %s", address(originals));
-        console.log("OG Migration Workshop: %s", address(migrationWorkshop));
         console.log("Descriptor: %s", address(descriptor));
     }
 }
